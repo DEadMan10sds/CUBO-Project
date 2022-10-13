@@ -10,6 +10,7 @@ import { ClassesService } from 'src/app/services/classes.service';
 })
 export class ClassDetailComponent implements OnInit {
 
+  classID: string;
   actualClass: ClassesModel;
 
 
@@ -18,8 +19,8 @@ export class ClassDetailComponent implements OnInit {
   ngOnInit(): void {
     this.currentRoute.params.subscribe(
       (params: Params) => {
-        const classID = params['classID'];
-        this.actualClass = this.actualClassesService.getSingleClass(classID);
+        this.classID = params['classID'];
+        this.actualClass = this.actualClassesService.getSingleClass(this.classID);
       }
     );
   }

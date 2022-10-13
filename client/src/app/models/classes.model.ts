@@ -1,17 +1,17 @@
 export class ClassesModel{
 
-  private mongoID: string;
-  private name: string;
-  private date: Date;
-  private place: string;
-  private teacher: string;
-  private type: string;
-  private free: boolean;
-  private recurrency: string[];
+  id: string;
+  name: string;
+  date: Date;
+  place: string;
+  teacher: string;
+  type: string;
+  free: boolean;
+  recurrency: string[];
 
   constructor(_mongoID: string, _name: string, _date: Date, _place: string, _teacher: string, _type: string, _free: boolean)
   {
-    this.mongoID = _mongoID;
+    this.id = _mongoID;
     this.name = _name;
     this.date = _date;
     this.place = _place;
@@ -52,7 +52,7 @@ export class ClassesModel{
 
   getID()
   {
-    return this.mongoID;
+    return this.id;
   }
 
 

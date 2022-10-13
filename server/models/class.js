@@ -53,8 +53,9 @@ const classModel = new Schema(
 );
 
 classModel.methods.toJSON = function () {
-  const { __v, ...clas } = this.toObject();
+  const { __v, _id, ...clas } = this.toObject();
 
+  clas.id = _id;
   return clas;
 };
 

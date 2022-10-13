@@ -18,8 +18,8 @@ const laboratoryModel = new Schema({
 });
 
 laboratoryModel.methods.toJSON = function () {
-  const { __v, ...labData } = this.toObject();
-
+  const { __v, _id, ...labData } = this.toObject();
+  labData.id = _id;
   return labData;
 };
 

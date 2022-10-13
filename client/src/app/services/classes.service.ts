@@ -1,24 +1,36 @@
 import { Injectable } from "@angular/core";
+import { Subject } from "rxjs";
 import { ClassesModel } from "../models/classes.model";
 
-@Injectable()
 export class ClassesService{
 
-  private existingClasses: ClassesModel[] = [
-    new ClassesModel('632deeba6f54434b198b8194', 'Cripto', new Date(), 'LCA1', 'Adán Sánchez', 'Cass', false),
-    new ClassesModel('632deeba6f54434b198b8192', 'Moviles', new Date(), 'LCA1', 'Adán Sánchez', 'Cass', false),
-    new ClassesModel('632deeba6f54434b198b8191', 'Web', new Date(), 'LCA1', 'Adán Sánchez', 'Cass', false),
-    new ClassesModel('632deeba6f54434b198b8195', 'Escalables', new Date(), 'LCA1', 'Adán Sánchez', 'Cass', false),
-  ];
+  classesChanges = new Subject<ClassesModel[]>();
+
+  private existingClasses: ClassesModel[] = [];
 
   getExistingClasses()
   {
+    console.log("GET existing classes",this.existingClasses)
     return this.existingClasses.slice();
   }
 
   getSingleClass(classId: string)
   {
-    return this.existingClasses.find(clasMongoID => clasMongoID.getID() === classId);
+    console.log("Existing cLASSES", this.existingClasses);
+    return this.existingClasses.find(
+      searchedClass => {
+        console.log("SEARCHED CLASS", classId)
+        searchedClass.id === classId;
+        console.log("Service clas id: ", classId)
+      }
+    );
   }
 
+  setClasses(classesArray: ClassesModel[])
+  {
+    console.log("SettingClasses");
+    this.existingClasses = classesArray;
+    console.log("Setted Classess", this.existingClasses)
+    console.log("Get classes after setted: ", this.getExistingClasses())
+  }
 }

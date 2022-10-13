@@ -11,6 +11,7 @@ const {
   deactivateClass,
   deleteClass,
   editClass,
+  getClassesByLab,
 } = require("../controllers/class");
 
 //All
@@ -27,6 +28,7 @@ router.get(
 );
 
 //CREAR RUTA PARA OBTENER CLASES DE ACUERDO AL LABORATORIO
+router.get("/ByLab/:labID", getClassesByLab);
 
 //Post class
 router.post(

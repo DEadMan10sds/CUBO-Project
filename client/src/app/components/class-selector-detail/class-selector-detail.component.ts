@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Params } from '@angular/router';
 import { ClassesModel } from 'src/app/models/classes.model';
+import { BackConnectionService } from 'src/app/services/backConnection.service';
 import { ClassesService } from 'src/app/services/classes.service';
 import { LaboratoriesService } from 'src/app/services/laboratories.service';
 
@@ -15,7 +16,7 @@ export class ClassSelectorDetailComponent implements OnInit {
   place: string;
 
   constructor(
-    private currentRoute: ActivatedRoute,
+    private currentRoute: ActivatedRoute
   ) { }
 
   ngOnInit(): void {
@@ -25,5 +26,4 @@ export class ClassSelectorDetailComponent implements OnInit {
       }
     );
   }
-
 }

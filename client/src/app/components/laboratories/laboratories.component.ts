@@ -13,6 +13,7 @@ export class LaboratoriesComponent implements OnInit {
   constructor() { }
 
   ngOnInit(): void {
+    //console.log('Hello', this.currentLab)
   }
 
 }

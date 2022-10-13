@@ -10,6 +10,7 @@ export class ClassPlaceholderComponent implements OnInit {
   constructor() { }
 
   ngOnInit(): void {
+    //this.backConnection.fetchClasses()
   }
 
 }

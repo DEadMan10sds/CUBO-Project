@@ -1,0 +1,64 @@
+<div class="container container-fluid">
+  <div class="row">
+    <div class="row mt-3 p-0" style>
+      <div class="col-md-7">
+        <div *ngIf="editMode">
+          <h3>Editando: {{ lab.name }}</h3>
+        </div>
+      </div>
+      <div class="col-md-5 d-grid gap-2 d-md-flex justify-content-md-end p-0">
+        <button
+          type="button"
+          class="btn btn-success"
+          [disabled]="!labForm.valid"
+          (click)="submitForm()"
+        >
+          Guardar
+        </button>
+        <button type="button" class="btn btn-primary" (click)="resetForm()">
+          Limpiar
+        </button>
+        <button type="button" class="btn btn-danger" (click)="cancelForm()">
+          Cancelar
+        </button>
+      </div>
+    </div>
+    <div class="col-xs-12">
+      <form [formGroup]="labForm" (submit)="submitForm()">
+        <div class="row">
+          <div class="col-xs-12">
+            <div class="form-group">
+              <label for="name">Nombre del salon</label>
+              <input
+                type="text"
+                id="name"
+                class="form-control"
+                formControlName="name"
+              />
+            </div>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-md-6 mt-2">
+            Estado
+            <div class="radio" *ngFor="let currentStatus of possibleStatus">
+              <label>
+                <input
+                  type="radio"
+                  [value]="currentStatus"
+                  formControlName="status"
+                />{{ currentStatus }}
+              </label>
+            </div>
+          </div>
+          <div
+            class="col-md-6 d-flex flex-row-reverse mt-3"
+            style="border: solid black 1px"
+          >
+            <button type="button" class="btn btn-danger">Borrar</button>
+          </div>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>

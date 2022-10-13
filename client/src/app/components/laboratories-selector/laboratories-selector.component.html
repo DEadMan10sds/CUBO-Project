@@ -2,3 +2,13 @@
   *ngFor="let labo of existingLabs"
   [currentLab]="labo"
 ></app-laboratories>
+<div class="row">
+  <button
+    class="btn btn-primary"
+    type="button"
+    [routerLink]="['../labDashboard/edit', 0]"
+    routerLinkActive="active"
+  >
+    Añadir salon
+  </button>
+</div>

@@ -1,24 +1,25 @@
-import { ClassesModel } from "./classes.model";
-
 export class LaboratoriesModel
 {
-  private name: string;
-  private status: boolean;
-  private classes: string[];
+  id?: string;
+  name: string;
+  status: boolean;
+  classes: string[];
 
-  constructor(_name: string, _status: boolean, _classes: string[])
+  constructor(_name: string, _status: boolean, _classes: string[], _id?: string)
   {
+    this.id = _id;
     this.name = _name;
     this.status = _status;
     this.classes = _classes
   }
 
-  getName()
+  getName(): string
   {
+    //console.log('getName')
     return this.name;
   }
 
-  get nameLab()
+  get nameLab(): string
   {
     return this.name;
   }
@@ -31,6 +32,11 @@ export class LaboratoriesModel
   getClasses()
   {
     return this.classes.slice();
+  }
+
+  getId()
+  {
+    return this.id;
   }
 
 

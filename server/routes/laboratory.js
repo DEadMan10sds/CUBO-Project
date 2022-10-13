@@ -8,6 +8,7 @@ const {
   deleteLab,
   getOneLab,
   addClass,
+  getAllActiveLabs,
 } = require("../controllers/laboratory");
 const { fieldValidation } = require("../middlewares/fieldValidation");
 
@@ -15,6 +16,9 @@ const router = Router();
 
 //All labs
 router.get("/", getAllLabs);
+
+//Active labs
+router.get("/active", getAllActiveLabs);
 
 //Single lab
 router.get(

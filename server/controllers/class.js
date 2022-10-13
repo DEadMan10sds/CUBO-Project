@@ -23,6 +23,28 @@ const getSingle = async (req, res) => {
   return res.status(200).json({ Message: "Clase encontrada", classSelected });
 };
 
+const getClassesByLab = async (req, res) => {
+  const { labID } = req.params;
+  console.log("LabID", labID);
+  const existLab = await Laboratory.findById(labID);
+
+  if (!existLab)
+    return res.status(400).json({ Message: "No existe este labo" });
+
+  const classesByLab = await Class.find({
+    $and: [{ status: true }, { place: labID }],
+  });
+
+  //console.log(classesByLab);
+
+  if (!classesByLab)
+    return res
+      .status(400)
+      .json({ Message: "No existen clases para este labo" });
+
+  return res.status(200).json(classesByLab);
+};
+
 const createClass = async (req, res) => {
   const { labID, ...classData } = req.body;
   const existClass = await Class.findOne({
@@ -81,6 +103,7 @@ const deleteClass = async (req, res) => {
 module.exports = {
   getAll,
   getSingle,
+  getClassesByLab,
   createClass,
   editClass,
   deactivateClass,

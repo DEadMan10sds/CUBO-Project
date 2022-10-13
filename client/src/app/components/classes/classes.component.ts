@@ -1,5 +1,4 @@
 import { Component, Input, OnInit } from '@angular/core';
-import { ActivatedRoute, Router } from '@angular/router';
 import { ClassesModel } from '../../models/classes.model'
 
 @Component({
@@ -12,10 +11,11 @@ export class ClassesComponent implements OnInit {
 
   constructor() { }
 
-  ngOnInit(): void {}
+  ngOnInit(): void {
+    //console.log("Incoming Class",this.incomingClass);
+  }
 
   onClick(){
-    console.log(this.incomingClass);
   }
 
 }

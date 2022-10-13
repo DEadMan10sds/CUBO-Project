@@ -2,13 +2,19 @@ const { Laboratory } = require("../models");
 const { findByIdAndUpdate } = require("../models/user");
 
 const getAllLabs = async (req, res) => {
+  const laboratories = await Laboratory.find();
+  if (laboratories.length === 0)
+    return res.status(400).json({ Message: "No hay laboratorios activados" });
+
+  return res.status(200).json(laboratories);
+};
+
+const getAllActiveLabs = async (req, res) => {
   const laboratories = await Laboratory.find({ status: true });
   if (laboratories.length === 0)
     return res.status(400).json({ Message: "No hay laboratorios activados" });
 
-  return res
-    .status(200)
-    .json({ Message: "Laboratorios encontrados", laboratories });
+  return res.status(200).json(laboratories);
 };
 
 const getOneLab = async (req, res) => {
@@ -91,6 +97,7 @@ const addClass = async (req, res) => {
 
 module.exports = {
   getAllLabs,
+  getAllActiveLabs,
   createLab,
   getOneLab,
   editLab,

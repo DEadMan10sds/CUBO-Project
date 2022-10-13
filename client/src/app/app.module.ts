@@ -2,7 +2,9 @@ import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 
 import { AppRoutingModule } from './app-routing.module';
+import {HttpClientModule} from '@angular/common/http';
 import { AppComponent } from './app.component';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
 //Customs
 import { HeaderComponent } from './components/header/header.component';
@@ -20,6 +22,7 @@ import { ClassesService } from './services/classes.service';
 import { ClassSelectorDetailComponent } from './components/class-selector-detail/class-selector-detail.component';
 import { ClassPlaceholderComponent } from './components/class-placeholder/class-placeholder.component';
 import { ProfileComponent } from './components/profile/profile.component';
+import { EditLaboComponent } from './components/edit-labo/edit-labo.component';
 
 @NgModule({
   declarations: [
@@ -36,11 +39,15 @@ import { ProfileComponent } from './components/profile/profile.component';
     ClassEditComponent,
     ClassSelectorDetailComponent,
     ClassPlaceholderComponent,
-    ProfileComponent
+    ProfileComponent,
+    EditLaboComponent
   ],
   imports: [
     BrowserModule,
-    AppRoutingModule
+    AppRoutingModule,
+    ReactiveFormsModule,
+    FormsModule,
+    HttpClientModule
   ],
   providers: [LaboratoriesService, ClassesService],
   bootstrap: [AppComponent]

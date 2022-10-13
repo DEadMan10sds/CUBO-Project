@@ -1,26 +1,27 @@
 <div class="row border border-primary d-md-flex justify-content-md-center">
   <a
-    [routerLink]="[incomingClass.getPlace(), incomingClass.getID()]"
+    [routerLink]="['../', incomingClass.place, incomingClass.id]"
     routerLinkActive="active"
     class="row col-md-9 border border-danger"
   >
     <div class="col">
-      {{ incomingClass.getDate().toLocaleString() }}
+      {{ incomingClass.date.toLocaleString() }}
     </div>
     <div class="col">
-      {{ incomingClass.getName() }}
+      {{ incomingClass.name }}
     </div>
     <div class="col">
-      {{ incomingClass.getType() }}
+      {{ incomingClass.type }}
     </div>
     <div class="col">
-      {{ incomingClass.getPlace() }}
+      {{ incomingClass.place }}
     </div>
   </a>
   <div class="col col-md-2">
     <button
+      type="button"
       class="btn btn-primary w-100"
-      [routerLink]="['../Dashboard', incomingClass.getID()]"
+      [routerLink]="['../Dashboard', incomingClass.id]"
       routerLinkActive="active"
     >
       Editar

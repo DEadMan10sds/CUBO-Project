@@ -2,14 +2,14 @@ import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { ClassDetailComponent } from './components/class-detail/class-detail.component';
 import { ClassEditComponent } from './components/class-edit/class-edit.component';
-import { ClassPlaceholderComponent } from './components/class-placeholder/class-placeholder.component';
 import { ClassSelectorDetailComponent } from './components/class-selector-detail/class-selector-detail.component';
-import { ClassesListComponent } from './components/classes-list/classes-list.component';
-import { ClassesComponent } from './components/classes/classes.component';
+import { EditLaboComponent } from './components/edit-labo/edit-labo.component';
 
 //Customs
 import { HomeComponent } from './components/home/home.component';
 import { ProfileComponent } from './components/profile/profile.component';
+import { ClassResolverService } from './services/resolvers/class-resolver.service';
+import { LaboratoryResolverService } from './services/resolvers/laboratories-resolver.service';
 
 const routes: Routes = [
   {
@@ -20,27 +20,38 @@ const routes: Routes = [
   {
     path: 'Home',
     component: HomeComponent,
+    resolve: [LaboratoryResolverService],
   },
   {
-    path: 'Classes',
-    component: ClassSelectorDetailComponent,
+    path: 'labDashboard',
+    resolve: [LaboratoryResolverService],
     children: [
       {
-        path: ':labName',
-        component: ClassPlaceholderComponent,
-        //pathMatch: 'full'
-      },
-      {
-        path: ':labName/:classID',
-        pathMatch: 'full',
-        component: ClassDetailComponent
+        path: 'edit/:idLab',
+        component: EditLaboComponent
       }
-    ],
+    ]
+  },
+  {
+    path: ':labName',
+    component: ClassSelectorDetailComponent,
+    resolve: [ClassResolverService],
+    //pathMatch: 'full',
+    children: [
+      {
+        path: ':classID',
+        pathMatch: 'full',
+        //resolve: [ClassResolverService],
+        component: ClassDetailComponent
+
+      }
+    ]
   },
   {
     path: 'Dashboard/:classID',
     component: ClassEditComponent
   },
+
   {
     path: 'Profile',
     component: ProfileComponent

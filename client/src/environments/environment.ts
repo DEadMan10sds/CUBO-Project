@@ -2,8 +2,11 @@
 // `ng build` replaces `environment.ts` with `environment.prod.ts`.
 // The list of file replacements can be found in `angular.json`.
 
+//require('dotenv').config();
+
 export const environment = {
-  production: false
+  production: false,
+  BACK_URL: 'http://localhost:3010/api/'
 };
 
 /*
