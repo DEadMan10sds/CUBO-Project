@@ -1,0 +1,6 @@
+<div *ngIf="!newClass; else NewClass">
+  {{ currentClass.getName() }}
+</div>
+<ng-template #NewClass>
+  <div class="row">New Class</div>
+</ng-template>

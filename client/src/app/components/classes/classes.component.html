@@ -1,0 +1,29 @@
+<div class="row border border-primary d-md-flex justify-content-md-center">
+  <a
+    [routerLink]="[incomingClass.getPlace(), incomingClass.getID()]"
+    routerLinkActive="active"
+    class="row col-md-9 border border-danger"
+  >
+    <div class="col">
+      {{ incomingClass.getDate().toLocaleString() }}
+    </div>
+    <div class="col">
+      {{ incomingClass.getName() }}
+    </div>
+    <div class="col">
+      {{ incomingClass.getType() }}
+    </div>
+    <div class="col">
+      {{ incomingClass.getPlace() }}
+    </div>
+  </a>
+  <div class="col col-md-2">
+    <button
+      class="btn btn-primary w-100"
+      [routerLink]="['../Dashboard', incomingClass.getID()]"
+      routerLinkActive="active"
+    >
+      Editar
+    </button>
+  </div>
+</div>

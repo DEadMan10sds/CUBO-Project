@@ -1,0 +1,12 @@
+<app-classes
+  *ngFor="let currentClass of classes"
+  [incomingClass]="currentClass"
+></app-classes>
+<button
+  class="btn btn-outline-primary w-100"
+  *ngIf="classes.length < 14"
+  [routerLink]="['../Dashboard', 0]"
+  routerLinkActive="active"
+>
+  Añadir clase
+</button>
