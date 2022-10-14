@@ -5,6 +5,7 @@ import { ClassesModel } from "../models/classes.model";
 export class ClassesService{
 
   classesChanges = new Subject<ClassesModel[]>();
+  startedEditing = new Subject<ClassesModel>;
 
   private existingClasses: ClassesModel[] = [];
 

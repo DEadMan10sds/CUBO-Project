@@ -1,10 +1,35 @@
-<div *ngIf="!existClassInArray">
-  ERROR THE CLASS YOURE SEARCHING DOES NOT EXISTS
-  <app-redirect-home></app-redirect-home>
-</div>
-<div *ngIf="existClassInArray">
-  <div class="row" *ngIf="!editClass">New Class</div>
-  <div *ngIf="editClass">
-    {{ currentClass.name }}
+<div class="container container-fluid">
+  <div *ngIf="!existClassInArray">
+    ERROR THE CLASS YOURE SEARCHING DOES NOT EXISTS
+    <app-redirect-home></app-redirect-home>
+  </div>
+  <div *ngIf="existClassInArray">
+    <div>
+      <div class="row" *ngIf="!editClass">New Class</div>
+      <div class="row" *ngIf="editClass">Editar Clase</div>
+      <form (ngSubmit)="submitForm(editClassForm)" #editClassForm="ngForm">
+        <div class="row">
+          <div class="col-md-5 form-group">
+            <label for="className">Nombre: </label>
+            <input
+              type="text"
+              [ngModel]="currentClass.name"
+              name="className"
+              class="form-control"
+              required
+            />
+          </div>
+        </div>
+        <div class="row">
+          <button
+            class="btn btn-success"
+            type="submit"
+            [disabled]="!editClassForm.valid"
+          >
+            Crear
+          </button>
+        </div>
+      </form>
+    </div>
   </div>
 </div>

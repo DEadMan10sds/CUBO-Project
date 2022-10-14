@@ -1,7 +1,8 @@
 const { Class, Laboratory } = require("../models");
 
 const getAll = async (req, res) => {
-  const classes = await Class.find()
+  const { status = true, authorized = true } = req.query;
+  const classes = await Class.find({ status, authorized })
     .populate("place", "name")
     .populate("teacher", "name");
   if (classes.length === 0)
@@ -48,7 +49,7 @@ const getClassesByLab = async (req, res) => {
 const createClass = async (req, res) => {
   const { labID, ...classData } = req.body;
   const existClass = await Class.findOne({
-    $and: [{ hour: classData.hour }, { authorized: true }],
+    $and: [{ possibleHour: classData.hour }, { authorized: true }],
   });
   //console.log(existClass);
   if (existClass)
@@ -66,6 +67,36 @@ const createClass = async (req, res) => {
   //console.log(currrentLab);
 
   return res.status(200).json({ Message: "Clase creada", result });
+};
+
+const createClassByLab = async (req, res) => {
+  const newClassData = req.body;
+  const existsLab = await Laboratory.findById(newClassData.place);
+  if (!existsLab)
+    return res.status(400).json({ Message: "No existe el laboratorio" });
+
+  const occupiedHour = existsLab.hours.find(
+    (currentHour) => currentHour === newClassData.hour
+  );
+  if (occupiedHour)
+    return res.status(400).json({ Message: "Ya existe una clase a esta hora" });
+
+  const newClass = new Class(newClassData);
+  const result = newClass.save();
+
+  console.log(newClass);
+
+  if (!result) return res.status(400).json({ Message: "Clase no creada" });
+
+  existsLab.hours.push(newClass.hour);
+  existsLab.classes.push(newClass.id);
+
+  existsLab.save();
+
+  console.log(existsLab, newClass);
+
+  //console.log({ existsLab, classAdded: req.body });
+  return res.status(200).json({ Message: "Classe encontrada" });
 };
 
 const editClass = async (req, res) => {
@@ -105,6 +136,7 @@ module.exports = {
   getSingle,
   getClassesByLab,
   createClass,
+  createClassByLab,
   editClass,
   deactivateClass,
   deleteClass,

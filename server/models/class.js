@@ -6,12 +6,11 @@ const classModel = new Schema(
       type: String,
       required: [true, "El nombre de la clase es obligatorio"],
     },
-    date: [
-      {
-        type: Date,
-        required: [true, "La fecha y hora es obligatoria"],
-      },
-    ],
+    //Para eventos de 1 sola vez
+    date: {
+      type: Date,
+      required: [true, "La fecha y hora es obligatoria"],
+    },
     place: {
       type: Schema.Types.ObjectId,
       required: [true, "Indica el laboratorio de la clase"],
@@ -38,6 +37,7 @@ const classModel = new Schema(
       type: Boolean,
       default: false,
     },
+    //Para clases recurrentes
     recurrent: {
       type: Boolean,
       default: true,
@@ -45,6 +45,17 @@ const classModel = new Schema(
     repeats: {
       type: String,
       enum: ["SUN", "MON", "TUE", "WEN", "THU", "FRI", "SAT"],
+    },
+    hour: {
+      type: Number,
+      min: 7,
+      max: 20,
+    },
+    startDate: {
+      type: Date,
+    },
+    endDate: {
+      type: Date,
     },
   },
   {

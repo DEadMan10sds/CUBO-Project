@@ -12,6 +12,7 @@ const {
   deleteClass,
   editClass,
   getClassesByLab,
+  createClassByLab,
 } = require("../controllers/class");
 
 //All
@@ -42,6 +43,18 @@ router.post(
   "/",
   [check("name", "El nombre no puede estar vacío").notEmpty(), fieldValidation],
   createClass
+);
+
+router.post(
+  "/ByLab/:labID",
+  [
+    check("labID", "El id de laboratorio no es válido").isMongoId().notEmpty(),
+    check("hour", "La clase no puede estar antes de las 7")
+      .isInt({ min: 7, max: 20 })
+      .notEmpty(),
+    fieldValidation,
+  ],
+  createClassByLab
 );
 
 //update class

@@ -34,7 +34,7 @@ const createLab = async (req, res) => {
   if (existsLab)
     return res
       .status(400)
-      .json({ Message: "Ya existe un laboratorio con este id" });
+      .json({ Message: "Ya existe un laboratorio con este nombre" });
 
   const newLab = new Laboratory(dataLab);
   const result = await newLab.save();

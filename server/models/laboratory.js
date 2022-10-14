@@ -16,7 +16,21 @@ const laboratoryModel = new Schema({
       //maxItems: 10,
     },
   ],
+  hours: {
+    type: [
+      {
+        type: Number,
+        min: 7,
+        max: 20,
+      },
+    ],
+    validate: [arrayLimit, "{PATH} exeeds thhe hours allowed"],
+  },
 });
+
+function arrayLimit(arrayLenght) {
+  return arrayLenght.length <= 14;
+}
 
 laboratoryModel.methods.toJSON = function () {
   const { __v, _id, ...labData } = this.toObject();
