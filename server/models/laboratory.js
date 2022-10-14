@@ -9,13 +9,11 @@ const laboratoryModel = new Schema({
     type: Boolean,
     default: true,
   },
-  classes: [
-    {
-      type: Schema.Types.ObjectId,
-      ref: "class",
-      //maxItems: 10,
-    },
-  ],
+  classes: {
+    type: [Schema.Types.ObjectId],
+    validate: [arrayLimit, "{PATH} exeeds the classes allowed"],
+    ref: "class",
+  },
   hours: {
     type: [
       {
@@ -24,7 +22,7 @@ const laboratoryModel = new Schema({
         max: 20,
       },
     ],
-    validate: [arrayLimit, "{PATH} exeeds thhe hours allowed"],
+    validate: [arrayLimit, "{PATH} exeeds the hours allowed"],
   },
 });
 
