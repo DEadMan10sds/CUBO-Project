@@ -14,6 +14,9 @@ import { LaboratoriesService } from 'src/app/services/laboratories.service';
 export class ClassSelectorDetailComponent implements OnInit {
 
   place: string;
+  selectedClass: boolean = false;
+  classSelectedData: ClassesModel;
+  hasError: boolean = false;
 
   constructor(
     private currentRoute: ActivatedRoute
@@ -25,5 +28,18 @@ export class ClassSelectorDetailComponent implements OnInit {
         this.place = params['labName']
       }
     );
+  }
+
+  setSelectedClass(classDetails: ClassesModel)
+  {
+    this.selectedClass = true;
+    this.classSelectedData = classDetails;
+    //console.log("Selector recibiendo clase")
+    //console.log(classDetails);
+  }
+
+  receiveError(recivingError: boolean)
+  {
+    this.hasError = recivingError;
   }
 }

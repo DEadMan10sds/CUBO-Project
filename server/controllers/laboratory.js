@@ -1,5 +1,4 @@
 const { Laboratory } = require("../models");
-const { findByIdAndUpdate } = require("../models/user");
 
 const getAllLabs = async (req, res) => {
   const laboratories = await Laboratory.find();
@@ -46,6 +45,7 @@ const createLab = async (req, res) => {
 const editLab = async (req, res) => {
   const { id } = req.params;
   const dataLab = req.body;
+  dataLab.name = dataLab.name.toUpperCase();
   const existsLab = await Laboratory.findByIdAndUpdate(id, dataLab);
 
   if (!existsLab)

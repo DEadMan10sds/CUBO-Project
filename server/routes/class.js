@@ -28,7 +28,14 @@ router.get(
 );
 
 //CREAR RUTA PARA OBTENER CLASES DE ACUERDO AL LABORATORIO
-router.get("/ByLab/:labID", getClassesByLab);
+router.get(
+  "/ByLab/:labID",
+  [
+    check("labID", "No es un id valido").isMongoId().notEmpty(),
+    fieldValidation,
+  ],
+  getClassesByLab
+);
 
 //Post class
 router.post(
@@ -38,12 +45,24 @@ router.post(
 );
 
 //update class
-router.put("/edit/:id", editClass);
+router.put(
+  "/edit/:id",
+  [check("id", "No es un id valido").isMongoId().notEmpty(), fieldValidation],
+  editClass
+);
 
 //Deactivate class
-router.put("/deactivate/:id", deactivateClass);
+router.put(
+  "/deactivate/:id",
+  [check("id", "No es un id valido").isMongoId().notEmpty(), fieldValidation],
+  deactivateClass
+);
 
 //delete class
-router.delete("/delete/:id", deleteClass);
+router.delete(
+  "/delete/:id",
+  [check("id", "No es un id valido").isMongoId().notEmpty(), fieldValidation],
+  deleteClass
+);
 
 module.exports = router;

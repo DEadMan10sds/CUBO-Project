@@ -13,23 +13,23 @@ export class LaboratoriesSelectorComponent implements OnInit {
   existingLabs: LaboratoriesModel[];
   labsSubscription: Subscription;
 
-  constructor(private labService: LaboratoriesService, private backConnection: BackConnectionService) { }
+  constructor(private labService: LaboratoriesService) { }
 
   ngOnInit(): void {
-    this.onFetchLabs();
+    //this.onFetchLabs();
+    //this.backConnection.fetchLabs();
     this.labsSubscription = this.labService.laboratoriesChanges.subscribe(
-      (laboratiories: LaboratoriesModel[]) => {
-        this.existingLabs = laboratiories;
+      (laboratories: LaboratoriesModel[]) => {
+        this.existingLabs = laboratories;
       }
     );
+    this.existingLabs = this.labService.getLaboratories();
   }
 
-  onFetchLabs()
+  onFetchLabs(){}
+
+  ngOnDestroy():void
   {
-    this.backConnection.fetchLabs().subscribe(
-      labs => {
-        this.existingLabs = labs;
-      }
-    );
+    this.labsSubscription.unsubscribe();
   }
 }

@@ -7,6 +7,7 @@ import { EditLaboComponent } from './components/edit-labo/edit-labo.component';
 
 //Customs
 import { HomeComponent } from './components/home/home.component';
+import { NotFoundComponent } from './components/not-found/not-found.component';
 import { ProfileComponent } from './components/profile/profile.component';
 import { ClassResolverService } from './services/resolvers/class-resolver.service';
 import { LaboratoryResolverService } from './services/resolvers/laboratories-resolver.service';
@@ -23,39 +24,50 @@ const routes: Routes = [
     resolve: [LaboratoryResolverService],
   },
   {
-    path: 'labDashboard',
+    path: '404',
+    component: NotFoundComponent
+  },
+  {
+    path: 'Dashboard',
     resolve: [LaboratoryResolverService],
     children: [
       {
-        path: 'edit/:idLab',
+        path: ':idLab',
+        //resolve: [LaboratoryResolverService],
         component: EditLaboComponent
+      },
+      {
+        path: ':idLab/:classID',
+        resolve: [ClassResolverService],
+        component: ClassEditComponent
+      },
+      {
+        path: '**',
+        redirectTo: '/404'
       }
     ]
   },
   {
     path: ':labName',
     component: ClassSelectorDetailComponent,
-    resolve: [ClassResolverService],
     //pathMatch: 'full',
     children: [
       {
         path: ':classID',
-        pathMatch: 'full',
-        //resolve: [ClassResolverService],
+        //pathMatch: 'full',
+        resolve: [ClassResolverService],
         component: ClassDetailComponent
-
-      }
+      },
     ]
   },
   {
-    path: 'Dashboard/:classID',
-    component: ClassEditComponent
-  },
-
-  {
     path: 'Profile',
     component: ProfileComponent
-  }
+  },
+  {
+    path: '**',
+    redirectTo: '/404'
+  },
 ];
 
 @NgModule({

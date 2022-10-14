@@ -31,7 +31,7 @@ const classModel = new Schema(
     },
     type: {
       type: String,
-      enum: ["EXAM", "CLASS"],
+      enum: ["EXAM", "CLASS", "COURSE"],
       required: [true, "El tipo de clase es obligatorio"],
     },
     authorized: {

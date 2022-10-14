@@ -11,18 +11,13 @@ import { ClassesService } from 'src/app/services/classes.service';
 export class ClassDetailComponent implements OnInit {
 
   classID: string;
-  actualClass: ClassesModel;
+  @Input() actualClass: ClassesModel;
 
 
-  constructor(private actualClassesService: ClassesService, private currentRoute: ActivatedRoute) { }
+  constructor() { }
 
   ngOnInit(): void {
-    this.currentRoute.params.subscribe(
-      (params: Params) => {
-        this.classID = params['classID'];
-        this.actualClass = this.actualClassesService.getSingleClass(this.classID);
-      }
-    );
+
   }
 
 }

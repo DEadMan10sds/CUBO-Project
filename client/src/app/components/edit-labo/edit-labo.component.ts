@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormGroup, Form, FormArray, FormControl, Validators  } from '@angular/forms';
 import { ActivatedRoute, Params, Route, Router } from '@angular/router';
+import { Subscription } from 'rxjs';
 import { LaboratoriesModel } from 'src/app/models/laboratories.model';
 import { BackConnectionService } from 'src/app/services/backConnection.service';
 import { LaboratoriesService } from 'src/app/services/laboratories.service';
@@ -16,7 +17,8 @@ export class EditLaboComponent implements OnInit {
   editMode: boolean = false;
   lab: LaboratoriesModel;
   labForm: FormGroup;
-  possibleStatus: boolean[] = [true, false]
+  labSubscription: Subscription;
+  existsLabInArray: boolean;
 
   constructor(
     private currentRoute: ActivatedRoute,
@@ -30,16 +32,15 @@ export class EditLaboComponent implements OnInit {
       (params: Params) => {
         this.labID = params['idLab'];
         if(this.labID !== '0') this.editMode = true;
-        this.lab = this.setLab();
-        this.initForm();
-        console.log(this.lab);
+        this.existsLabInArray = this.existsLab();
+        if(this.existsLabInArray)
+        {
+          this.lab = this.setLab();
+          this.initForm();
+        }
+        //console.log(this.lab);
       }
-      );
-    this.labForm.statusChanges.subscribe(
-      (value) => {
-        console.log(value);
-      }
-    )
+    );
   }
 
   private initForm()
@@ -58,9 +59,21 @@ export class EditLaboComponent implements OnInit {
     return this.labService.getSingleLab(this.labID);
   }
 
+  existsLab(): boolean
+  {
+    if(this.labService.getSingleLab(this.labID)) return true;
+    return false;
+  }
+
+  changeStatus()
+  {
+    this.lab.status = !this.lab.status;
+    this.labForm.value.status = this.lab.status;
+  }
+
   submitForm()
   {
-    console.log("Front", this.labForm.value);
+    //console.log("Front", this.labForm.value);
     if(!this.editMode) this.backConnection.postLab(this.labForm.value);
     else this.backConnection.updateLab(this.labID, this.labForm.value);
     this.cancelForm();
@@ -73,7 +86,14 @@ export class EditLaboComponent implements OnInit {
 
   cancelForm()
   {
-    this.router.navigate(['../'])
+    this.router.navigate(['../']);
+  }
+
+  deleteLab()
+  {
+    if(!this.editMode) return;
+    this.backConnection.deleteLab(this.labID);
+    this.cancelForm();
   }
 
 }

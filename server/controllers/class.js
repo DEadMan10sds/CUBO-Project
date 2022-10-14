@@ -25,7 +25,7 @@ const getSingle = async (req, res) => {
 
 const getClassesByLab = async (req, res) => {
   const { labID } = req.params;
-  console.log("LabID", labID);
+  //console.log("LabID", labID);
   const existLab = await Laboratory.findById(labID);
 
   if (!existLab)

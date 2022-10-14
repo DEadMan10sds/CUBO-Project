@@ -10,27 +10,28 @@ export class ClassesService{
 
   getExistingClasses()
   {
-    console.log("GET existing classes",this.existingClasses)
+    //console.log("GET existing classes",this.existingClasses)
     return this.existingClasses.slice();
   }
 
   getSingleClass(classId: string)
   {
-    console.log("Existing cLASSES", this.existingClasses);
-    return this.existingClasses.find(
-      searchedClass => {
-        console.log("SEARCHED CLASS", classId)
-        searchedClass.id === classId;
-        console.log("Service clas id: ", classId)
-      }
-    );
+    return this.existingClasses.find(searchedClass => searchedClass.id === classId);
+    //return this.existingClasses.find(arrClass => arrClass.id === classId);
   }
 
   setClasses(classesArray: ClassesModel[])
   {
-    console.log("SettingClasses");
+    //console.log("SettingClasses");
     this.existingClasses = classesArray;
-    console.log("Setted Classess", this.existingClasses)
-    console.log("Get classes after setted: ", this.getExistingClasses())
+    //console.log("Setted Classess", this.existingClasses)
+    //console.log("Get classes after setted: ", this.getExistingClasses())
   }
+
+  existsClass(classIdToSearch: string): boolean
+  {
+    if(this.existingClasses.find(searchedClass => searchedClass.id === classIdToSearch)) return true;
+    return false;
+  }
+
 }

@@ -1,5 +1,8 @@
 <div class="container container-fluid">
-  <div class="row">
+  <div *ngIf="!existsLabInArray">
+    <app-redirect-home></app-redirect-home>
+  </div>
+  <div class="row" *ngIf="existsLabInArray">
     <div class="row mt-3 p-0" style>
       <div class="col-md-7">
         <div *ngIf="editMode">
@@ -39,7 +42,7 @@
           </div>
         </div>
         <div class="row">
-          <div class="col-md-6 mt-2">
+          <!-- <div class="col-md-6 mt-2">
             Estado
             <div class="radio" *ngFor="let currentStatus of possibleStatus">
               <label>
@@ -50,12 +53,37 @@
                 />{{ currentStatus }}
               </label>
             </div>
+          </div> -->
+          <div class="col-md-6 d-flex mt-3" style="border: solid black 1px">
+            <button
+              type="button"
+              class="btn btn-danger"
+              *ngIf="lab.status"
+              (click)="changeStatus()"
+            >
+              Desactivar
+            </button>
+            <button
+              type="button"
+              class="btn btn-success"
+              *ngIf="!lab.status"
+              (click)="changeStatus()"
+            >
+              Activar
+            </button>
           </div>
           <div
             class="col-md-6 d-flex flex-row-reverse mt-3"
             style="border: solid black 1px"
           >
-            <button type="button" class="btn btn-danger">Borrar</button>
+            <button
+              type="button"
+              class="btn btn-danger"
+              *ngIf="editMode"
+              (click)="deleteLab()"
+            >
+              Borrar
+            </button>
           </div>
         </div>
       </form>

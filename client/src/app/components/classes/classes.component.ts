@@ -1,4 +1,4 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, Input, Output, OnInit, EventEmitter } from '@angular/core';
 import { ClassesModel } from '../../models/classes.model'
 
 @Component({
@@ -8,7 +8,7 @@ import { ClassesModel } from '../../models/classes.model'
 })
 export class ClassesComponent implements OnInit {
   @Input() incomingClass: ClassesModel;
-
+  @Output() idClassSelected = new EventEmitter<string>();
   constructor() { }
 
   ngOnInit(): void {
@@ -16,6 +16,7 @@ export class ClassesComponent implements OnInit {
   }
 
   onClick(){
+    this.idClassSelected.emit(this.incomingClass.id);
   }
 
 }

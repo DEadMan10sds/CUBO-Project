@@ -11,21 +11,34 @@ import { ClassesService } from 'src/app/services/classes.service';
 export class ClassEditComponent implements OnInit {
 
   currentClass: ClassesModel;
-  newClass: boolean = false;
+  editClass: boolean = false;
+  existClassInArray: boolean;
+  classID: string;
 
   constructor(private currentClassService: ClassesService, private currentRoute: ActivatedRoute) { }
 
   ngOnInit(): void {
     this.currentRoute.params.subscribe(
       (params: Params) => {
-        if(params['classID'] === '0')
-        {
-          this.newClass = true;
-          this.currentClass = new ClassesModel('', '', new Date(), '', '', '', false);
-        }
-        else this.currentClass = this.currentClassService.getSingleClass(params['classID']);
+        this.classID = params['classID']
+        if(this.classID !== '0') this.editClass = true;
+        this.existsClass();
+        if(this.existClassInArray) this.currentClass = this.setClass();
+        //console.log(this.currentClass, this.classID);
       }
     );
+  }
+
+  existsClass()
+  {
+    this.existClassInArray = this.currentClassService.existsClass(this.classID);
+    //console.log(this.existClassInArray)
+  }
+
+  setClass():ClassesModel
+  {
+    if(!this.editClass) return this.currentClass = new ClassesModel(null, null, new Date(), null, null, null, false);
+    else return this.currentClassService.getSingleClass(this.classID);
   }
 
 }

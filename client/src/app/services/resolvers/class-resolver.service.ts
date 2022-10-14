@@ -17,8 +17,9 @@ export class ClassResolverService implements Resolve<ClassesModel[]>
 
   resolve(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): ClassesModel[] | Observable<ClassesModel[]> | Promise<ClassesModel[]> {
     const classArray: ClassesModel[] = this.classService.getExistingClasses();
-    console.log("RESOLVER:", route.params['labName'])
-    if(classArray.length === 0) return this.backConnection.fetchClasses(route.params['labName']);
+    //console.log(route.params['idLab'])
+    //if(route.params['labName'] === undefined) route.params['labName'] = 0;
+    if(classArray.length === 0) return this.backConnection.fetchClasses(route.params['idLab']);
     return classArray;
   }
 

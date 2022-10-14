@@ -17,13 +17,22 @@ export class BackConnectionService
 
   postLab(newLab: LaboratoriesModel)
   {
-    console.log(newLab);
-    this.httpSolicitudes.post<LaboratoriesModel>((environment.BACK_URL + 'labs/'), newLab).subscribe();
+
+    this.httpSolicitudes.post<{Message, result: LaboratoriesModel}>((environment.BACK_URL + 'labs/'), newLab)
+    .subscribe(
+      resultingClass =>
+      {
+        //console.log(resultingClass)
+        this.labService.createLab(resultingClass.result);
+      }
+    );
   }
 
   updateLab(updateLabID: string, updatedLab: LaboratoriesModel)
   {
-    this.httpSolicitudes.put((environment.BACK_URL + 'labs/' + updateLabID), updatedLab).subscribe();
+    this.httpSolicitudes.put<LaboratoriesModel>((environment.BACK_URL + 'labs/' + updateLabID), updatedLab).subscribe();
+    this.labService.updateLab(updateLabID, updatedLab);
+    //this.fetchLabsWithoutSub();
   }
 
   fetchLabs()
@@ -45,11 +54,36 @@ export class BackConnectionService
     .pipe(
       tap(
         classes => {
-          console.log('FETCHING CLASSES BY LAB', lab ,classes)
+          //console.log('FETCHING CLASSES BY LAB', lab ,classes)
           this.classService.setClasses(classes);
         }
       )
     );
+  }
+
+  fetchLabsWithoutSub()
+  {
+    this.httpSolicitudes.get<LaboratoriesModel[]>((environment.BACK_URL + 'labs/'))
+    .pipe(
+      tap(
+        laboratories => {
+          //console.log("Fetching: ", laboratories)
+          this.labService.setLaboratories(laboratories);
+        }
+      )
+    ).subscribe();
+  }
+
+  fetchSingleClass(classID: string)
+  {
+    return this.httpSolicitudes.get<ClassesModel>((environment.BACK_URL + 'classes/' + classID));
+  }
+
+  deleteLab(labID: string)
+  {
+    //console.log(labID)
+    this.httpSolicitudes.delete<LaboratoriesModel>((environment.BACK_URL + 'labs/delete/' + labID)).subscribe();
+    this.labService.deleteLab(labID);
   }
 
 }

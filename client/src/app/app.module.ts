@@ -23,6 +23,8 @@ import { ClassSelectorDetailComponent } from './components/class-selector-detail
 import { ClassPlaceholderComponent } from './components/class-placeholder/class-placeholder.component';
 import { ProfileComponent } from './components/profile/profile.component';
 import { EditLaboComponent } from './components/edit-labo/edit-labo.component';
+import { NotFoundComponent } from './components/not-found/not-found.component';
+import { RedirectHomeComponent } from './components/redirect-home/redirect-home.component';
 
 @NgModule({
   declarations: [
@@ -40,7 +42,9 @@ import { EditLaboComponent } from './components/edit-labo/edit-labo.component';
     ClassSelectorDetailComponent,
     ClassPlaceholderComponent,
     ProfileComponent,
-    EditLaboComponent
+    EditLaboComponent,
+    NotFoundComponent,
+    RedirectHomeComponent
   ],
   imports: [
     BrowserModule,

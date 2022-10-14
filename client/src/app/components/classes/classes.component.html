@@ -1,9 +1,5 @@
 <div class="row border border-primary d-md-flex justify-content-md-center">
-  <a
-    [routerLink]="['../', incomingClass.place, incomingClass.id]"
-    routerLinkActive="active"
-    class="row col-md-9 border border-danger"
-  >
+  <a (click)="onClick()" class="row col-md-9 border border-danger">
     <div class="col">
       {{ incomingClass.date.toLocaleString() }}
     </div>
@@ -14,14 +10,14 @@
       {{ incomingClass.type }}
     </div>
     <div class="col">
-      {{ incomingClass.place }}
+      {{ incomingClass.id }}
     </div>
   </a>
   <div class="col col-md-2">
     <button
       type="button"
       class="btn btn-primary w-100"
-      [routerLink]="['../Dashboard', incomingClass.id]"
+      [routerLink]="['../Dashboard', incomingClass.place, incomingClass.id]"
       routerLinkActive="active"
     >
       Editar

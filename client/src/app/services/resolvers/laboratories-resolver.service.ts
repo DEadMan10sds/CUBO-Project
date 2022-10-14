@@ -13,6 +13,7 @@ export class LaboratoryResolverService implements Resolve<LaboratoriesModel[]>
   constructor(private backConnection: BackConnectionService, private labService: LaboratoriesService){}
 
   resolve(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): LaboratoriesModel[] | Observable<LaboratoriesModel[]> | Promise<LaboratoriesModel[]> {
+    //console.log('resolver')
     const laboratories = this.labService.getLaboratories();
     if(laboratories.length === 0) return this.backConnection.fetchLabs();
     return laboratories;

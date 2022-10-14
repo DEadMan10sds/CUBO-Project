@@ -1,15 +1,27 @@
 <div class="container">
-  <div class="row">
+  <div class="row" *ngIf="hasError">
+    ERROR
+    <app-redirect-home></app-redirect-home>
+  </div>
+  <div class="row" *ngIf="!hasError">
     <!-- <div class="col-md-1">
       <app-laboratories-selector></app-laboratories-selector>
     </div> -->
     <div class="col-md-6">
       Classes
-      <app-classes-list [laboratory]="place"></app-classes-list>
+      <app-classes-list
+        [laboratory]="place"
+        (selectedCLassData)="setSelectedClass($event)"
+        (hasErrorEvent)="receiveError($event)"
+      ></app-classes-list>
     </div>
     <div class="col-md-6">
       Details
-      <router-outlet></router-outlet>
+      <app-class-detail
+        [actualClass]="classSelectedData"
+        *ngIf="selectedClass"
+      ></app-class-detail>
+      <app-class-placeholder *ngIf="!selectedClass"></app-class-placeholder>
     </div>
   </div>
 </div>

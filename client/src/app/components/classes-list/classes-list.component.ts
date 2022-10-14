@@ -1,7 +1,7 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, EventEmitter, OnInit } from '@angular/core';
 import { ClassesService } from 'src/app/services/classes.service';
 import { ClassesModel } from 'src/app/models/classes.model';
-import {Input} from '@angular/core';
+import {Input, Output} from '@angular/core';
 import { LaboratoriesService } from 'src/app/services/laboratories.service';
 import { ActivatedRoute, Params } from '@angular/router';
 import { BackConnectionService } from 'src/app/services/backConnection.service';
@@ -16,8 +16,15 @@ export class ClassesListComponent implements OnInit {
   classes: ClassesModel[] = [];
   classesArraySuscription: Subscription;
   labID: string;
+  selectedClassID: string;
 
+  @Output() hasErrorEvent = new EventEmitter<boolean>();
+  errorData: string = null;
+
+  //@Output() selectedClass: boolean = false;
+  @Output() selectedCLassData = new EventEmitter<ClassesModel>();
   @Input()  laboratory: string;
+
   constructor(
     private classService: ClassesService,
     private backConnection: BackConnectionService,
@@ -28,7 +35,7 @@ export class ClassesListComponent implements OnInit {
     this.currentRoute.params.subscribe(
       (params: Params) => {
         this.labID = params['labName'];
-        console.log("LAB TO SELECT CLASSES", this.labID)
+        //console.log("LAB TO SELECT CLASSES", this.labID)
       }
     );
     this.onFetchClasses();
@@ -38,7 +45,7 @@ export class ClassesListComponent implements OnInit {
       }
     );
     //this.classes = this.classService.getExistingClasses();
-    console.log("LIST", this.classes)
+    //console.log("LIST", this.classes)
   }
 
   onFetchClasses()
@@ -47,8 +54,22 @@ export class ClassesListComponent implements OnInit {
       classArray =>
       {
         this.classes = classArray;
+      },
+      (error) => {
+        console.log(error)
+        this.hasErrorEvent.emit(true);
       }
     );
+  }
+
+  onSelectedClass(childSelectedClassID: string)
+  {
+
+    this.selectedClassID = childSelectedClassID;
+    const auxClass = this.classes.find(selectClass => selectClass.id === this.selectedClassID);
+    //console.log(this.classes.find(selectClass => selectClass.id === this.selectedClassID))
+    this.selectedCLassData.emit(auxClass);
+    //console.log("Componente lista: ", auxClass)
   }
 
 }
