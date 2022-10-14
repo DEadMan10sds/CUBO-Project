@@ -1,8 +1,6 @@
 <div class="row border border-primary d-md-flex justify-content-md-center">
   <a (click)="onClick()" class="row col-md-9 border border-danger">
-    <div class="col">
-      {{ incomingClass.date.toLocaleString() }}
-    </div>
+    <div class="col">{{ incomingClass.hour }}:00</div>
     <div class="col">
       {{ incomingClass.name }}
     </div>
@@ -10,7 +8,7 @@
       {{ incomingClass.type }}
     </div>
     <div class="col">
-      {{ incomingClass.id }}
+      {{ incomingClass.teacher.name }}
     </div>
   </a>
   <div class="col col-md-2">

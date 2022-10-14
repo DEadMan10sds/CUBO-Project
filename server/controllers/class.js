@@ -34,7 +34,7 @@ const getClassesByLab = async (req, res) => {
 
   const classesByLab = await Class.find({
     $and: [{ status: true }, { place: labID }],
-  });
+  }).populate("teacher", "name");
 
   //console.log(classesByLab);
 

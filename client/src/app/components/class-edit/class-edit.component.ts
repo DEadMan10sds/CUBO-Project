@@ -1,9 +1,11 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { NgForm } from '@angular/forms';
-import { ActivatedRoute, Params } from '@angular/router';
+import { ActivatedRoute, Params, Router } from '@angular/router';
 import { Subscription } from 'rxjs';
 import { ClassesModel } from 'src/app/models/classes.model';
+import { LaboratoriesModel } from 'src/app/models/laboratories.model';
 import { ClassesService } from 'src/app/services/classes.service';
+import { LaboratoriesService } from 'src/app/services/laboratories.service';
 
 @Component({
   selector: 'app-class-edit',
@@ -19,8 +21,14 @@ export class ClassEditComponent implements OnInit {
   existClassInArray: boolean;
   classID: string;
   labID: string;
+  labs: LaboratoriesModel[] = [];
 
-  constructor(private currentClassService: ClassesService, private currentRoute: ActivatedRoute) { }
+  constructor(
+    private currentClassService: ClassesService,
+    private currentRoute: ActivatedRoute,
+    private router: Router,
+    private labsService: LaboratoriesService
+    ) { }
 
   ngOnInit(): void {
     this.currentRoute.params.subscribe(
@@ -31,9 +39,10 @@ export class ClassEditComponent implements OnInit {
         if(this.classID !== '0') this.editClass = true;
         if(this.classID === '0') this.existClassInArray = true;
         if(this.existClassInArray) this.currentClass = this.setClass();
-        //console.log(this.currentClass, this.classID);
+        console.log(this.currentClass, this.classID);
       }
     );
+    this.labs = this.labsService.getLaboratories();
   }
 
   existsClass()
@@ -44,14 +53,42 @@ export class ClassEditComponent implements OnInit {
 
   setClass():ClassesModel
   {
-    if(!this.editClass) return this.currentClass = new ClassesModel(null, null, new Date(), null, null, null, false);
+    if(!this.editClass)
+    return this.currentClass = new ClassesModel(
+      {
+        id: null,
+        name: null,
+        date: new Date(),
+        place: this.labID,
+        status: false,
+        free: false,
+        teacher: null,
+        type: null,
+        authorized: false,
+        recurrent: false,
+        repeats: [],
+        hour: null,
+        startDate: null,
+        endDate: null
+      }
+    );
     else return this.currentClassService.getSingleClass(this.classID);
   }
 
   submitForm(classForm: NgForm)
   {
-    classForm.value.id = this.labID;
+    if(this.editClass) classForm.value.id = this.classID;
     console.log("Clase agregada", classForm.value);
+  }
+
+  clearForm()
+  {
+    this.slForm.reset();
+  }
+
+  redirect()
+  {
+    this.router.navigate(['/', this.labID]);
   }
 
 }

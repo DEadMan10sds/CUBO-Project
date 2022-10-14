@@ -10,24 +10,48 @@
       <form (ngSubmit)="submitForm(editClassForm)" #editClassForm="ngForm">
         <div class="row">
           <div class="col-md-5 form-group">
-            <label for="className">Nombre: </label>
+            <label for="name">Nombre: </label>
             <input
               type="text"
               [ngModel]="currentClass.name"
-              name="className"
+              name="name"
               class="form-control"
               required
             />
           </div>
         </div>
         <div class="row">
-          <button
-            class="btn btn-success"
-            type="submit"
-            [disabled]="!editClassForm.valid"
-          >
-            Crear
-          </button>
+          <div class="form-group col-md-5">
+            <label for="place">Laboratorio</label>
+            <select
+              id="place"
+              name="place"
+              ngModel
+              class="form-control"
+              required
+            >
+              <option *ngFor="let lab of labs" [value]="lab.id">
+                {{ lab.name }}
+              </option>
+            </select>
+          </div>
+        </div>
+        <div class="row">
+          <div class="d-grid gap-4 d-md-block">
+            <button
+              class="btn btn-success"
+              type="submit"
+              [disabled]="!editClassForm.valid"
+            >
+              Crear
+            </button>
+            <button class="btn btn-primary" type="button" (click)="clearForm()">
+              Limpiar
+            </button>
+            <button class="btn btn-danger" type="button" (click)="redirect()">
+              Cancelar
+            </button>
+          </div>
         </div>
       </form>
     </div>

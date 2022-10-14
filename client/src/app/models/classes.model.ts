@@ -1,23 +1,40 @@
-export class ClassesModel{
+import { ClassInterface } from "../interface/classInterface.interface";
+export class ClassesModel implements ClassInterface{
 
   id: string;
   name: string;
   date: Date;
   place: string;
-  teacher: string;
-  type: string;
+  status: boolean;
   free: boolean;
-  recurrency: string[];
+  teacher: {
+    _id: string,
+    name: string
+  }
+  type: string;
+  authorized: boolean;
+  recurrent: boolean;
+  repeats: string[];
+  hour: number;
+  startDate: Date;
+  endDate: Date;
 
-  constructor(_mongoID: string, _name: string, _date: Date, _place: string, _teacher: string, _type: string, _free: boolean)
+  constructor(classsData: ClassInterface)
   {
-    this.id = _mongoID;
-    this.name = _name;
-    this.date = _date;
-    this.place = _place;
-    this.teacher = _teacher;
-    this.type = _type;
-    this.free = _free;
+    this.id = classsData.id;
+    this.name = classsData.name;
+    this.date = classsData.date;
+    this.place = classsData.place;
+    this.status = classsData.status,
+    this.free = classsData.free;
+    this.teacher = classsData.teacher;
+    this.type = classsData.type;
+    this.authorized = classsData.authorized;
+    this.recurrent = classsData.recurrent,
+    this.repeats = classsData.repeats,
+    this.hour = classsData.hour,
+    this.startDate = classsData.startDate,
+    this.endDate = classsData.endDate
   };
 
   getName()
