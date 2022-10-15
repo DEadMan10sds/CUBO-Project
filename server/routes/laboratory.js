@@ -9,6 +9,7 @@ const {
   getOneLab,
   addClass,
   getAllActiveLabs,
+  deleteClassFromLab,
 } = require("../controllers/laboratory");
 const { fieldValidation } = require("../middlewares/fieldValidation");
 
@@ -69,6 +70,24 @@ router.delete(
   deleteLab
 );
 
-router.post("/addClass/:id", addClass);
+//Añadir clase en el arreglo de classes y hora en el arreglo de hours
+//Se usa cuando se actualiza una clase de un labo a otro, junto con la ruta de borrar clase
+router.post(
+  "/addClassToLab/:id",
+  [
+    check("id", "El id debe ser válido").isMongoId().notEmpty(),
+    fieldValidation,
+  ],
+  addClass
+);
+
+router.post(
+  "/deleteClassFromLab/:id",
+  [
+    check("id", "El id del laboratorio no es válido").isMongoId().notEmpty(),
+    fieldValidation,
+  ],
+  deleteClassFromLab
+);
 
 module.exports = router;

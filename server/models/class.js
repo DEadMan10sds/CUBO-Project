@@ -50,6 +50,7 @@ const classModel = new Schema(
       type: Number,
       min: 7,
       max: 20,
+      require: [true, "La clase debe tener una hora"],
     },
     startDate: {
       type: Date,

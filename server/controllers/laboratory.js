@@ -1,4 +1,5 @@
 const { Laboratory } = require("../models");
+const { findByIdAndUpdate } = require("../models/laboratory");
 
 const getAllLabs = async (req, res) => {
   const laboratories = await Laboratory.find();
@@ -84,14 +85,29 @@ const addClass = async (req, res) => {
   const dataClass = req.body;
   console.log(dataClass);
   const currrentLab = await Laboratory.findByIdAndUpdate(id, {
-    $push: { classes: dataClass.classID },
+    $push: { classes: dataClass.id, hours: dataClass.hour },
   });
+  console.log(currrentLab);
   if (!currrentLab)
     return res
       .status(400)
       .json({ Message: "No se pudo agregar la clase al laboratorio" });
-
   return res.status(200).json({ Message: "Clase agregada", currrentLab });
+};
+
+const deleteClassFromLab = async (req, res) => {
+  const { id } = req.params;
+  const dataClass = req.body;
+  const currentLab = await Laboratory.findByIdAndUpdate(id, {
+    $pull: { classes: dataClass.id, hours: dataClass.hour },
+  });
+  //await currentLab.save();
+  console.log(currentLab);
+  if (!currentLab)
+    return res.status(400).json({ Message: "La clase no se pudo eliminar" });
+  return res
+    .status(200)
+    .json({ Message: "La clase se eliminó del laboratorio" });
 };
 
 module.exports = {
@@ -103,4 +119,5 @@ module.exports = {
   deactivateLab,
   deleteLab,
   addClass,
+  deleteClassFromLab,
 };
