@@ -25,7 +25,7 @@ export class ClassSelectorDetailComponent implements OnInit {
   ngOnInit(): void {
     this.currentRoute.params.subscribe(
       (params: Params) => {
-        this.place = params['labName']
+        this.place = params['idLab']
       }
     );
   }

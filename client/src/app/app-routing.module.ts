@@ -48,7 +48,7 @@ const routes: Routes = [
     ]
   },
   {
-    path: ':labName',
+    path: ':idLab',
     component: ClassSelectorDetailComponent,
     //pathMatch: 'full',
     children: [

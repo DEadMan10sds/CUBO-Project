@@ -67,8 +67,9 @@ export class ClassBackConnection
     ).subscribe()
   }
 
-  changeLabOfClass(classUpdated: ClassesModel, previousLabID: string)
+  changeLabOfClass(classUpdated: ClassesModel, previousLabID: string, oldHour: number)
   {
+    console.log("ChangeLabOfCLass", classUpdated)
     this.httpSolicitudes.put<{Message, result}>(
       (environment.BACK_URL + 'classes/edit/' + classUpdated.id),
       classUpdated,
@@ -76,12 +77,18 @@ export class ClassBackConnection
 
     this.httpSolicitudes.post<{Message}>(
       (environment.BACK_URL + 'labs/deleteClassFromLab/' + previousLabID),
-      classUpdated
+      {
+        id: classUpdated.id,
+        hour: oldHour
+      }
     ).subscribe();
 
     this.httpSolicitudes.post<{Message}>(
       (environment.BACK_URL + 'labs/addClassToLab/' + classUpdated.place),
-      classUpdated
+      {
+        id: classUpdated.id,
+        hour: classUpdated.hour
+      }
     ).subscribe();
   }
 

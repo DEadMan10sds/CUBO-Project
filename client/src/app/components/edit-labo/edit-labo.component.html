@@ -41,6 +41,7 @@
             </div>
           </div>
         </div>
+        <app-classes-list [laboratory]="lab.id"></app-classes-list>
         <div class="row">
           <!-- <div class="col-md-6 mt-2">
             Estado
@@ -79,7 +80,7 @@
             <button
               type="button"
               class="btn btn-danger"
-              *ngIf="editMode"
+              *ngIf="editMode && lab.classes.length > 0"
               (click)="deleteLab()"
             >
               Borrar

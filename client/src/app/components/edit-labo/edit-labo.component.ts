@@ -42,7 +42,7 @@ export class EditLaboComponent implements OnInit {
           this.lab = this.setLab();
           this.initForm();
         }
-        //console.log(this.lab);
+        console.log(this.lab.id);
       }
     );
   }

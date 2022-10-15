@@ -33,11 +33,11 @@ export class ClassesListComponent implements OnInit {
   ngOnInit(): void {
     this.currentRoute.params.subscribe(
       (params: Params) => {
-        this.labID = params['labName'];
+        this.labID = params['idLab'];
         //console.log("LAB TO SELECT CLASSES", this.labID)
       }
     );
-    this.onFetchClasses();
+    if(this.labID !== '0') this.onFetchClasses();
     this.classesArraySuscription = this.classService.classesChanges.subscribe(
       (classArray: ClassesModel[]) => {
         this.classes = classArray;
