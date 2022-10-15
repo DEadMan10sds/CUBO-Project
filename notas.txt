@@ -1,7 +1,0 @@
--Migrar
--modelo
--Controlador
-
-
-//Comnado para 
-php artisan make:migration productos-mc 
