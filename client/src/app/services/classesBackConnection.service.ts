@@ -85,5 +85,19 @@ export class ClassBackConnection
     ).subscribe();
   }
 
+  deleteClass(classToDelete: string, labID: string , hourToDelete: number)
+  {
+    this.httpSolicitudes.post<{Message}>(
+      (environment.BACK_URL + 'labs/deleteClassFromLab/' + labID),
+      {
+        id: classToDelete,
+        hour: hourToDelete
+      }
+    ).subscribe();
+
+    this.httpSolicitudes.delete<{Message}>(
+      (environment.BACK_URL + 'classes/delete/' + classToDelete)
+    ).subscribe();
+  }
 
 }

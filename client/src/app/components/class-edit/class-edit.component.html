@@ -146,7 +146,14 @@
             </button>
           </div>
           <div class="col-md-5 d-flex flex-row-reverse mt-3">
-            <button class="btn btn-danger" type="button">Eliminar</button>
+            <button
+              class="btn btn-danger"
+              type="button"
+              *ngIf="editClass"
+              (click)="deleteClass()"
+            >
+              Eliminar
+            </button>
           </div>
         </div>
       </form>

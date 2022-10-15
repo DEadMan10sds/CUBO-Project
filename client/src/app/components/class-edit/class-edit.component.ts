@@ -96,7 +96,7 @@ export class ClassEditComponent implements OnInit {
     classForm.value.teacher = this.currentClass.teacher;
     const {id, ...newClassData} = classForm.value;
     if(!this.editClass) this.backConnection.createNewClass(newClassData);
-    if((classForm.value.place !== this.labID) && this.editClass) this.backConnection.changeLabOfClass(classForm.value, this.labID)
+    if((classForm.value.place !== this.labID) && this.editClass) this.backConnection.changeLabOfClass(classForm.value.id, this.labID)
     if((classForm.value.place === this.labID) && this.editClass) this.backConnection.updateClass(classForm.value, this.currentClass.hour);
     this.backConnection.fetchClasses(this.labID);
     this.redirect();
@@ -143,5 +143,12 @@ export class ClassEditComponent implements OnInit {
     this.hoursAvailables = fullHours.filter(function(element) {
       return occupiedHours.indexOf(element) === -1;
     });
+  }
+
+  deleteClass()
+  {
+    this.backConnection.deleteClass(this.classID, this.labID, this.currentClass.hour);
+    console.log("Delete Class", this.classID, this.currentClass.hour);
+    this.redirect();
   }
 }
