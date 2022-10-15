@@ -4,13 +4,15 @@ export class LaboratoriesModel
   name: string;
   status: boolean;
   classes: string[];
+  hours: number[];
 
-  constructor(_name: string, _status: boolean, _classes: string[], _id?: string)
+  constructor(_name: string, _status: boolean, _classes: string[], _hours: number[], _id?: string)
   {
     this.id = _id;
     this.name = _name;
     this.status = _status;
-    this.classes = _classes
+    this.classes = _classes;
+    this.hours = _hours;
   }
 
   getName(): string

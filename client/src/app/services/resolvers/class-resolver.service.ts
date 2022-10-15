@@ -2,8 +2,8 @@ import {Injectable} from '@angular/core';
 import { ActivatedRouteSnapshot, Resolve, RouterStateSnapshot } from '@angular/router';
 import { Observable } from 'rxjs';
 import { ClassesModel } from '../../models/classes.model';
-import { BackConnectionService } from '../backConnection.service';
 import { ClassesService } from '../classes.service';
+import { ClassBackConnection } from '../classesBackConnection.service';
 
 @Injectable({
   providedIn: 'root'
@@ -11,7 +11,7 @@ import { ClassesService } from '../classes.service';
 export class ClassResolverService implements Resolve<ClassesModel[]>
 {
   constructor(
-    private backConnection: BackConnectionService,
+    private backConnection: ClassBackConnection,
     private classService: ClassesService
   ){}
 

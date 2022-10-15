@@ -75,4 +75,10 @@ export class LaboratoriesService{
     this.laboratoriesChanges.next(this.existingLaboratories.slice());
   }
 
+  getLabHours(labID: string)
+  {
+    const labSearched = this.getSingleLab(labID);
+    return labSearched.hours;
+  }
+
 }

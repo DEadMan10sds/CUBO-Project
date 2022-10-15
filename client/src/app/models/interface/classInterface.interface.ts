@@ -6,10 +6,8 @@ export interface ClassInterface
   place: string;
   status: boolean;
   free: boolean;
-  teacher: {
-    _id: string,
-    name: string
-  }
+  teacher: string;
+  teacherName?: string;
   type: string;
   authorized: boolean;
   recurrent: boolean;

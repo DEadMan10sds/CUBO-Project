@@ -31,8 +31,12 @@ export class EditLaboComponent implements OnInit {
     this.currentRoute.params.subscribe(
       (params: Params) => {
         this.labID = params['idLab'];
-        if(this.labID !== '0') this.editMode = true;
-        this.existsLabInArray = this.existsLab();
+        if(this.labID !== '0')
+        {
+          this.editMode = true;
+          this.existsLabInArray = this.existsLab();
+        }
+        if(this.labID === '0')  this.existsLabInArray = true;
         if(this.existsLabInArray)
         {
           this.lab = this.setLab();
@@ -55,7 +59,7 @@ export class EditLaboComponent implements OnInit {
 
   setLab():LaboratoriesModel
   {
-    if(!this.editMode) return new LaboratoriesModel(null, false, null);
+    if(!this.editMode) return new LaboratoriesModel(null, false, [], null);
     return this.labService.getSingleLab(this.labID);
   }
 

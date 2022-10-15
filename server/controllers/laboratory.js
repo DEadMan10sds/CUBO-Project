@@ -2,8 +2,7 @@ const { Laboratory } = require("../models");
 
 const getAllLabs = async (req, res) => {
   const laboratories = await Laboratory.find();
-  if (laboratories.length === 0)
-    return res.status(400).json({ Message: "No hay laboratorios activados" });
+  if (laboratories.length === 0) return res.status(200).json([]);
 
   return res.status(200).json(laboratories);
 };

@@ -9,7 +9,7 @@ const classModel = new Schema(
     //Para eventos de 1 sola vez
     date: {
       type: Date,
-      required: [true, "La fecha y hora es obligatoria"],
+      required: [false, "La fecha y hora es obligatoria"],
     },
     place: {
       type: Schema.Types.ObjectId,
@@ -43,7 +43,7 @@ const classModel = new Schema(
       default: true,
     },
     repeats: {
-      type: String,
+      type: [String],
       enum: ["SUN", "MON", "TUE", "WEN", "THU", "FRI", "SAT"],
     },
     hour: {

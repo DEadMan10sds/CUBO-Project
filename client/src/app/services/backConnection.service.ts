@@ -17,13 +17,12 @@ export class BackConnectionService
 
   postLab(newLab: LaboratoriesModel)
   {
-
     this.httpSolicitudes.post<{Message, result: LaboratoriesModel}>((environment.BACK_URL + 'labs/'), newLab)
     .subscribe(
-      resultingClass =>
+      resultingLab =>
       {
         //console.log(resultingClass)
-        this.labService.createLab(resultingClass.result);
+        this.labService.createLab(resultingLab.result);
       }
     );
   }
@@ -43,19 +42,6 @@ export class BackConnectionService
         laboratories => {
           //console.log("Fetching: ", laboratories)
           this.labService.setLaboratories(laboratories);
-        }
-      )
-    );
-  }
-
-  fetchClasses(lab: string)
-  {
-    return this.httpSolicitudes.get<ClassesModel[]>(environment.BACK_URL + 'classes/ByLab/' + lab)
-    .pipe(
-      tap(
-        classes => {
-          //console.log('FETCHING CLASSES BY LAB', lab ,classes)
-          this.classService.setClasses(classes);
         }
       )
     );

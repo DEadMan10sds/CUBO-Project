@@ -1,4 +1,4 @@
-import { ClassInterface } from "../interface/classInterface.interface";
+import { ClassInterface } from "./interface/classInterface.interface";
 export class ClassesModel implements ClassInterface{
 
   id: string;
@@ -7,10 +7,8 @@ export class ClassesModel implements ClassInterface{
   place: string;
   status: boolean;
   free: boolean;
-  teacher: {
-    _id: string,
-    name: string
-  }
+  teacher: string;
+  teacherName?: string;
   type: string;
   authorized: boolean;
   recurrent: boolean;

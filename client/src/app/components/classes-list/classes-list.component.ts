@@ -2,10 +2,9 @@ import { Component, EventEmitter, OnInit } from '@angular/core';
 import { ClassesService } from 'src/app/services/classes.service';
 import { ClassesModel } from 'src/app/models/classes.model';
 import {Input, Output} from '@angular/core';
-import { LaboratoriesService } from 'src/app/services/laboratories.service';
 import { ActivatedRoute, Params } from '@angular/router';
-import { BackConnectionService } from 'src/app/services/backConnection.service';
-import { first, Subscription } from 'rxjs';
+import {  Subscription } from 'rxjs';
+import { ClassBackConnection } from 'src/app/services/classesBackConnection.service';
 
 @Component({
   selector: 'app-classes-list',
@@ -27,7 +26,7 @@ export class ClassesListComponent implements OnInit {
 
   constructor(
     private classService: ClassesService,
-    private backConnection: BackConnectionService,
+    private classBackConnection: ClassBackConnection,
     private currentRoute: ActivatedRoute,
     ) { }
 
@@ -50,7 +49,7 @@ export class ClassesListComponent implements OnInit {
 
   onFetchClasses()
   {
-    this.backConnection.fetchClasses(this.labID).subscribe(
+    this.classBackConnection.fetchClasses(this.labID).subscribe(
       classArray =>
       {
         this.classes = classArray;

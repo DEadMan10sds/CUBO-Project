@@ -33,7 +33,7 @@ const getClassesByLab = async (req, res) => {
     return res.status(400).json({ Message: "No existe este labo" });
 
   const classesByLab = await Class.find({
-    $and: [{ status: true }, { place: labID }],
+    $and: [{ place: labID }],
   }).populate("teacher", "name");
 
   //console.log(classesByLab);
@@ -84,7 +84,7 @@ const createClassByLab = async (req, res) => {
   const newClass = new Class(newClassData);
   const result = newClass.save();
 
-  console.log(newClass);
+  //console.log(newClass);
 
   if (!result) return res.status(400).json({ Message: "Clase no creada" });
 
@@ -93,10 +93,10 @@ const createClassByLab = async (req, res) => {
 
   existsLab.save();
 
-  console.log(existsLab, newClass);
+  //console.log(existsLab, newClass);
 
   //console.log({ existsLab, classAdded: req.body });
-  return res.status(200).json({ Message: "Classe encontrada" });
+  return res.status(200).json({ Message: "Classe encontrada", result });
 };
 
 const editClass = async (req, res) => {
