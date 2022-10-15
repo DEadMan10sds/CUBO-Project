@@ -10,6 +10,7 @@ const {
   addClass,
   getAllActiveLabs,
   deleteClassFromLab,
+  changeHourOfClass,
 } = require("../controllers/laboratory");
 const { fieldValidation } = require("../middlewares/fieldValidation");
 
@@ -79,6 +80,15 @@ router.post(
     fieldValidation,
   ],
   addClass
+);
+
+router.post(
+  "/changeHour/:id",
+  [
+    check("id", "El ID debe ser válido").isMongoId().notEmpty(),
+    fieldValidation,
+  ],
+  changeHourOfClass
 );
 
 router.post(

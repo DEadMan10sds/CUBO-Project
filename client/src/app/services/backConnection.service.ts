@@ -15,25 +15,6 @@ export class BackConnectionService
 
   constructor(private httpSolicitudes: HttpClient, private labService: LaboratoriesService, private classService: ClassesService){}
 
-  postLab(newLab: LaboratoriesModel)
-  {
-    this.httpSolicitudes.post<{Message, result: LaboratoriesModel}>((environment.BACK_URL + 'labs/'), newLab)
-    .subscribe(
-      resultingLab =>
-      {
-        //console.log(resultingClass)
-        this.labService.createLab(resultingLab.result);
-      }
-    );
-  }
-
-  updateLab(updateLabID: string, updatedLab: LaboratoriesModel)
-  {
-    this.httpSolicitudes.put<LaboratoriesModel>((environment.BACK_URL + 'labs/' + updateLabID), updatedLab).subscribe();
-    this.labService.updateLab(updateLabID, updatedLab);
-    //this.fetchLabsWithoutSub();
-  }
-
   fetchLabs()
   {
     return this.httpSolicitudes.get<LaboratoriesModel[]>((environment.BACK_URL + 'labs/'))
@@ -63,6 +44,41 @@ export class BackConnectionService
   fetchSingleClass(classID: string)
   {
     return this.httpSolicitudes.get<ClassesModel>((environment.BACK_URL + 'classes/' + classID));
+  }
+
+  postLab(newLab: LaboratoriesModel)
+  {
+    this.httpSolicitudes.post<{Message, result: LaboratoriesModel}>((environment.BACK_URL + 'labs/'), newLab)
+    .subscribe(
+      resultingLab =>
+      {
+        //console.log(resultingClass)
+        this.labService.createLab(resultingLab.result);
+      }
+    );
+  }
+
+  addClassToArrays(classData: {id: string, hour: number}, labID: string)
+  {
+    this.httpSolicitudes.post<{Message}>(
+      (environment.BACK_URL + 'labs/addClassToLab/' + labID),
+      classData
+    ).subscribe()
+  }
+
+  deleteClassFromArrays(classData: {id: string, hour: number}, labID: string)
+  {
+    this.httpSolicitudes.post<{Message}>(
+      (environment.BACK_URL + 'labs/deleteClassFromLab/' + labID),
+      classData
+    ).subscribe()
+  }
+
+  updateLab(updateLabID: string, updatedLab: LaboratoriesModel)
+  {
+    this.httpSolicitudes.put<LaboratoriesModel>((environment.BACK_URL + 'labs/' + updateLabID), updatedLab).subscribe();
+    this.labService.updateLab(updateLabID, updatedLab);
+    //this.fetchLabsWithoutSub();
   }
 
   deleteLab(labID: string)

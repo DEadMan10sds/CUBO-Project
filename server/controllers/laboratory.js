@@ -95,6 +95,22 @@ const addClass = async (req, res) => {
   return res.status(200).json({ Message: "Clase agregada", currrentLab });
 };
 
+const changeHourOfClass = async (req, res) => {
+  const { id } = req.params;
+  const { newHour, oldHour } = req.body;
+  //console.log({ newHour, oldHour });
+  const currentLab = await Laboratory.findById(id);
+  let indexOfOldHour = currentLab.hours.indexOf(oldHour);
+  currentLab.hours[indexOfOldHour] = newHour;
+  await currentLab.save();
+  //console.log(currentLab);
+  if (!currentLab)
+    return res.status(400).json({
+      Message: "No se pudo actualizar la hora de la clase en el laboratorio",
+    });
+  return res.status(200).json({ Message: "Hora actualizada correctamente" });
+};
+
 const deleteClassFromLab = async (req, res) => {
   const { id } = req.params;
   const dataClass = req.body;
@@ -119,5 +135,6 @@ module.exports = {
   deactivateLab,
   deleteLab,
   addClass,
+  changeHourOfClass,
   deleteClassFromLab,
 };

@@ -46,9 +46,9 @@ router.post(
 );
 
 router.post(
-  "/ByLab/:labID",
+  "/ByLab/",
   [
-    check("labID", "El id de laboratorio no es válido").isMongoId().notEmpty(),
+    //check("labID", "El id de laboratorio no es válido").isMongoId().notEmpty(),
     check("hour", "La clase no puede estar antes de las 7")
       .isInt({ min: 7, max: 20 })
       .notEmpty(),

@@ -96,8 +96,10 @@ export class ClassEditComponent implements OnInit {
     classForm.value.teacher = this.currentClass.teacher;
     const {id, ...newClassData} = classForm.value;
     if(!this.editClass) this.backConnection.createNewClass(newClassData);
+    if((classForm.value.place !== this.labID) && this.editClass) this.backConnection.changeLabOfClass(classForm.value, this.labID)
+    if((classForm.value.place === this.labID) && this.editClass) this.backConnection.updateClass(classForm.value, this.currentClass.hour);
+    this.backConnection.fetchClasses(this.labID);
     this.redirect();
-    //console.log("Clase agregada", classForm.value, newClassData);
   }
 
   clearForm()
