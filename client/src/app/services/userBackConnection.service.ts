@@ -20,12 +20,30 @@ export class UserBackConnectionService
     ).subscribe(
       (received: {Message, insert: UserModel})=>
       {
-        this.currentUser = received.insert;
-        console.log(this.currentUser);
+        console.log(received);
       },
       (error)=> {
         console.log(error);
       }
     );
   }
+
+
+  loginUser(loginData: {email: string, password: string})
+  {
+    this.httpSolicitudes.post<{Message: string, existsUser: UserModel, token: string}>(
+      (environment.BACK_URL + 'auth/login/'),
+      loginData
+    ).subscribe(
+      (receiver: {Message: string, existsUser: UserModel, token: string}) => {
+        console.log(receiver);
+        this.currentUser = receiver.existsUser;
+        console.log("Loggueado", this.currentUser);
+      },
+      (error) => {
+        console.log(error);
+      }
+    );
+  }
+
 }

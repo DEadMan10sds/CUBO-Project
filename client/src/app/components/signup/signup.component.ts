@@ -1,5 +1,6 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { NgForm } from '@angular/forms';
+import { Router } from '@angular/router';
 import { UserBackConnectionService } from 'src/app/services/userBackConnection.service';
 
 @Component({
@@ -17,7 +18,8 @@ export class SignupComponent implements OnInit{
   @ViewChild('registerUser', {static: false}) registerForm: NgForm;
 
   constructor(
-    private userBack: UserBackConnectionService
+    private userBack: UserBackConnectionService,
+    private router: Router
   ){}
 
   ngOnInit()
@@ -42,6 +44,13 @@ export class SignupComponent implements OnInit{
     newUser.role = "ALUMNO";
     this.userBack.registerUser(newUser);
     this.user_login()
+  }
+
+  login(loginData: NgForm)
+  {
+    console.log("Login data", loginData.value);
+    this.userBack.loginUser(loginData.value);
+    this.router.navigate(['/']);
   }
 
 }
