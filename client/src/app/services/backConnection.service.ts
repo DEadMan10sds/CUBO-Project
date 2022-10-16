@@ -54,6 +54,10 @@ export class BackConnectionService
       {
         //console.log(resultingClass)
         this.labService.createLab(resultingLab.result);
+      },
+      (error)=>
+      {
+        console.log(error);
       }
     );
   }

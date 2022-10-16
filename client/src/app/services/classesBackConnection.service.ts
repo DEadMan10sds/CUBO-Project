@@ -1,4 +1,4 @@
-import { HttpClient } from "@angular/common/http";
+import { HttpClient, HttpHeaders } from "@angular/common/http";
 import { EventEmitter, Injectable, Output } from "@angular/core";
 import { tap } from "rxjs/operators";
 import { environment } from "src/environments/environment";
@@ -38,7 +38,7 @@ export class ClassBackConnection
     //console.log("Creating class: ", newClass);
     this.httpSolicitudes.post<{Message, result: ClassesModel}>(
       (environment.BACK_URL + 'classes/ByLab/'),
-      newClass
+      newClass,
     ).subscribe(
       resultingClass => {
         this.fetchClasses(resultingClass.result.place);

@@ -29,6 +29,12 @@ export class UserBackConnectionService
     )
   }
 
+  getToken(): string
+  {
+    return localStorage.getItem('xToken');
+  }
+
+
   isLoggedIn(): boolean
   {
     return localStorage.getItem('xToken') ? true : false;

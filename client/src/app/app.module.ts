@@ -2,7 +2,7 @@ import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 
 import { AppRoutingModule } from './app-routing.module';
-import {HttpClientModule} from '@angular/common/http';
+import {HttpClientModule, HTTP_INTERCEPTORS} from '@angular/common/http';
 import { AppComponent } from './app.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
@@ -28,6 +28,7 @@ import { RedirectHomeComponent } from './components/redirect-home/redirect-home.
 import { LoginComponent } from './components/login/login.component';
 import { SignupComponent } from './components/signup/signup.component';
 import { AuthGuard } from './guards/auth.guard';
+import { tokenInterceptor } from './services/token-interceptor.service';
 
 @NgModule({
   declarations: [
@@ -58,7 +59,16 @@ import { AuthGuard } from './guards/auth.guard';
     FormsModule,
     HttpClientModule
   ],
-  providers: [LaboratoriesService, ClassesService, AuthGuard],
+  providers: [
+    LaboratoriesService,
+    ClassesService,
+    AuthGuard,
+    {
+      provide: HTTP_INTERCEPTORS,
+      useClass: tokenInterceptor,
+      multi: true
+    }
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
