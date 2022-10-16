@@ -7,7 +7,7 @@ const loopEncriptions = bcrypt.genSaltSync();
 
 const getUser = async (req, res = response) => {
   const { id } = req.params;
-  const userResult = await User.findOne({ uniKey: id });
+  const userResult = await User.findById(id);
   if (!userResult)
     return res.status(400).json({ Message: "No se encontró el usuario" });
   return res.status(200).json({ Message: "Usuario encontrado", userResult });
@@ -41,10 +41,8 @@ const editUser = async (req, res = response) => {
   const { id } = req.params;
   //Elimina password y role para hacerlas variables independientes y no tenerlas en userData
   const { password, ...dataToUpdate } = req.body;
-  //Añade el id como uniKey para validaciones
-  userData = { ...dataToUpdate, uniKey: id };
 
-  const existsUser = await existUser(userData);
+  const existsUser = await User.findById(id);
   //Crear validación de password
 
   if (!existsUser)
@@ -54,7 +52,7 @@ const editUser = async (req, res = response) => {
   if (!bcrypt.compareSync(existsUser.password, verifiedPass))
     return res.status(400).json({ Message: "Contraseña incorrecta" });
 
-  const editedData = await User.findOneAndUpdate({ uniKey: id }, dataToUpdate);
+  const editedData = await User.findOneAndUpdate(id, dataToUpdate);
 
   return res.status(200).json({ Message: "Usuario editado", editedData });
 };
@@ -62,7 +60,7 @@ const editUser = async (req, res = response) => {
 const deactivateUser = async (req, res = response) => {
   const { id } = req.params;
   const deactivateUser = await User.findOneAndUpdate(
-    { uniKey: id },
+    id,
     { status: false },
     { new: true }
   );
@@ -75,7 +73,7 @@ const deactivateUser = async (req, res = response) => {
 
 const deleteUser = async (req, res = response) => {
   const { id } = req.params;
-  const existsUser = await User.findOneAndDelete({ uniKey: id });
+  const existsUser = await User.findOneAndDelete(id);
   if (!existsUser)
     return res.status(400).json({ Message: "Usuario no encontrado" });
   return res.status(200).json({ Message: "Usuario eliminado", existsUser });

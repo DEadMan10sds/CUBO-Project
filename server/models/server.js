@@ -11,9 +11,10 @@ class Server {
 
     //Rutas
     this.paths = {
-      users: "/api/users",
-      labs: "/api/labs",
+      auth: "/api/auth",
       classes: "/api/classes",
+      labs: "/api/labs",
+      users: "/api/users",
     };
 
     //Conexión a BD
@@ -36,9 +37,10 @@ class Server {
   }
 
   routes() {
-    this.app.use(this.paths.users, require("../routes/user"));
-    this.app.use(this.paths.labs, require("../routes/laboratory"));
+    this.app.use(this.paths.auth, require("../routes/auth"));
     this.app.use(this.paths.classes, require("../routes/class"));
+    this.app.use(this.paths.labs, require("../routes/laboratory"));
+    this.app.use(this.paths.users, require("../routes/user"));
   }
 
   //Inicializar el servidor

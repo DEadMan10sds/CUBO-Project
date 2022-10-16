@@ -9,11 +9,17 @@ const {
   deactivateUser,
   deleteUser,
 } = require("../controllers/user");
+const { fieldValidation } = require("../middlewares/fieldValidation");
 
 //Unique user
 router.get(
   "/:id",
-  [check("id", "El id del usuario no puede estar vacio").notEmpty()],
+  [
+    check("id", "El id del usuario no puede estar vacio")
+      .isMongoId()
+      .notEmpty(),
+    fieldValidation,
+  ],
   getUser
 );
 
@@ -27,14 +33,28 @@ router.post(
     ).notEmpty(),
     check("uniKey", "El id solo puede ser numérico").isNumeric().isInt(),
     check("email", "El correo debe ser valido").isEmail(),
-    check(
+    /*check(
       ["name", "surname"],
       "No se pueden guardar nombres con numeros"
-    ).isAlpha(),
+    ).isAlpha(),*/
     check(
       "password",
       "La contraseña debe tener un mínimo de 8 caracteres"
-    ).matches(/^[a-zA-Z0-9]{8}$/, "i"),
+    ).isStrongPassword({
+      minLength: 8,
+      minLowercase: 1,
+      minUppercase: 1,
+      minNumbers: 1,
+      minSymbols: 1,
+      returnScore: false,
+      pointsPerUnique: 1,
+      pointsPerRepeat: 0.5,
+      pointsForContainingLower: 10,
+      pointsForContainingUpper: 10,
+      pointsForContainingNumber: 10,
+      pointsForContainingSymbol: 10,
+    }),
+    fieldValidation,
   ],
   createUser
 );
@@ -53,6 +73,7 @@ router.put(
       ["name", "surname"],
       "No se pueden guardar nombres con numeros"
     ).isAlpha(),
+    fieldValidation,
   ],
   editUser
 );
@@ -60,14 +81,14 @@ router.put(
 //Deactivate user
 router.put(
   "/deactivate/:id",
-  [check("id", "El id no puede estar vacio").notEmpty()],
+  [check("id", "El id no puede estar vacio").notEmpty(), fieldValidation],
   deactivateUser
 );
 
 //Delete user
 router.delete(
   "/delete/:id",
-  [check("id", "El id no puede estar vacio").notEmpty()],
+  [check("id", "El id no puede estar vacio").notEmpty(), fieldValidation],
   deleteUser
 );
 
