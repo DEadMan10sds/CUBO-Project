@@ -4,6 +4,9 @@
       <div class="col-lg-6 px-lg-4" *ngIf="userlogin">
         <div class="card">
           <div class="card-body p-lg-5">
+            <div *ngIf="loginHadError">
+              Error: {{ loginError.error.Message }}
+            </div>
             <form
               (ngSubmit)="login(loginForm)"
               #loginForm="ngForm"
@@ -130,7 +133,7 @@
                   class="form-control"
                   id="password"
                   name="password"
-                  pattern="(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[$@$!%*?&])[A-Za-zd$@$!%*?&].{8,15}"
+                  pattern="(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[$@$!%*?&-])[A-Za-zd$@$!%*?&].{8,15}"
                   placeholder="Contraseña"
                   ngModel
                   required

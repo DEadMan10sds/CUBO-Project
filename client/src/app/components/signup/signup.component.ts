@@ -1,6 +1,7 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { NgForm } from '@angular/forms';
 import { Router } from '@angular/router';
+import { UserModel } from 'src/app/models/user.model';
 import { UserBackConnectionService } from 'src/app/services/userBackConnection.service';
 
 @Component({
@@ -14,6 +15,10 @@ export class SignupComponent implements OnInit{
   userlogin = false;
   userregister = true;
   //Buttons clicks functionalities
+
+  currentUser: UserModel;
+  loginError;
+  loginHadError: boolean = false;
 
   @ViewChild('registerUser', {static: false}) registerForm: NgForm;
 
@@ -42,15 +47,34 @@ export class SignupComponent implements OnInit{
     console.log(userData.value);
     const {repeatPassword, ...newUser} = userData.value;
     newUser.role = "ALUMNO";
-    this.userBack.registerUser(newUser);
-    this.user_login()
+    this.userBack.registerUser(newUser).subscribe(
+      (received: {Message, insert: UserModel})=>
+      {
+        console.log(received);
+        this.user_login()
+      },
+      (error)=> {
+        console.log(error);
+      }
+    );;
   }
 
   login(loginData: NgForm)
   {
     console.log("Login data", loginData.value);
-    this.userBack.loginUser(loginData.value);
-    this.router.navigate(['/']);
+    this.userBack.loginUser(loginData.value).subscribe(
+      (receiver: {Message: string, existsUser: UserModel, token: string}) => {
+        console.log(receiver);
+        this.currentUser = receiver.existsUser;
+        console.log("Loggueado", this.currentUser);
+        localStorage.setItem("xToken", receiver.token)
+        this.router.navigate(['/']);
+      },
+      (error) => {
+        this.loginError = error;
+        this.loginHadError = true;
+      }
+    );
   }
 
 }

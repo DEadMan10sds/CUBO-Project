@@ -14,36 +14,19 @@ export class UserBackConnectionService
 
   registerUser(newUser: UserModel)
   {
-    this.httpSolicitudes.post<{Message, insert: UserModel}>(
+    return this.httpSolicitudes.post<{Message, insert: UserModel}>(
       (environment.BACK_URL + 'users/'),
       newUser,
-    ).subscribe(
-      (received: {Message, insert: UserModel})=>
-      {
-        console.log(received);
-      },
-      (error)=> {
-        console.log(error);
-      }
-    );
+    )
   }
 
 
   loginUser(loginData: {email: string, password: string})
   {
-    this.httpSolicitudes.post<{Message: string, existsUser: UserModel, token: string}>(
+    return this.httpSolicitudes.post<{Message: string, existsUser: UserModel, token: string}>(
       (environment.BACK_URL + 'auth/login/'),
       loginData
-    ).subscribe(
-      (receiver: {Message: string, existsUser: UserModel, token: string}) => {
-        console.log(receiver);
-        this.currentUser = receiver.existsUser;
-        console.log("Loggueado", this.currentUser);
-      },
-      (error) => {
-        console.log(error);
-      }
-    );
+    )
   }
 
 }
