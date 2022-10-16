@@ -67,6 +67,14 @@ const editUser = async (req, res = response) => {
   return res.status(200).json({ Message: "Usuario editado", editedData });
 };
 
+/**
+ *
+ *
+ * CAMBIAR LOS FIND ONE POR FIND BY ID
+ *
+ *
+ */
+
 const deactivateUser = async (req, res = response) => {
   const { id } = req.params;
   const deactivateUser = await User.findOneAndUpdate(

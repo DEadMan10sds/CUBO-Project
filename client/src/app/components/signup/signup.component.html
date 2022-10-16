@@ -1,1 +1,220 @@
-<p>signup works!</p>
+<div class="page-holder align-items-center py-4 bg-gray-100 vh-100">
+  <div class="container">
+    <div class="row align-items-center">
+      <div class="col-lg-6 px-lg-4" *ngIf="userlogin">
+        <div class="card">
+          <div class="card-header px-lg-5">
+            <div class="card-heading text-primary">Jassa Login</div>
+          </div>
+          <div class="card-body p-lg-5">
+            <h3 class="mb-4">Hi, welcome back! 👋👋</h3>
+            <p class="text-muted text-sm mb-5">
+              Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do
+              eiusmod tempor incididunt ut labore.
+            </p>
+            <form id="loginForm" action="index.html">
+              <div class="form-floating mb-3">
+                <input
+                  class="form-control"
+                  id="floatingInput"
+                  type="email"
+                  placeholder="name@example.com"
+                  required
+                />
+                <label for="floatingInput">Email address</label>
+              </div>
+              <div class="form-floating mb-3">
+                <input
+                  class="form-control"
+                  id="floatingPassword"
+                  type="password"
+                  placeholder="Password"
+                  required
+                />
+                <label for="floatingPassword">Password</label>
+              </div>
+              <div class="form-check mb-3">
+                <input
+                  class="form-check-input"
+                  type="checkbox"
+                  name="remember"
+                  id="remember"
+                />
+                <label class="form-check-label" for="remember"
+                  >Remember me</label
+                >
+              </div>
+              <button class="btn btn-primary" type="button">Submit</button>
+            </form>
+          </div>
+          <div class="card-footer px-lg-5 py-lg-4">
+            <div class="text-sm text-muted">
+              Don't have an account? <a (click)="user_register()">Register</a>.
+            </div>
+          </div>
+        </div>
+      </div>
+      <!-- register -->
+      <div class="col-lg-6 px-lg-4" *ngIf="userregister">
+        <div class="card">
+          <div class="card-body p-lg-5">
+            <form
+              (ngSubmit)="register(registerUser)"
+              #registerUser="ngForm"
+              ngNativeValidate
+            >
+              <div class="form-floating mb-3">
+                <input
+                  class="form-control"
+                  id="name"
+                  type="text"
+                  name="name"
+                  placeholder="Nombre(s)"
+                  ngModel
+                  required
+                  #name="ngModel"
+                />
+                <label for="name">Nombre(s)</label>
+                <span
+                  class="help-block"
+                  *ngIf="name.touched && !email.valid && !name.valid"
+                  >El nombre es obligatorio</span
+                >
+              </div>
+              <div class="form-floating mb-3">
+                <input
+                  class="form-control"
+                  id="surname"
+                  name="surname"
+                  type="text"
+                  ngModel
+                  placeholder="Apellido(S)"
+                  required
+                  #surname="ngModel"
+                />
+                <label for="surname">Apellido(s)</label>
+                <span
+                  class="help-block"
+                  *ngIf="surname.touched && !surname.valid"
+                  >Los apellidos son obligatorios</span
+                >
+              </div>
+              <div class="form-floating mb-3">
+                <input
+                  class="form-control"
+                  id="uniKey"
+                  type="number"
+                  minlength="7"
+                  maxlength="7"
+                  min="0000001"
+                  max="9999999"
+                  placeholder="Clave universitaria"
+                  required
+                  ngModel
+                  name="uniKey"
+                  #uniKey="ngModel"
+                />
+                <label for="uniKey">Clave universitaria</label>
+                <span class="help-block" *ngIf="uniKey.touched && !uniKey.valid"
+                  >La clave universitaria es obligatoria</span
+                >
+              </div>
+              <div class="form-floating mb-3">
+                <input
+                  class="form-control"
+                  id="email"
+                  type="email"
+                  name="email"
+                  ngModel
+                  placeholder="Correo"
+                  required
+                  #email="ngModel"
+                />
+                <label for="email">Correo</label>
+                <span class="help-block" *ngIf="email.touched && !email.valid"
+                  >El email es obligatorio</span
+                >
+              </div>
+              <div class="form-floating mb-3">
+                <input
+                  class="form-control"
+                  id="password"
+                  name="password"
+                  pattern="(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[$@$!%*?&])[A-Za-zd$@$!%*?&].{8,15}"
+                  placeholder="Contraseña"
+                  ngModel
+                  required
+                  #password="ngModel"
+                  type="password"
+                />
+                <label for="password">Contraseña</label>
+              </div>
+              <span
+                class="help-block"
+                *ngIf="password.touched && !password.valid"
+                >La contraseña no es segura <br
+              /></span>
+              <div class="form-floating mb-3">
+                <input
+                  class="form-control"
+                  id="repeatPassword"
+                  name="repeatPassword"
+                  ngModel
+                  placeholder="Repetir contraseña"
+                  required
+                  #repeatPassword="ngModel"
+                  type="password"
+                />
+                <label for="repeatPassword">Repetir contrasñea</label>
+              </div>
+              <span
+                class="help-block"
+                *ngIf="
+                  password.value !== repeatPassword.value &&
+                  password.touched &&
+                  repeatPassword.touched
+                "
+              >
+                Las contraseñas no coinciden
+              </span>
+              <span
+                class="help-block"
+                *ngIf="repeatPassword.touched && !repeatPassword.valid"
+                >Es necesario repetir la contraseña</span
+              >
+              <div class="form-group text-center mt-2">
+                <button
+                  class="btn btn-success"
+                  id="register"
+                  type="submit"
+                  name="registerSubmit"
+                  [disabled]="
+                    !registerUser.valid ||
+                    registerUser.value.password !==
+                      registerUser.value.repeatPassword
+                  "
+                >
+                  Registrarse
+                </button>
+              </div>
+            </form>
+          </div>
+          <div class="card-footer px-lg-5 py-lg-4">
+            <div class="text-sm text-muted">
+              Ya tienes cuenta? <a (click)="user_login()">Iniciar sesión</a>.
+            </div>
+          </div>
+        </div>
+      </div>
+      <div
+        class="col-lg-6 col-xl-5 ms-xl-auto px-lg-4 text-center text-primary"
+      >
+        <img
+          class="img-fluid m-4"
+          src="https://upload.wikimedia.org/wikipedia/commons/1/12/Logo_de_la_UASLP.svg"
+          alt=""
+        />
+      </div>
+    </div>
+  </div>
+</div>

@@ -8,7 +8,6 @@ import { EditLaboComponent } from './components/edit-labo/edit-labo.component';
 //Customs
 import { HomeComponent } from './components/home/home.component';
 import { LoginComponent } from './components/login/login.component';
-import { NotFoundComponent } from './components/not-found/not-found.component';
 import { ProfileComponent } from './components/profile/profile.component';
 import { SignupComponent } from './components/signup/signup.component';
 import { ClassResolverService } from './services/resolvers/class-resolver.service';
@@ -24,6 +23,20 @@ const routes: Routes = [
     path: 'Home',
     component: HomeComponent,
     resolve: [LaboratoryResolverService],
+  },
+
+  {
+    path: ':idLab',
+    component: ClassSelectorDetailComponent,
+    pathMatch: 'full',
+    children: [
+      {
+        path: ':classID',
+        //pathMatch: 'full',
+        resolve: [ClassResolverService],
+        component: ClassDetailComponent
+      },
+    ]
   },
   {
     path: 'User',
@@ -60,19 +73,6 @@ const routes: Routes = [
         path: '**',
         redirectTo: '/404'
       }
-    ]
-  },
-  {
-    path: ':idLab',
-    component: ClassSelectorDetailComponent,
-    //pathMatch: 'full',
-    children: [
-      {
-        path: ':classID',
-        //pathMatch: 'full',
-        resolve: [ClassResolverService],
-        component: ClassDetailComponent
-      },
     ]
   },
   {
