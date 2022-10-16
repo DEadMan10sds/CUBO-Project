@@ -13,6 +13,7 @@ const {
   changeHourOfClass,
 } = require("../controllers/laboratory");
 const { fieldValidation } = require("../middlewares/fieldValidation");
+const { validateJWT } = require("../middlewares/validateJWT");
 
 const router = Router();
 
@@ -35,7 +36,11 @@ router.get(
 //Create lab
 router.post(
   "/",
-  [check("name", "El nombre no puede estar vacío").notEmpty(), fieldValidation],
+  [
+    validateJWT,
+    check("name", "El nombre no puede estar vacío").notEmpty(),
+    fieldValidation,
+  ],
   createLab
 );
 

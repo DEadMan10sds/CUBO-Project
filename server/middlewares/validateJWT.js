@@ -1,14 +1,14 @@
 const jwt = require("jsonwebtoken");
-const User = require("../models");
+const User = require("../models/user");
 
 const validateJWT = async (req, res, next) => {
-  const token = req.header("authToken");
+  const token = req.header("xToken");
   if (!token)
     return res.status(400).json({ Message: "Token de autenticación faltante" });
 
   try {
     const { id } = jwt.verify(token, process.env.SECRETKEY);
-    const usuario = await User.findByID(id);
+    const usuario = await User.findById(id);
     if (!usuario)
       return res.status(401).json({ Message: "El usuario no existe" });
 
