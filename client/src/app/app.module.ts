@@ -27,6 +27,7 @@ import { NotFoundComponent } from './components/not-found/not-found.component';
 import { RedirectHomeComponent } from './components/redirect-home/redirect-home.component';
 import { LoginComponent } from './components/login/login.component';
 import { SignupComponent } from './components/signup/signup.component';
+import { AuthGuard } from './guards/auth.guard';
 
 @NgModule({
   declarations: [
@@ -57,7 +58,7 @@ import { SignupComponent } from './components/signup/signup.component';
     FormsModule,
     HttpClientModule
   ],
-  providers: [LaboratoriesService, ClassesService],
+  providers: [LaboratoriesService, ClassesService, AuthGuard],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

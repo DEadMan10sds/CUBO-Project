@@ -10,6 +10,7 @@ import { HomeComponent } from './components/home/home.component';
 import { LoginComponent } from './components/login/login.component';
 import { ProfileComponent } from './components/profile/profile.component';
 import { SignupComponent } from './components/signup/signup.component';
+import { AuthGuard } from './guards/auth.guard';
 import { ClassResolverService } from './services/resolvers/class-resolver.service';
 import { LaboratoryResolverService } from './services/resolvers/laboratories-resolver.service';
 
@@ -23,11 +24,13 @@ const routes: Routes = [
     path: 'Home',
     component: HomeComponent,
     resolve: [LaboratoryResolverService],
+    canActivate: [AuthGuard]
   },
 
   {
     path: ':idLab',
     component: ClassSelectorDetailComponent,
+    canActivate: [AuthGuard],
     pathMatch: 'full',
     children: [
       {
@@ -51,13 +54,16 @@ const routes: Routes = [
       },
       {
         path: ':idUser',
+        canActivate: [AuthGuard],
         component: ProfileComponent
+
       },
     ]
   },
   {
     path: 'Dashboard',
     resolve: [LaboratoryResolverService],
+    canActivate: [AuthGuard],
     children: [
       {
         path: ':idLab',

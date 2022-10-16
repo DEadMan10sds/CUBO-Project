@@ -29,4 +29,9 @@ export class UserBackConnectionService
     )
   }
 
+  isLoggedIn(): boolean
+  {
+    return localStorage.getItem('xToken') ? true : false;
+  }
+
 }
