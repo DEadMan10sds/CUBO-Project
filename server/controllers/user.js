@@ -3,7 +3,7 @@ const bcrypt = require("bcrypt");
 const { User } = require("../models");
 const { existUser } = require("../helpers/existsUser");
 
-const loopEncriptions = bcrypt.genSaltSync();
+const loopEncriptions = bcrypt.genSaltSync(10);
 
 const getUser = async (req, res = response) => {
   const { id } = req.params;
@@ -39,20 +39,30 @@ const createUser = async (req, res = response) => {
 
 const editUser = async (req, res = response) => {
   const { id } = req.params;
-  //Elimina password y role para hacerlas variables independientes y no tenerlas en userData
+  //Elimina password y role para hacerlas variables independientes
   const { password, ...dataToUpdate } = req.body;
 
   const existsUser = await User.findById(id);
-  //Crear validación de password
 
   if (!existsUser)
     return res.status(400).json({ Message: "No existe el usuario" });
 
-  const verifiedPass = bcrypt.hashSync(password, loopEncriptions);
-  if (!bcrypt.compareSync(existsUser.password, verifiedPass))
+  if (dataToUpdate.uniKey || dataToUpdate.email) {
+    const duplicatedData = await User.find({
+      $or: [{ uniKey: dataToUpdate.uniKey }, { email: dataToUpdate.email }],
+    });
+    if (duplicatedData)
+      return res
+        .status(400)
+        .json({ Message: "Clave universitaria o correo ya registrados" });
+  }
+
+  if (!bcrypt.compareSync(password, existsUser.password))
     return res.status(400).json({ Message: "Contraseña incorrecta" });
 
-  const editedData = await User.findOneAndUpdate(id, dataToUpdate);
+  const editedData = await User.findByIdAndUpdate(id, dataToUpdate);
+
+  console.log(editedData);
 
   return res.status(200).json({ Message: "Usuario editado", editedData });
 };

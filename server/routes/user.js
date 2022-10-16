@@ -10,11 +10,13 @@ const {
   deleteUser,
 } = require("../controllers/user");
 const { fieldValidation } = require("../middlewares/fieldValidation");
+const { validateJWT } = require("../middlewares/validateJWT");
 
 //Unique user
 router.get(
   "/:id",
   [
+    validateJWT,
     check("id", "El id del usuario no puede estar vacio")
       .isMongoId()
       .notEmpty(),
@@ -33,10 +35,10 @@ router.post(
     ).notEmpty(),
     check("uniKey", "El id solo puede ser numérico").isNumeric().isInt(),
     check("email", "El correo debe ser valido").isEmail(),
-    /*check(
+    check(
       ["name", "surname"],
       "No se pueden guardar nombres con numeros"
-    ).isAlpha(),*/
+    ).isAlpha("es-ES", { ignore: " " }),
     check(
       "password",
       "La contraseña debe tener un mínimo de 8 caracteres"
@@ -63,16 +65,13 @@ router.post(
 router.put(
   "/:id",
   [
-    check(
-      ["name", "surname", "email", "password", "role", "id"],
-      "No puede haber campos vacíos"
-    ).notEmpty(),
-    check("id", "El id solo puede ser numérico").isNumeric().isInt(),
-    check("email", "El correo debe ser valido").isEmail(),
+    validateJWT,
+    check("id", "El id solo puede ser numérico").isMongoId().notEmpty(),
+    check("email", "El correo debe ser valido").optional().isEmail(),
     check(
       ["name", "surname"],
       "No se pueden guardar nombres con numeros"
-    ).isAlpha(),
+    ).isAlpha("es-ES", { ignore: " " }),
     fieldValidation,
   ],
   editUser
