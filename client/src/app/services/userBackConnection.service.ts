@@ -1,5 +1,6 @@
 import { HttpClient } from "@angular/common/http";
 import { Injectable } from "@angular/core";
+import { Router } from "@angular/router";
 import { environment } from "src/environments/environment";
 import { UserModel } from "../models/user.model";
 
@@ -10,7 +11,7 @@ export class UserBackConnectionService
 {
   currentUser: UserModel;
 
-  constructor(private httpSolicitudes: HttpClient){}
+  constructor(private httpSolicitudes: HttpClient, private router: Router){}
 
   registerUser(newUser: UserModel)
   {
@@ -34,10 +35,15 @@ export class UserBackConnectionService
     return localStorage.getItem('xToken');
   }
 
-
   isLoggedIn(): boolean
   {
     return localStorage.getItem('xToken') ? true : false;
+  }
+
+  logOut()
+  {
+    localStorage.removeItem('xToken');
+    this.router.navigate(['/User/singup']);
   }
 
 }

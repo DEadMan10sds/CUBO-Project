@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { BackConnectionService } from 'src/app/services/backConnection.service';
+import { UserBackConnectionService } from 'src/app/services/userBackConnection.service';
 
 @Component({
   selector: 'app-header',
@@ -8,8 +9,15 @@ import { BackConnectionService } from 'src/app/services/backConnection.service';
 })
 export class HeaderComponent implements OnInit {
 
-  constructor(){}
+
+  constructor(private userBack: UserBackConnectionService){}
 
   ngOnInit(): void {
+
+  }
+
+  logOut()
+  {
+    this.userBack.logOut();
   }
 }
