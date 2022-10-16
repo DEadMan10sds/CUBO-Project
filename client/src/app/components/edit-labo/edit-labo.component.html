@@ -80,7 +80,7 @@
             <button
               type="button"
               class="btn btn-danger"
-              *ngIf="editMode && lab.classes.length > 0"
+              *ngIf="editMode && lab.classes.length === 0"
               (click)="deleteLab()"
             >
               Borrar

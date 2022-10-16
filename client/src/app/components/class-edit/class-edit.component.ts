@@ -29,6 +29,9 @@ export class ClassEditComponent implements OnInit {
   repeats: string[] = ["SUN", "MON", "TUE", "WEN", "THU", "FRI", "SAT"];
   hoursAvailables: number[] = [];
   occupiedHours: number[];
+  startDateString: string;
+  auxDate: string = '02/10/2022';
+  defaultType: string;
 
   constructor(
     private currentClassService: ClassesService,
@@ -48,6 +51,14 @@ export class ClassEditComponent implements OnInit {
         if(this.classID !== '0') this.editClass = true;
         if(this.classID === '0') this.existClassInArray = true;
         if(this.existClassInArray) this.currentClass = this.setClass();
+        if(this.editClass)
+        {
+          console.log(this.currentClass.startDate.toString())
+          this.startDateString = this.convertDate(this.currentClass.startDate.toString());
+          if(this.currentClass.type === 'CLASS') this.defaultType = 'Clase'
+          else this.defaultType = 'Examen'
+          this.hoursAvailables.push(this.currentClass.hour);
+        }
         //console.log(this.currentClass, this.classID);
       }
     );
@@ -84,14 +95,24 @@ export class ClassEditComponent implements OnInit {
     else return this.currentClassService.getSingleClass(this.classID);
   }
 
+  convertDate(dateToConver: string):string
+  {
+    let convertedDate: string[];
+    let finalDate: string;
+    convertedDate = dateToConver.split('-');
+    console.log(convertedDate)
+    finalDate = [convertedDate[0], convertedDate[1],[convertedDate[2][0],convertedDate[2][1] ].join(''),].join('-')
+    console.log(finalDate);
+    return finalDate
+  }
+
   submitForm(classForm: NgForm)
   {
     if(classForm.value.type === 'Examen') classForm.value.type = "EXAM";
     else classForm.value.type = "CLASS"
     if(this.editClass) classForm.value.id = this.classID;
     classForm.value.status = this.currentClass.status;
-    classForm.value.authorized = this.currentClass.authorized;
-    classForm.value.hour = +classForm.value.hour;
+    //classForm.value.authorized = this.currentClass.authorized;
     classForm.value.repeats = this.currentClass.repeats;
     classForm.value.teacher = this.currentClass.teacher;
     const {id, ...newClassData} = classForm.value;
@@ -99,6 +120,7 @@ export class ClassEditComponent implements OnInit {
     if((classForm.value.place !== this.labID) && this.editClass) this.backConnection.changeLabOfClass(classForm.value, this.labID, this.currentClass.hour)
     if((classForm.value.place === this.labID) && this.editClass) this.backConnection.updateClass(classForm.value, this.currentClass.hour);
     this.backConnection.fetchClasses(this.labID);
+    console.log(newClassData)
     this.redirect();
   }
 

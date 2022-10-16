@@ -7,8 +7,10 @@ import { EditLaboComponent } from './components/edit-labo/edit-labo.component';
 
 //Customs
 import { HomeComponent } from './components/home/home.component';
+import { LoginComponent } from './components/login/login.component';
 import { NotFoundComponent } from './components/not-found/not-found.component';
 import { ProfileComponent } from './components/profile/profile.component';
+import { SignupComponent } from './components/signup/signup.component';
 import { ClassResolverService } from './services/resolvers/class-resolver.service';
 import { LaboratoryResolverService } from './services/resolvers/laboratories-resolver.service';
 
@@ -24,8 +26,21 @@ const routes: Routes = [
     resolve: [LaboratoryResolverService],
   },
   {
-    path: '404',
-    component: NotFoundComponent
+    path: 'User',
+    children: [
+      {
+        path: 'login',
+        component: LoginComponent
+      },
+      {
+        path: 'signup',
+        component: SignupComponent
+      },
+      {
+        path: ':idUser',
+        component: ProfileComponent
+      },
+    ]
   },
   {
     path: 'Dashboard',
@@ -59,10 +74,6 @@ const routes: Routes = [
         component: ClassDetailComponent
       },
     ]
-  },
-  {
-    path: 'Profile',
-    component: ProfileComponent
   },
   {
     path: '**',

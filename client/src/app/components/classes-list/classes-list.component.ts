@@ -28,7 +28,7 @@ export class ClassesListComponent implements OnInit {
     private classService: ClassesService,
     private classBackConnection: ClassBackConnection,
     private currentRoute: ActivatedRoute,
-    ) { }
+  ) { }
 
   ngOnInit(): void {
     this.currentRoute.params.subscribe(
@@ -52,6 +52,7 @@ export class ClassesListComponent implements OnInit {
     this.classBackConnection.fetchClasses(this.labID).subscribe(
       classArray =>
       {
+        this.classService.setClasses(classArray)
         this.classes = classArray;
       },
       (error) => {
@@ -69,6 +70,11 @@ export class ClassesListComponent implements OnInit {
     //console.log(this.classes.find(selectClass => selectClass.id === this.selectedClassID))
     this.selectedCLassData.emit(auxClass);
     //console.log("Componente lista: ", auxClass)
+  }
+
+  ngOnDestroy()
+  {
+    this.classesArraySuscription.unsubscribe()
   }
 
 }

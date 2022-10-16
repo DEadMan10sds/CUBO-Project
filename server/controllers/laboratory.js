@@ -83,11 +83,11 @@ const deleteLab = async (req, res) => {
 const addClass = async (req, res) => {
   const { id } = req.params;
   const dataClass = req.body;
-  console.log(dataClass);
+  //console.log(dataClass);
   const currrentLab = await Laboratory.findByIdAndUpdate(id, {
     $push: { classes: dataClass.id, hours: dataClass.hour },
   });
-  console.log(currrentLab);
+  //console.log(currrentLab);
   if (!currrentLab)
     return res
       .status(400)
@@ -118,7 +118,7 @@ const deleteClassFromLab = async (req, res) => {
     $pull: { classes: dataClass.id, hours: dataClass.hour },
   });
   //await currentLab.save();
-  console.log(currentLab);
+  //console.log(currentLab);
   if (!currentLab)
     return res.status(400).json({ Message: "La clase no se pudo eliminar" });
   return res
