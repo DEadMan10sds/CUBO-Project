@@ -41,21 +41,12 @@
             </div>
           </div>
         </div>
-        <app-classes-list [laboratory]="lab.id"></app-classes-list>
+        <app-classes-list
+          [laboratory]="lab.id"
+          *ngIf="lab.classes.length > 0"
+        ></app-classes-list>
         <div class="row">
-          <!-- <div class="col-md-6 mt-2">
-            Estado
-            <div class="radio" *ngFor="let currentStatus of possibleStatus">
-              <label>
-                <input
-                  type="radio"
-                  [value]="currentStatus"
-                  formControlName="status"
-                />{{ currentStatus }}
-              </label>
-            </div>
-          </div> -->
-          <div class="col-md-6 d-flex mt-3" style="border: solid black 1px">
+          <div class="col-md-6 d-flex mt-3">
             <button
               type="button"
               class="btn btn-danger"
@@ -73,10 +64,7 @@
               Activar
             </button>
           </div>
-          <div
-            class="col-md-6 d-flex flex-row-reverse mt-3"
-            style="border: solid black 1px"
-          >
+          <div class="col-md-6 d-flex flex-row-reverse mt-3">
             <button
               type="button"
               class="btn btn-danger"
