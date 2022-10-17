@@ -8,6 +8,7 @@
     type="button"
     [routerLink]="['/Dashboard', 0]"
     routerLinkActive="active"
+    *ngIf="userRole === 'ADMIN'"
   >
     Añadir salon
   </button>

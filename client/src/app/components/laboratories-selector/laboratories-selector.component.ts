@@ -38,7 +38,7 @@ export class LaboratoriesSelectorComponent implements OnInit {
     );
     this.actualUserData = this.userDataStored.getUserStored();
     console.log(this.actualUserData)
-    //this.userRole = this.userData.getCurrentUserRole()
+    this.userRole = this.userDataStored.getCurrentUserRole()
     this.existingLabs = this.labService.getLaboratories();
     //console.log(this.existingLabs)
   }
