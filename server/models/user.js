@@ -29,9 +29,9 @@ const userSchema = new Schema(
       required: [true, "El estado del usuario es obligatorio"],
       default: true,
     },
-    img: {
+    /*img: {
       type: String,
-    },
+    },*/
     role: {
       type: String,
       required: true,

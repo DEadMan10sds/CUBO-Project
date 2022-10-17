@@ -23,11 +23,6 @@
               [disabled]="!editingUser"
             />
             <label for="name">Nombre(s)</label>
-            <span
-              class="help-block"
-              *ngIf="name.touched && !email.valid && !name.valid"
-              >El nombre es obligatorio</span
-            >
           </div>
           <div class="form-floating mb-3">
             <input
@@ -57,15 +52,10 @@
               max="9999999"
               placeholder="Clave universitaria"
               required
-              [(ngModel)]="actualUser.uniKey"
-              name="uniKey"
-              #uniKey="ngModel"
-              [disabled]="!editingUser"
+              [value]="actualUser.uniKey"
+              [disabled]="true"
             />
             <label for="uniKey">Clave universitaria</label>
-            <span class="help-block" *ngIf="uniKey.touched && !uniKey.valid"
-              >La clave universitaria es obligatoria</span
-            >
           </div>
           <div class="form-floating mb-3">
             <input
@@ -73,29 +63,20 @@
               id="email"
               type="email"
               name="email"
-              [(ngModel)]="actualUser.email"
+              [value]="actualUser.email"
               placeholder="Correo"
-              required
-              #email="ngModel"
-              [disabled]="!editingUser"
+              [disabled]="true"
             />
             <label for="email">Correo</label>
-            <span class="help-block" *ngIf="email.touched && !email.valid"
-              >El email es obligatorio</span
-            >
           </div>
           <div class="form-floating mb-3">
             <input
               class="form-control"
               placeholder="Rol"
-              required
               [value]="actualUser.role"
               [disabled]="true"
             />
             <label for="email">Correo</label>
-            <span class="help-block" *ngIf="email.touched && !email.valid"
-              >El email es obligatorio</span
-            >
           </div>
           <div class="form-group mt-2 d-flex flex-row-reverse">
             <button

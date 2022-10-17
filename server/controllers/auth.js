@@ -20,7 +20,7 @@ const login = async (req, res) => {
       existsUser.password
     );
     if (!passwordVerification)
-      return res.status(400).json({ Message: "Correo o contrasña erroneos" });
+      return res.status(400).json({ Message: "Correo o contraseña erroneos" });
 
     const token = await generateJWT(existsUser.id);
     res

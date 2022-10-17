@@ -75,7 +75,7 @@ export class UserBackConnectionService
 
   updateUser(userToUpdate: UserModel)
   {
-    console.log(userToUpdate);
+    //console.log(userToUpdate);
     return this.httpSolicitudes.put<{Message, editedData}>(
       (environment.BACK_URL + 'users/' + localStorage.getItem('uid')),
       userToUpdate

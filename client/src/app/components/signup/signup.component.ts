@@ -43,13 +43,13 @@ export class SignupComponent implements OnInit{
 
   register(userData: NgForm)
   {
-    console.log(userData.value);
+    //console.log(userData.value);
     const {repeatPassword, ...newUser} = userData.value;
     newUser.role = "ALUMNO";
     this.userBack.registerUser(newUser).subscribe(
       (received: {Message, insert: UserModel})=>
       {
-        console.log(received);
+        //console.log(received);
         this.user_login()
       },
       (error)=> {

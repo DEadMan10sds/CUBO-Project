@@ -13,12 +13,14 @@ export class ClassesComponent implements OnInit {
 
   userRole: string;
   teacherData;
+  localStorageID;
 
   constructor(private userData: storeUserData) { }
 
   ngOnInit(): void {
     //console.log("Incoming Class",this.incomingClass);
     this.userRole = this.userData.getCurrentUserRole();
+    this.localStorageID = localStorage.getItem('uid');
   }
 
   onClick(){

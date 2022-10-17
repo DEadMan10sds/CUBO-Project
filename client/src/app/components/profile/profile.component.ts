@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { NgForm } from '@angular/forms';
+import { Router } from '@angular/router';
 import { Subscription } from 'rxjs';
 import { UserModel } from 'src/app/models/user.model';
 import { storeUserData } from 'src/app/services/storeUser.service';
@@ -18,7 +19,11 @@ export class ProfileComponent implements OnInit {
   editErrorTrigger: boolean = false;
   editError;
 
-  constructor(private userData: storeUserData, private userBack: UserBackConnectionService) { }
+  constructor(
+    private userData: storeUserData,
+    private userBack: UserBackConnectionService,
+    private router: Router
+  ) { }
 
   ngOnInit(): void {
     this.actualUserSuscription = this.userData.userStored.subscribe(
@@ -39,7 +44,9 @@ export class ProfileComponent implements OnInit {
   {
     this.userBack.updateUser(userDataForm.value).subscribe(
       {
-        next: (result) => console.log(result),
+        next: (result) => {
+          this.router.navigate(['/']);
+        },
         error: (error) => {
           this.editErrorTrigger = true
           this.editError = error;

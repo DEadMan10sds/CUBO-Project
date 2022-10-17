@@ -40,14 +40,14 @@ const createUser = async (req, res = response) => {
 const editUser = async (req, res = response) => {
   const { id } = req.params;
   //Elimina password y role para hacerlas variables independientes
-  const { password, ...dataToUpdate } = req.body;
+  const { name, surname, ...dataToUpdate } = req.body;
 
   const existsUser = await User.findById(id);
 
   if (!existsUser)
     return res.status(400).json({ Message: "No existe el usuario" });
 
-  if (dataToUpdate.uniKey || dataToUpdate.email) {
+  /*if (dataToUpdate.uniKey || dataToUpdate.email) {
     const duplicatedData = await User.find({
       $or: [{ uniKey: dataToUpdate.uniKey }, { email: dataToUpdate.email }],
     });
@@ -55,14 +55,14 @@ const editUser = async (req, res = response) => {
       return res
         .status(400)
         .json({ Message: "Clave universitaria o correo ya registrados" });
-  }
+  }*/
 
-  if (!bcrypt.compareSync(password, existsUser.password))
-    return res.status(400).json({ Message: "Contraseña incorrecta" });
+  /*if (!bcrypt.compareSync(password, existsUser.password))
+    return res.status(400).json({ Message: "Contraseña incorrecta" });*/
 
-  const editedData = await User.findByIdAndUpdate(id, dataToUpdate);
+  const editedData = await User.findByIdAndUpdate(id, { name, surname });
 
-  console.log(editedData);
+  //console.log(editedData);
 
   return res.status(200).json({ Message: "Usuario editado", editedData });
 };

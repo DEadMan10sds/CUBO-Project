@@ -67,7 +67,6 @@ router.put(
   [
     validateJWT,
     check("id", "El id solo puede ser numérico").isMongoId().notEmpty(),
-    check("email", "El correo debe ser valido").optional().isEmail(),
     check(
       ["name", "surname"],
       "No se pueden guardar nombres con numeros"
