@@ -10,6 +10,7 @@ export class storeUserData {
   private currentUserStored: UserModel;
   userStored = new Subject<UserModel>();
   isLogged: boolean = false;
+  userLogged = new Subject<boolean>();
 
   getUserStored()
   {
@@ -25,6 +26,18 @@ export class storeUserData {
   getCurrentUserRole()
   {
     return this.currentUserStored.role;
+  }
+
+  setUserLogged()
+  {
+    this.isLogged = true;
+    this.userLogged.next(this.isLogged);
+  }
+
+  unsetUserLogged()
+  {
+    this.isLogged = false;
+    this.userLogged.next(this.isLogged);
   }
 
 }

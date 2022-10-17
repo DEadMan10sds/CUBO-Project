@@ -61,10 +61,10 @@ export class SignupComponent implements OnInit{
   login(loginData: NgForm)
   {
 
-    console.log("Login data", loginData.value);
+    //console.log("Login data", loginData.value);
     this.userBack.loginUser(loginData.value).subscribe(
       (receiver: {Message: string, existsUser: UserModel, token: string}) => {
-        console.log(receiver);
+        //console.log(receiver);
         this.userBack.setCurrentUser(receiver.existsUser);
         localStorage.setItem("xToken", receiver.token);
         localStorage.setItem('uid', receiver.existsUser.id);

@@ -67,6 +67,7 @@ export class UserBackConnectionService
       tap(
         userDataFetched =>{
           this.userDataStoraged.setUserStored(userDataFetched.userResult);
+          this.userDataStoraged.setUserLogged()
         }
       )
     ).toPromise();
