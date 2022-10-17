@@ -34,11 +34,15 @@ export class SignupComponent implements OnInit{
   {
     this.userlogin = false;
     this.userregister = true;
+    this.loginError = false;
+    this.loginHadError = null;
   }
   user_login()
   {
     this.userlogin = true;
     this.userregister = false;
+    this.loginError = false;
+    this.loginHadError = null;
   }
 
   register(userData: NgForm)
@@ -49,11 +53,13 @@ export class SignupComponent implements OnInit{
     this.userBack.registerUser(newUser).subscribe(
       (received: {Message, insert: UserModel})=>
       {
-        //console.log(received);
+        console.log(received);
         this.user_login()
       },
       (error)=> {
         console.log(error);
+        this.loginError = error;
+        this.loginHadError = true;
       }
     );;
   }
@@ -68,6 +74,7 @@ export class SignupComponent implements OnInit{
         this.userBack.setCurrentUser(receiver.existsUser);
         localStorage.setItem("xToken", receiver.token);
         localStorage.setItem('uid', receiver.existsUser.id);
+        this.userData.setUserLogged();
         this.router.navigate(['/']);
       },
       (error) => {

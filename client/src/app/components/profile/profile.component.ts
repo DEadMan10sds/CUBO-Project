@@ -56,4 +56,20 @@ export class ProfileComponent implements OnInit {
     );
   }
 
+  deleteUser()
+  {
+    this.userBack.deactivateUser(this.actualUser.id).subscribe(
+      {
+        next: (result) => {
+          console.log(result);
+          localStorage.removeItem('uid');
+          localStorage.removeItem('xToken');
+          this.userData.unsetUserLogged();
+          this.router.navigate(['/']);
+        },
+        error: (error) => console.log(error)
+      }
+    );
+  }
+
 }

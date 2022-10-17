@@ -26,7 +26,7 @@ export class ClassesComponent implements OnInit {
   onClick(){
     this.idClassSelected.emit(this.incomingClass.id);
     this.teacherData = this.incomingClass.teacher;
-    console.log(this.teacherData.name)
+    //console.log(this.teacherData.name)
   }
 
 }

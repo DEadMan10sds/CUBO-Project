@@ -1,14 +1,19 @@
-<a [routerLink]="['../', currentLab.id]" routerLinkActive="active">
-  <div class="col-xs-12">
-    <h1>{{ currentLab.name }}</h1>
+<div class="row m-2 card">
+  <div class="card-body shadow-sm over-overlay hover-zoom hover-shadow ripple">
+    <a [routerLink]="['../', currentLab.id]" routerLinkActive="active">
+      <div class="col-xs-12 text-center">
+        <h1>{{ currentLab.name }}</h1>
+      </div>
+    </a>
   </div>
-</a>
-<button
-  type="button"
-  class="btn btn-primary"
-  [routerLink]="['../Dashboard', currentLab.id]"
-  routerLinkActive="router-link-active"
-  *ngIf="userRole === 'ADMIN'"
->
-  Editar
-</button>
+  <div class="card-footer row m-0" *ngIf="userRole === 'ADMIN'">
+    <button
+      type="button"
+      class="btn btn-primary col-xs-12"
+      [routerLink]="['../Dashboard', currentLab.id]"
+      routerLinkActive="router-link-active"
+    >
+      Editar
+    </button>
+  </div>
+</div>

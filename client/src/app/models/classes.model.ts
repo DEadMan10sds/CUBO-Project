@@ -9,7 +9,8 @@ export class ClassesModel implements ClassInterface{
   free: boolean;
   teacher: {
     _id: string,
-    name: string
+    name: string,
+    surname: string
   };
   type: string;
   authorized: boolean;

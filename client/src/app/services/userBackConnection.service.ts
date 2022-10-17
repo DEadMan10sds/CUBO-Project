@@ -82,4 +82,12 @@ export class UserBackConnectionService
     )
   }
 
+  deactivateUser(idUserToDeactivate: string)
+  {
+    return this.httpSolicitudes.put<{Message, deactivateUser?}>(
+      (environment.BACK_URL + 'users/deactivate/' + idUserToDeactivate),
+      {}
+    );
+  }
+
 }

@@ -1,20 +1,20 @@
-<div class="row border border-primary d-md-flex justify-content-md-center">
-  <a (click)="onClick()" class="row col-md-9 border border-danger">
-    <div class="col">{{ incomingClass.hour }}:00</div>
+<div class="row d-md-flex justify-content-md-center">
+  <a (click)="onClick()" class="row col-md-9">
+    <div class="col-md-2">{{ incomingClass.hour }}:00</div>
     <div class="col">
       {{ incomingClass.name }}
     </div>
     <div class="col">
-      {{ incomingClass.type }}
+      {{ incomingClass.type === "CLASS" ? "Clase" : "Examen" }}
     </div>
     <div class="col">
       {{ incomingClass.teacher.name }}
     </div>
   </a>
-  <div class="col col-md-2">
+  <div class="col-md-3">
     <button
       type="button"
-      class="btn btn-primary w-100"
+      class="btn btn-primary"
       [routerLink]="['/Dashboard', incomingClass.place, incomingClass.id]"
       routerLinkActive="active"
       *ngIf="

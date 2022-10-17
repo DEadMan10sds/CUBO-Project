@@ -28,7 +28,7 @@ export class TeacherGuardGuard implements CanActivate, CanActivateChild, CanLoad
 
   validateUser():boolean
   {
-    if(this.userData.getCurrentUserRole() === 'PROFESOR') return true;
+    if(this.userData.getCurrentUserRole() === 'PROFESOR' || this.userData.getCurrentUserRole() === 'ADMIN') return true;
     return false;
   }
 

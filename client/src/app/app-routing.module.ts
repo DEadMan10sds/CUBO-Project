@@ -62,8 +62,8 @@ const routes: Routes = [
   {
     path: 'Dashboard',
     resolve: [LaboratoryResolverService, UserResolver],
-    canActivate: [AuthGuard],
-    //canActivateChild: [AdminGuardGuard],
+    canActivate: [AuthGuard, AdminGuardGuard],
+    canActivateChild: [AdminGuardGuard],
     children: [
       {
         path: ':idLab',
@@ -74,13 +74,9 @@ const routes: Routes = [
       {
         path: ':idLab/:classID',
         resolve: [ClassResolverService, UserResolver],
-        canActivate: [TeacherGuardGuard],
+        canActivate: [AdminGuardGuard, TeacherGuardGuard],
         component: ClassEditComponent
       },
-      {
-        path: '**',
-        redirectTo: '/404'
-      }
     ]
   },
   {

@@ -18,7 +18,7 @@ const createUser = async (req, res = response) => {
   const existsUser = await existUser(userData);
   if (existsUser)
     return res.status(400).json({
-      Message: "Ya existe un usuario con este id o correo",
+      Message: "Ya existe un usuario con esta clave universitaria o correo",
       existsUser,
     });
 
@@ -77,7 +77,7 @@ const editUser = async (req, res = response) => {
 
 const deactivateUser = async (req, res = response) => {
   const { id } = req.params;
-  const deactivateUser = await User.findOneAndUpdate(
+  const deactivateUser = await User.findByIdAndUpdate(
     id,
     { status: false },
     { new: true }

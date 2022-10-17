@@ -97,7 +97,8 @@ export class ClassEditComponent implements OnInit {
           free: false,
           teacher: {
             _id: localStorage.getItem('uid'),
-            name: ''
+            name: '',
+            surname: ''
           },
           type: null,
           authorized: false,
