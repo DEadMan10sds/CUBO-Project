@@ -1,5 +1,5 @@
-import { Component, OnInit } from '@angular/core';
-import { UserBackConnectionService } from './services/userBackConnection.service';
+import { Component, OnInit} from '@angular/core';
+import { UserModel } from './models/user.model';
 
 @Component({
   selector: 'app-root',
@@ -8,12 +8,10 @@ import { UserBackConnectionService } from './services/userBackConnection.service
 })
 export class AppComponent implements OnInit{
 
-  isLogged: boolean = false;
-
-  constructor(private userBack: UserBackConnectionService){}
+  //actualUserData: UserModel;
 
   ngOnInit(): void {
-    this.isLogged = this.userBack.isLoggedIn()
+
   }
 
 }

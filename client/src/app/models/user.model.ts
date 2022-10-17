@@ -1,5 +1,7 @@
 export class UserModel
 {
+
+  id: string;
   name: string;
   surname: string;
   uniKey: number;
@@ -7,8 +9,9 @@ export class UserModel
   password?: string;
   role: string;
 
-  constructor(name:string, surname: string, uniKey: number, email: string, role: string, password?: string)
+  constructor(id: string, name:string, surname: string, uniKey: number, email: string, role: string, password?: string)
   {
+    this.id = id;
     this.name = name;
     this.surname = surname;
     this.uniKey = uniKey;

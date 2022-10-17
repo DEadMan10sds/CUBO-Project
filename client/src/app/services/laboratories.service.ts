@@ -10,11 +10,8 @@ export class LaboratoriesService{
 
   private existingLaboratories: LaboratoriesModel[] = [];
 
-  //constructor(private backConnection: BackConnectionService){}
-
   getLaboratories()
   {
-    //console.log(this.existingLaboratories)
     return this.existingLaboratories.slice();
   }
 
@@ -30,10 +27,8 @@ export class LaboratoriesService{
 
   createLab(newLab: LaboratoriesModel)
   {
-    //newLab.name = newLab.name.toUpperCase();
     this.existingLaboratories.push(newLab);
     this.laboratoriesChanges.next(this.existingLaboratories.slice());
-    //this.backConnection.postLab(newLab);
   }
 
   updateLab(labUpdatedID: string,labUpdated: LaboratoriesModel)
@@ -43,21 +38,17 @@ export class LaboratoriesService{
     labToUpdateData.name = labUpdated.name.toUpperCase();
     labToUpdateData.status = labUpdated.status;
     this.existingLaboratories[labToUpdateIndex] = labToUpdateData;
-    //console.log(this.existingLaboratories);
     this.laboratoriesChanges.next(this.existingLaboratories.slice());
-    //this.backConnection.updateLab(labUpdatedID, labUpdated);
   }
 
   setLaboratories(backLabsArray: LaboratoriesModel[])
   {
     this.existingLaboratories = backLabsArray;
-    //console.log('existingLabs', backLabsArray)
     this.laboratoriesChanges.next(this.existingLaboratories.slice());
   }
 
   getSingleLabClass(labName: string, classIndex: number)
   {
-    //console.log({labName, classIndex})
     const classesArray = this.getLabClasses(labName);
     return classesArray[classIndex];
   }

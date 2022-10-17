@@ -13,12 +13,15 @@ export class tokenInterceptor implements HttpInterceptor
 
     intercept(req, next)
     {
+      //console.log(req)
+      if(((req.url.includes('auth')) || (req.url.includes('users/'))) && req.method === "POST" )
+        return next.handle(req)
+
       const tokenizedRequest = req.clone({
         setHeaders: {
           xToken: this.logInService.getToken()
         }
       });
-
       return next.handle(tokenizedRequest);
     }
 

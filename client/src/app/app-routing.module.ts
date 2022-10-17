@@ -7,12 +7,13 @@ import { EditLaboComponent } from './components/edit-labo/edit-labo.component';
 
 //Customs
 import { HomeComponent } from './components/home/home.component';
-import { LoginComponent } from './components/login/login.component';
 import { ProfileComponent } from './components/profile/profile.component';
 import { SignupComponent } from './components/signup/signup.component';
 import { AuthGuard } from './guards/auth.guard';
 import { ClassResolverService } from './services/resolvers/class-resolver.service';
 import { LaboratoryResolverService } from './services/resolvers/laboratories-resolver.service';
+import { UserResolver } from './services/resolvers/user-resolver.service';
+//import { userResolver } from './services/resolvers/user-resolver.service';
 
 const routes: Routes = [
   {
@@ -21,9 +22,23 @@ const routes: Routes = [
     pathMatch: 'full'
   },
   {
+    path: 'User',
+    children: [
+      {
+        path: 'signup',
+        component: SignupComponent
+      },
+      {
+        path: ':idUser',
+        canActivate: [AuthGuard],
+        component: ProfileComponent
+      },
+    ]
+  },
+  {
     path: 'Home',
     component: HomeComponent,
-    resolve: [LaboratoryResolverService],
+    resolve: [LaboratoryResolverService, UserResolver],
     canActivate: [AuthGuard]
   },
 
@@ -31,6 +46,7 @@ const routes: Routes = [
     path: ':idLab',
     component: ClassSelectorDetailComponent,
     canActivate: [AuthGuard],
+    resolve: [UserResolver],
     pathMatch: 'full',
     children: [
       {
@@ -42,27 +58,8 @@ const routes: Routes = [
     ]
   },
   {
-    path: 'User',
-    children: [
-      {
-        path: 'login',
-        component: LoginComponent
-      },
-      {
-        path: 'signup',
-        component: SignupComponent
-      },
-      {
-        path: ':idUser',
-        canActivate: [AuthGuard],
-        component: ProfileComponent
-
-      },
-    ]
-  },
-  {
     path: 'Dashboard',
-    resolve: [LaboratoryResolverService],
+    resolve: [LaboratoryResolverService, UserResolver],
     canActivate: [AuthGuard],
     children: [
       {

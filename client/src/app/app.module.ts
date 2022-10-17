@@ -25,7 +25,6 @@ import { ProfileComponent } from './components/profile/profile.component';
 import { EditLaboComponent } from './components/edit-labo/edit-labo.component';
 import { NotFoundComponent } from './components/not-found/not-found.component';
 import { RedirectHomeComponent } from './components/redirect-home/redirect-home.component';
-import { LoginComponent } from './components/login/login.component';
 import { SignupComponent } from './components/signup/signup.component';
 import { AuthGuard } from './guards/auth.guard';
 import { tokenInterceptor } from './services/token-interceptor.service';
@@ -49,7 +48,6 @@ import { tokenInterceptor } from './services/token-interceptor.service';
     EditLaboComponent,
     NotFoundComponent,
     RedirectHomeComponent,
-    LoginComponent,
     SignupComponent
   ],
   imports: [

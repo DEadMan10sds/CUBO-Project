@@ -2,6 +2,7 @@ import { Component, OnInit, ViewChild } from '@angular/core';
 import { NgForm } from '@angular/forms';
 import { Router } from '@angular/router';
 import { UserModel } from 'src/app/models/user.model';
+import { storeUserData } from 'src/app/services/storeUser.service';
 import { UserBackConnectionService } from 'src/app/services/userBackConnection.service';
 
 @Component({
@@ -11,12 +12,9 @@ import { UserBackConnectionService } from 'src/app/services/userBackConnection.s
 })
 export class SignupComponent implements OnInit{
 
-  //show hide div variables
-  userlogin = false;
-  userregister = true;
-  //Buttons clicks functionalities
+  userlogin = true;
+  userregister = false;
 
-  currentUser: UserModel;
   loginError;
   loginHadError: boolean = false;
 
@@ -24,7 +22,8 @@ export class SignupComponent implements OnInit{
 
   constructor(
     private userBack: UserBackConnectionService,
-    private router: Router
+    private router: Router,
+    private userData: storeUserData
   ){}
 
   ngOnInit()
@@ -61,16 +60,18 @@ export class SignupComponent implements OnInit{
 
   login(loginData: NgForm)
   {
+
     console.log("Login data", loginData.value);
     this.userBack.loginUser(loginData.value).subscribe(
       (receiver: {Message: string, existsUser: UserModel, token: string}) => {
         console.log(receiver);
-        this.currentUser = receiver.existsUser;
-        console.log("Loggueado", this.currentUser);
-        localStorage.setItem("xToken", receiver.token)
+        this.userBack.setCurrentUser(receiver.existsUser);
+        localStorage.setItem("xToken", receiver.token);
+        localStorage.setItem('uid', receiver.existsUser.id);
         this.router.navigate(['/']);
       },
       (error) => {
+        console.log('Error', error)
         this.loginError = error;
         this.loginHadError = true;
       }

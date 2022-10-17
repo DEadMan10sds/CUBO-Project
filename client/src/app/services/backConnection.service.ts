@@ -13,7 +13,7 @@ import { ClassesService } from './classes.service';
 export class BackConnectionService
 {
 
-  constructor(private httpSolicitudes: HttpClient, private labService: LaboratoriesService, private classService: ClassesService){}
+  constructor(private httpSolicitudes: HttpClient, private labService: LaboratoriesService){}
 
   fetchLabs()
   {
@@ -28,7 +28,7 @@ export class BackConnectionService
     );
   }
 
-  fetchLabsWithoutSub()
+  fetchLabsWithSub()
   {
     this.httpSolicitudes.get<LaboratoriesModel[]>((environment.BACK_URL + 'labs/'))
     .pipe(
