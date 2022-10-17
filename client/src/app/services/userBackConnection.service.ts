@@ -69,7 +69,7 @@ export class UserBackConnectionService
           this.userDataStoraged.setUserStored(userDataFetched.userResult);
         }
       )
-    );
+    ).toPromise();
   }
 
 }
