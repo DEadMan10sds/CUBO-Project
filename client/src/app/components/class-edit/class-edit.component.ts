@@ -5,7 +5,6 @@ import { Subscription } from 'rxjs';
 import { ClassesModel } from 'src/app/models/classes.model';
 import { LaboratoriesModel } from 'src/app/models/laboratories.model';
 import { UserModel } from 'src/app/models/user.model';
-import { BackConnectionService } from 'src/app/services/backConnection.service';
 import { ClassesService } from 'src/app/services/classes.service';
 import { ClassBackConnection } from 'src/app/services/classesBackConnection.service';
 import { LaboratoriesService } from 'src/app/services/laboratories.service';
@@ -52,7 +51,7 @@ export class ClassEditComponent implements OnInit {
       (params: Params) => {
         this.classID = params['classID'];
         this.labID = params["idLab"];
-        console.log(this.classID)
+        //console.log(this.classID)
         this.existsClass();
         this.setHoursAvailable(this.labID);
         if(this.classID !== '0') this.editClass = true;
@@ -60,11 +59,11 @@ export class ClassEditComponent implements OnInit {
         if(this.existClassInArray) this.currentClass = this.setClass();
         if(this.editClass)
         {
-          console.log(this.currentClass.startDate.toString())
+          //console.log(this.currentClass.startDate.toString())
           this.startDateString = this.convertDate(this.currentClass.startDate.toString());
           if(this.currentClass.type === 'CLASS') this.defaultType = 'Clase'
           else this.defaultType = 'Examen'
-          this.hoursAvailables.push(this.currentClass.hour);
+          this.pushEditinHour()
         }
         //console.log(this.currentClass, this.classID);
       }
@@ -118,9 +117,9 @@ export class ClassEditComponent implements OnInit {
     let convertedDate: string[];
     let finalDate: string;
     convertedDate = dateToConver.split('-');
-    console.log(convertedDate)
+    //console.log(convertedDate)
     finalDate = [convertedDate[0], convertedDate[1],[convertedDate[2][0],convertedDate[2][1] ].join(''),].join('-')
-    console.log(finalDate);
+    //console.log(finalDate);
     return finalDate
   }
 
@@ -138,7 +137,8 @@ export class ClassEditComponent implements OnInit {
     if((classForm.value.place !== this.labID) && this.editClass) this.backConnection.changeLabOfClass(classForm.value, this.labID, this.currentClass.hour)
     if((classForm.value.place === this.labID) && this.editClass) this.backConnection.updateClass(classForm.value, this.currentClass.hour);
     this.backConnection.fetchClasses(this.labID);
-    console.log(newClassData)
+    //console.log(newClassData)
+    this.popEditingHour();
     this.redirect();
   }
 
@@ -171,7 +171,7 @@ export class ClassEditComponent implements OnInit {
   addDay(dayToAdd: string)
   {
     const existsDay = this.currentClass.repeats.indexOf(dayToAdd);
-    console.log(existsDay);
+    //console.log(existsDay);
     if(existsDay === -1)return this.currentClass.repeats.push(dayToAdd);
     return this.currentClass.repeats.splice(existsDay, 1);
   }
@@ -188,7 +188,19 @@ export class ClassEditComponent implements OnInit {
   deleteClass()
   {
     this.backConnection.deleteClass(this.classID, this.labID, this.currentClass.hour);
-    console.log("Delete Class", this.classID, this.currentClass.hour);
+    //console.log("Delete Class", this.classID, this.currentClass.hour);
     this.redirect();
   }
+
+  pushEditinHour()
+  {
+    this.hoursAvailables.push(this.currentClass.hour);
+  }
+
+  popEditingHour()
+  {
+    const currentHourIndex = this.hoursAvailables.indexOf(this.currentClass.hour);
+    this.hoursAvailables.splice(currentHourIndex, 1);
+  }
+
 }

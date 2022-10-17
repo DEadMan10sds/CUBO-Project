@@ -1,7 +1,9 @@
 import { Component, OnInit } from '@angular/core';
+import { NgForm } from '@angular/forms';
 import { Subscription } from 'rxjs';
 import { UserModel } from 'src/app/models/user.model';
 import { storeUserData } from 'src/app/services/storeUser.service';
+import { UserBackConnectionService } from 'src/app/services/userBackConnection.service';
 
 @Component({
   selector: 'app-profile',
@@ -12,8 +14,11 @@ export class ProfileComponent implements OnInit {
 
   actualUser: UserModel;
   actualUserSuscription: Subscription;
+  editingUser: boolean = false;
+  editErrorTrigger: boolean = false;
+  editError;
 
-  constructor(private userData: storeUserData) { }
+  constructor(private userData: storeUserData, private userBack: UserBackConnectionService) { }
 
   ngOnInit(): void {
     this.actualUserSuscription = this.userData.userStored.subscribe(
@@ -23,6 +28,25 @@ export class ProfileComponent implements OnInit {
     );
     this.actualUser = this.userData.getUserStored()
     //console.log(this.actualUser);
+  }
+
+  editMode()
+  {
+    this.editingUser = !this.editingUser;
+  }
+
+  editUserData(userDataForm: NgForm)
+  {
+    this.userBack.updateUser(userDataForm.value).subscribe(
+      {
+        next: (result) => console.log(result),
+        error: (error) => {
+          this.editErrorTrigger = true
+          this.editError = error;
+          console.log(error)
+        }
+      }
+    );
   }
 
 }

@@ -80,7 +80,11 @@ router.put(
 //Deactivate user
 router.put(
   "/deactivate/:id",
-  [check("id", "El id no puede estar vacio").notEmpty(), fieldValidation],
+  [
+    validateJWT,
+    check("id", "El id no puede estar vacio").notEmpty(),
+    fieldValidation,
+  ],
   deactivateUser
 );
 
