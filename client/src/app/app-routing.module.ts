@@ -33,6 +33,7 @@ const routes: Routes = [
       {
         path: ':idUser',
         canActivate: [AuthGuard],
+        resolve:[UserResolver],
         component: ProfileComponent
       },
     ]
@@ -43,7 +44,6 @@ const routes: Routes = [
     resolve: [LaboratoryResolverService, UserResolver],
     canActivate: [AuthGuard]
   },
-
   {
     path: ':idLab',
     component: ClassSelectorDetailComponent,
