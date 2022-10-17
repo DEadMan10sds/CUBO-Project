@@ -4,10 +4,12 @@ import { ActivatedRoute, Params, Router } from '@angular/router';
 import { Subscription } from 'rxjs';
 import { ClassesModel } from 'src/app/models/classes.model';
 import { LaboratoriesModel } from 'src/app/models/laboratories.model';
+import { UserModel } from 'src/app/models/user.model';
 import { BackConnectionService } from 'src/app/services/backConnection.service';
 import { ClassesService } from 'src/app/services/classes.service';
 import { ClassBackConnection } from 'src/app/services/classesBackConnection.service';
 import { LaboratoriesService } from 'src/app/services/laboratories.service';
+import { storeUserData } from 'src/app/services/storeUser.service';
 
 @Component({
   selector: 'app-class-edit',
@@ -33,12 +35,16 @@ export class ClassEditComponent implements OnInit {
   auxDate: string = '02/10/2022';
   defaultType: string;
 
+  actualUser: UserModel;
+  actualUserSuscription: Subscription;
+
   constructor(
     private currentClassService: ClassesService,
     private currentRoute: ActivatedRoute,
     private router: Router,
     private labsService: LaboratoriesService,
-    private backConnection: ClassBackConnection
+    private backConnection: ClassBackConnection,
+    private userData: storeUserData
     ) { }
 
   ngOnInit(): void {
@@ -46,6 +52,7 @@ export class ClassEditComponent implements OnInit {
       (params: Params) => {
         this.classID = params['classID'];
         this.labID = params["idLab"];
+        console.log(this.classID)
         this.existsClass();
         this.setHoursAvailable(this.labID);
         if(this.classID !== '0') this.editClass = true;
@@ -62,6 +69,12 @@ export class ClassEditComponent implements OnInit {
         //console.log(this.currentClass, this.classID);
       }
     );
+    this.actualUserSuscription = this.userData.userStored.subscribe(
+      {
+        next: (result) => this.actualUser = result
+      }
+    );
+    this.actualUser = this.userData.getUserStored();
     this.labs = this.labsService.getLaboratories();
   }
 
@@ -74,6 +87,7 @@ export class ClassEditComponent implements OnInit {
   setClass():ClassesModel
   {
     if(!this.editClass)
+    {
       return this.currentClass = new ClassesModel(
         {
           id: null,
@@ -82,7 +96,10 @@ export class ClassEditComponent implements OnInit {
           place: this.labID,
           status: false,
           free: false,
-          teacher: '632c5dc7a91eb6f2325ddfd9',
+          teacher: {
+            _id: localStorage.getItem('uid'),
+            name: ''
+          },
           type: null,
           authorized: false,
           recurrent: false,
@@ -92,6 +109,7 @@ export class ClassEditComponent implements OnInit {
           endDate: null
         }
       );
+    }
     else return this.currentClassService.getSingleClass(this.classID);
   }
 

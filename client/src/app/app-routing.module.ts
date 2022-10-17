@@ -73,7 +73,7 @@ const routes: Routes = [
       },
       {
         path: ':idLab/:classID',
-        resolve: [ClassResolverService],
+        resolve: [ClassResolverService, UserResolver],
         canActivate: [TeacherGuardGuard],
         component: ClassEditComponent
       },

@@ -35,7 +35,6 @@ export class ClassBackConnection
   createNewClass(newClass: ClassesModel)
   {
     let result;
-    //console.log("Creating class: ", newClass);
     this.httpSolicitudes.post<{Message, result: ClassesModel}>(
       (environment.BACK_URL + 'classes/ByLab/'),
       newClass,

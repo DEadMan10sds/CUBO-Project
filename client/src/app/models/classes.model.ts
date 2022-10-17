@@ -7,8 +7,10 @@ export class ClassesModel implements ClassInterface{
   place: string;
   status: boolean;
   free: boolean;
-  teacher: string;
-  teacherName?: string;
+  teacher: {
+    _id: string,
+    name: string
+  };
   type: string;
   authorized: boolean;
   recurrent: boolean;

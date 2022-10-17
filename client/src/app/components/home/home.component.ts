@@ -12,19 +12,10 @@ import { storeUserData } from 'src/app/services/storeUser.service';
 })
 export class HomeComponent implements OnInit {
 
-  actualUserData: UserModel;
-  userSuscription: Subscription;
-
-  constructor(private userDataStored: storeUserData) { }
+  constructor() { }
 
   ngOnInit(): void {
-    this.userSuscription = this.userDataStored.userStored.subscribe(
-      (resultUserData: UserModel) => {
-        this.actualUserData = resultUserData;
-      }
-    );
-    this.actualUserData = this.userDataStored.getUserStored();
-    console.log(this.actualUserData)
+    //console.log(this.actualUserData)
   }
 
 }

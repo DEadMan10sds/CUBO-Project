@@ -51,7 +51,7 @@ export class UserBackConnectionService
   setCurrentUser(user: UserModel)
   {
     this.currentUser = user;
-    console.log(this.currentUser, "Setting current user on service");
+    //console.log(this.currentUser, "Setting current user on service");
   }
 
   getUserFromService()

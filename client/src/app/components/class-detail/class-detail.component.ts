@@ -12,12 +12,11 @@ export class ClassDetailComponent implements OnInit {
 
   classID: string;
   @Input() actualClass: ClassesModel;
-
+  teacherName;
 
   constructor() { }
 
   ngOnInit(): void {
-
   }
 
 }

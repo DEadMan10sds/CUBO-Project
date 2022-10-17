@@ -12,6 +12,7 @@ export class ClassesComponent implements OnInit {
   @Output() idClassSelected = new EventEmitter<string>();
 
   userRole: string;
+  teacherData;
 
   constructor(private userData: storeUserData) { }
 
@@ -22,6 +23,8 @@ export class ClassesComponent implements OnInit {
 
   onClick(){
     this.idClassSelected.emit(this.incomingClass.id);
+    this.teacherData = this.incomingClass.teacher;
+    console.log(this.teacherData.name)
   }
 
 }
