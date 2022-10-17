@@ -9,6 +9,7 @@ import { UserModel } from "../models/user.model";
 export class storeUserData {
   private currentUserStored: UserModel;
   userStored = new Subject<UserModel>();
+  isLogged: boolean = false;
 
   getUserStored()
   {

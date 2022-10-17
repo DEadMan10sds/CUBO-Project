@@ -1,4 +1,5 @@
 import { Component, Input, Output, OnInit, EventEmitter } from '@angular/core';
+import { storeUserData } from 'src/app/services/storeUser.service';
 import { ClassesModel } from '../../models/classes.model'
 
 @Component({
@@ -9,10 +10,14 @@ import { ClassesModel } from '../../models/classes.model'
 export class ClassesComponent implements OnInit {
   @Input() incomingClass: ClassesModel;
   @Output() idClassSelected = new EventEmitter<string>();
-  constructor() { }
+
+  userRole: string;
+
+  constructor(private userData: storeUserData) { }
 
   ngOnInit(): void {
     //console.log("Incoming Class",this.incomingClass);
+    this.userRole = this.userData.getCurrentUserRole();
   }
 
   onClick(){

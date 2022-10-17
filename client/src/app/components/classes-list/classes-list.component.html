@@ -5,7 +5,11 @@
 ></app-classes>
 <button
   class="btn btn-outline-primary w-100"
-  *ngIf="classes.length < 14 && this.labID !== '0'"
+  *ngIf="
+    classes.length < 14 &&
+    this.labID !== '0' &&
+    (userRole === 'ADMIN' || userRole === 'PROFESOR')
+  "
   [routerLink]="['/Dashboard/', laboratory, 0]"
   routerLinkActive="active"
 >

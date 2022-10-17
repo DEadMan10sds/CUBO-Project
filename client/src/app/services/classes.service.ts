@@ -27,7 +27,7 @@ export class ClassesService{
     //console.log("SettingClasses");
     this.existingClasses = classesArray;
     this.classesChanges.next(this.existingClasses.slice());
-    console.log("Setted Classess", this.existingClasses)
+    //console.log("Setted Classess", this.existingClasses)
     //console.log("Get classes after setted: ", this.getExistingClasses())
   }
 

@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { storeUserData } from 'src/app/services/storeUser.service';
 import { UserBackConnectionService } from 'src/app/services/userBackConnection.service';
 
 @Component({
@@ -11,7 +12,8 @@ export class HeaderComponent implements OnInit {
   isLogged: boolean = false;
 
   constructor(
-    private userBack: UserBackConnectionService
+    private userBack: UserBackConnectionService,
+    private userData: storeUserData
     ){}
 
   ngOnInit(): void {

@@ -17,10 +17,10 @@ export class UserResolver implements Resolve<UserModel>
   async resolve(route: ActivatedRouteSnapshot, state: RouterStateSnapshot){
     const uid = localStorage.getItem('uid');
     const uDataStored = this.dataStored.getUserStored();
-    console.log(uDataStored)
+    //console.log(uDataStored)
     if(uDataStored === undefined)
     {
-      console.log("resolver", uid)
+      //console.log("resolver", uid)
       await this.userBack.getUserData(uid);
       return this.uData;
     }

@@ -9,7 +9,9 @@ import { EditLaboComponent } from './components/edit-labo/edit-labo.component';
 import { HomeComponent } from './components/home/home.component';
 import { ProfileComponent } from './components/profile/profile.component';
 import { SignupComponent } from './components/signup/signup.component';
+import { AdminGuardGuard } from './guards/admin-guard.guard';
 import { AuthGuard } from './guards/auth.guard';
+import { TeacherGuardGuard } from './guards/teacher-guard.guard';
 import { ClassResolverService } from './services/resolvers/class-resolver.service';
 import { LaboratoryResolverService } from './services/resolvers/laboratories-resolver.service';
 import { UserResolver } from './services/resolvers/user-resolver.service';
@@ -61,15 +63,18 @@ const routes: Routes = [
     path: 'Dashboard',
     resolve: [LaboratoryResolverService, UserResolver],
     canActivate: [AuthGuard],
+    //canActivateChild: [AdminGuardGuard],
     children: [
       {
         path: ':idLab',
         //resolve: [LaboratoryResolverService],
+        canActivate: [AdminGuardGuard],
         component: EditLaboComponent
       },
       {
         path: ':idLab/:classID',
         resolve: [ClassResolverService],
+        canActivate: [TeacherGuardGuard],
         component: ClassEditComponent
       },
       {

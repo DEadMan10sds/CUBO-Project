@@ -5,6 +5,7 @@ import {Input, Output} from '@angular/core';
 import { ActivatedRoute, Params } from '@angular/router';
 import {  Subscription } from 'rxjs';
 import { ClassBackConnection } from 'src/app/services/classesBackConnection.service';
+import { storeUserData } from 'src/app/services/storeUser.service';
 
 @Component({
   selector: 'app-classes-list',
@@ -24,10 +25,13 @@ export class ClassesListComponent implements OnInit {
   @Output() selectedCLassData = new EventEmitter<ClassesModel>();
   @Input()  laboratory: string;
 
+  userRole: string;
+
   constructor(
     private classService: ClassesService,
     private classBackConnection: ClassBackConnection,
     private currentRoute: ActivatedRoute,
+    private userData: storeUserData
   ) { }
 
   ngOnInit(): void {
@@ -43,6 +47,7 @@ export class ClassesListComponent implements OnInit {
         this.classes = classArray;
       }
     );
+    this.userRole = this.userData.getCurrentUserRole();
     //this.classes = this.classService.getExistingClasses();
     //console.log("LIST", this.classes)
   }
