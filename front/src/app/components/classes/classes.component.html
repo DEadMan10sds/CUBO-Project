@@ -1,0 +1,27 @@
+<div class="row d-md-flex justify-content-md-center" (click)="onClick()">
+  <div class="col">{{ incomingClass.hour }}:00</div>
+  <div class="col">
+    {{ incomingClass.name }}
+  </div>
+  <div class="col">
+    {{ incomingClass.type === "CLASS" ? "Clase" : "Examen" }}
+  </div>
+  <div class="col">
+    {{ incomingClass.teacher.name }}
+  </div>
+  <div class="col-md-3">
+    <button
+      type="button"
+      class="btn btn-primary"
+      [routerLink]="['/Dashboard', incomingClass.place, incomingClass.id]"
+      routerLinkActive="active"
+      *ngIf="
+        userRole === 'ADMIN' ||
+        (userRole === 'PROFESOR' &&
+          incomingClass.teacher._id === localStorageID)
+      "
+    >
+      Editar
+    </button>
+  </div>
+</div>

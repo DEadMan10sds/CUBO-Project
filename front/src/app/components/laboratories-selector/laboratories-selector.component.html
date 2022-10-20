@@ -1,0 +1,19 @@
+<div class="row">
+  <div class="col-4" *ngFor="let labo of existingLabs">
+    <app-laboratories
+      [currentLab]="labo"
+      (click)="setLabName(labo.name)"
+    ></app-laboratories>
+  </div>
+</div>
+<div class="row mt-5 mb-5">
+  <button
+    class="btn btn-primary"
+    type="button"
+    [routerLink]="['/Dashboard', 0]"
+    routerLinkActive="active"
+    *ngIf="userRole === 'ADMIN'"
+  >
+    Añadir salon
+  </button>
+</div>

@@ -1,0 +1,28 @@
+<div class="container container-fluid">
+  <div class="row m-3 justify-content-md-center" *ngIf="!hasError">
+    <div class="row" *ngIf="hasError">
+      ERROR
+      <app-redirect-home></app-redirect-home>
+    </div>
+    <div class="col-md-5">
+      <h2>{{ place }}</h2>
+      <app-classes-list
+        [laboratory]="place"
+        (selectedCLassData)="setSelectedClass($event)"
+        (hasErrorEvent)="receiveError($event)"
+      ></app-classes-list>
+    </div>
+    <div class="card col-md-6 m-1">
+      <div class="card-header">
+        <h2>Detalles de la clase</h2>
+      </div>
+      <div class="card-body">
+        <app-class-detail
+          [actualClass]="classSelectedData"
+          *ngIf="selectedClass"
+        ></app-class-detail>
+        <app-class-placeholder *ngIf="!selectedClass"></app-class-placeholder>
+      </div>
+    </div>
+  </div>
+</div>
