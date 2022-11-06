@@ -12,6 +12,7 @@ import { ClassDetailsComponent } from './components/class-details/class-details.
 import { ResolverClass } from './resolvers/classes.resolver';
 import { EditLaboComponent } from './components/edit-labo/edit-labo.component';
 import { EditClassesComponent } from './components/edit-classes/edit-classes.component';
+import { AdminGuard } from './guards/admin.guard';
 
 const routes: Routes = [
   {
@@ -51,6 +52,7 @@ const routes: Routes = [
       {
         path: 'addLab',
         pathMatch: 'full',
+        canActivate: [AdminGuard],
         component: EditLaboComponent,
         resolve: [ResolverLabo],
       },

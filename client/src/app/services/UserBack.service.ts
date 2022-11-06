@@ -1,4 +1,4 @@
-import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { environment } from 'src/environments/environment';
 
@@ -16,37 +16,28 @@ export class authServiceConnection {
     };
   }
 
-  loginUser(userData: { email: string; password: string }) {
+  logIn(userData: { email: string; password: string }) {
     return this.httpSolicitudes.post<{
       Message: string;
-      existsUser: User;
-      token: string;
+      existsUser?: User;
+      token?: string;
     }>(environment.backURL + '/auth/login', userData, {
       headers: this.skipSolicitude(),
     });
   }
 
-  getUser(idUser: string) {
+  register(newUser: User) {
+    return this.httpSolicitudes.post<{
+      Message: string;
+      existsUser?: User;
+    }>(environment.backURL + '/users/', newUser, {
+      headers: this.skipSolicitude(),
+    });
+  }
+
+  getUser(userID: string) {
     return this.httpSolicitudes.get<{ Message: string; userResult?: User }>(
-      environment.backURL + '/users/' + idUser
-    );
-  }
-
-  registerUser(newUser: User) {
-    newUser.role = 'ALUMNO';
-    return this.httpSolicitudes.post<{ Message: string; insert?: User }>(
-      environment.backURL + '/users/',
-      newUser,
-      {
-        headers: this.skipSolicitude(),
-      }
-    );
-  }
-
-  editUser(newData: User, userID: string) {
-    return this.httpSolicitudes.put<{ Message: string; editedUser?: User }>(
-      environment.backURL + '/users/' + userID,
-      newData
+      environment.backURL + '/users/' + userID
     );
   }
 }

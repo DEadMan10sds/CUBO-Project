@@ -16,7 +16,6 @@ export class LabosListComponent implements OnInit {
   constructor(private labsService: LaboratoriesService) {}
 
   ngOnInit(): void {
-    //this.labosBack.fetchLabs();
     this.labosChangesSubscription =
       this.labsService.laboratoriesChanges.subscribe({
         next(value) {
@@ -27,7 +26,6 @@ export class LabosListComponent implements OnInit {
         },
       });
     this.labos = this.labsService.getLabsArray();
-    //localStorage.removeItem('currentLab');
   }
 
   setIDLab(labID: string) {

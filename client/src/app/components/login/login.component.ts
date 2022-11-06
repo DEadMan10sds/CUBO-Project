@@ -1,9 +1,11 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { NgForm } from '@angular/forms';
-import { Subscription } from 'rxjs';
+import { of, Subscription, throwError } from 'rxjs';
+import { catchError, tap } from 'rxjs/operators';
 import { User } from 'src/app/interfaces/user.interface';
 import { authServiceConnection } from 'src/app/services/UserBack.service';
 import { UserService } from 'src/app/services/user.service';
+import { Router } from '@angular/router';
 @Component({
   selector: 'app-login',
   templateUrl: './login.component.html',
@@ -13,14 +15,18 @@ export class LoginComponent implements OnInit {
   @ViewChild('FormData') formData: NgForm;
 
   loginStatus: boolean = true;
-  registerSubscription: Subscription;
-  errorOnAction;
   hasError: boolean = null;
+  userSubscription: Subscription;
+  navigate: boolean = false;
 
-  constructor(private userService: UserService) {}
+  constructor(
+    private userService: UserService,
+    private backUser: authServiceConnection,
+    private router: Router
+  ) {}
 
   ngOnInit(): void {
-    console.log("login Inid")
+    console.log('login Inid');
   }
 
   changeMode() {
@@ -28,61 +34,40 @@ export class LoginComponent implements OnInit {
   }
 
   register() {
-    this.registerSubscription = this.userService
-      .registerUser(this.formData.value)
-      .subscribe({
-        next(value) {
+    this.formData.value.role = 'ALUMNO';
+    this.backUser
+      .register(this.formData.value)
+      .pipe(
+        tap((value) => {
+          this.changeMode();
           console.log(value);
-        },
-        error(err) {
-          console.log(err);
-        },
-      });
-    this.changeMode();
+        }),
+        catchError((err) => this.handleError(err))
+      )
+      .subscribe();
   }
 
   login() {
-    let errror = this.userService.loginUser(this.formData.value);
-    errror
-      .then((value) => {
-        if (value) {
-          this.errorOnAction = value;
-          this.hasError = true;
-        }
-        //console.log(value, this.hasError);
-      })
-      .catch();
-  }
-
-  /**
-   * login() {
-    this.loginSubscription = this.userService
-      .loginUser(this.formData.value)
-      .subscribe({
-        next(value) {
-          console.log(value);
+    this.userSubscription = this.backUser
+      .logIn(this.formData.value)
+      .pipe(
+        tap((value) => {
+          this.userService.setUserLogged(value.existsUser);
+          this.router.navigate(['']);
+          localStorage.setItem('userID', value.existsUser.id);
           localStorage.setItem('authToken', value.token);
-          this.logginSuccesful = true;
-        },
-        error(err) {
-          console.log(err);
-        },
-      });
-    console.log('ExitLoginSub');
-    if (this.logginSuccesful) {
-      console.log('SetLogginSettings');
-      this.setLogginSettings();
-    }
+        }),
+        catchError((err) => this.handleError(err))
+      )
+      .subscribe();
   }
 
-  setLogginSettings() {
-    this.userService.setLoggedInUser(true);
-    this.router.navigate(['/home']);
+  handleError(error) {
+    console.log('ERROR', error);
+    return of(error);
   }
 
-  NgDestroy() {
-    this.registerSubscription.unsubscribe();
-    this.loginSubscription.unsubscribe();
+  ngOnDestroy() {
+    this.userSubscription.unsubscribe();
   }
-   */
 }

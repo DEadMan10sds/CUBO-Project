@@ -10,18 +10,15 @@ export class ClassesService {
   private classesArray: ClassInterface[] = [];
 
   setClassesArray(newClassesArray: ClassInterface[]) {
-    console.log('SETTING CLASSES');
     this.classesArray = newClassesArray;
     this.classArrayChanges.next(this.classesArray.slice());
   }
 
   getClassesArray(): ClassInterface[] {
-    console.log('GetClasses', this.classesArray);
     return this.classesArray.slice();
   }
 
   setEmptyClassesArray() {
-    console.log('VACIANDO ARREGLO DE CLASES');
     this.classesArray = [];
     this.classArrayChanges.next(this.classesArray.slice());
   }

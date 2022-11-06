@@ -23,7 +23,6 @@ export class ResolverLabo implements Resolve<Laboratories[]> {
     state: RouterStateSnapshot
   ): Laboratories[] | Observable<Laboratories[]> | Promise<Laboratories[]> {
     const laboratoriesInstance = this.labService.getLabsArray();
-    console.log('RESOLVER LABO', laboratoriesInstance);
     if (!laboratoriesInstance.length) return this.backLabs.fetchLabs();
     return laboratoriesInstance;
   }

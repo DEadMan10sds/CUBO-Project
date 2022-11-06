@@ -4,6 +4,7 @@
   </div>
   <div
     class="row row-cols-auto d-flex align-content-center justify-content-center"
+    *ngIf="labos.length > 0; else emptyLabs"
   >
     <a *ngFor="let labo of labos">
       <app-labo-card
@@ -15,3 +16,13 @@
     </a>
   </div>
 </div>
+
+<ng-template #emptyLabs class="m-auto">
+  <div class="text-center mt-lg-5 p-4">
+    <div class="alert alert-danger" role="alert">
+      <h2 class="text-danger">No hay laboratorios</h2>
+      <br />
+      <h4>Contacte a un administrador</h4>
+    </div>
+  </div>
+</ng-template>

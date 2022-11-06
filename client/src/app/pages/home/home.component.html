@@ -1,6 +1,21 @@
 <div class="d-flex flex-column min-vh-100">
-  <app-navbar [UserData]="dataUser"></app-navbar>
-  <div class="mt-4 container-fluid">
+  <app-navbar></app-navbar>
+  <div class="mt-4 m-auto container-fluid">
+    <div class="text-center m-auto" *ngIf="route === '/'">
+      <div class="spinner mx-auto mt-5">
+        <div></div>
+        <div></div>
+        <div></div>
+        <div></div>
+        <div></div>
+        <div></div>
+      </div>
+      <h1 class="mt-5">Administrador de clases</h1>
+      <p>
+        Bienvenido al sistema adminstrador de clases, por favor, ve a la sección
+        de laboratorios
+      </p>
+    </div>
     <router-outlet></router-outlet>
   </div>
   <footer class="mt-auto p-2">Funcionaaa</footer>

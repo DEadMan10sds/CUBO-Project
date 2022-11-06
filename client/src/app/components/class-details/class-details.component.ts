@@ -20,12 +20,6 @@ export class ClassDetailsComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
-    /*
-      this.activeRoute.params.subscribe((params: Params) => {
-        this.currentClassID = params['classID'];
-      });
-      console.log(this.currentClassID, this.currentClass);
-      */
     this.currentClass = this.classesService.getSpecificClassByID(
       this.currentClassID
     );

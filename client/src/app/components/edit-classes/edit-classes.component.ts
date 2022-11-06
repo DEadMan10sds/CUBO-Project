@@ -67,18 +67,16 @@ export class EditClassesComponent implements OnInit, AfterContentInit {
             status: this.currentClass.status,
             type: this.currentClass.type,
             startDate: this.currentClass.startDate,
+            teacher: localStorage.getItem('userID'),
           });
         });
         this.days.map((day) => {
           if (this.currentClass.repeats.includes(day)) {
             this.selectedDays.push(day);
-            console.log('', this.selectedDays.includes(day));
           }
         });
-        console.log(this.selectedDays);
       }
     }
-    //console.log(this.formData);
   }
 
   addDay(newDay: string) {
@@ -95,7 +93,10 @@ export class EditClassesComponent implements OnInit, AfterContentInit {
   createClass() {
     const splitedHour = this.formData.value.hour.split(':');
     this.formData.value.hour = +splitedHour[0];
-    //this.classesBack.createClassOnLab(this.labID, this.formData.value);
+    this.formData.value.teacher = localStorage.getItem('userID');
+    this.formData.value.place = this.labID;
+
+    if (this.formData.value.status === '') this.formData.value.status = false;
 
     this.formData.value.repeats = this.selectedDays;
 
@@ -103,7 +104,6 @@ export class EditClassesComponent implements OnInit, AfterContentInit {
       this.classesBack.editClass(this.classID, this.formData.value);
     else this.classesBack.createClassOnLab(this.labID, this.formData.value);
 
-    console.log(this.formData.value);
     this.router.navigate(['/labs']);
   }
 

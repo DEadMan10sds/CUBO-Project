@@ -23,7 +23,7 @@
             >Salones</a
           >
         </li>
-        <li class="nav-item" *ngIf="UserData.role === 'ADMIN'">
+        <li class="nav-item" *ngIf="currentUser.role === 'ADMIN'">
           <a class="nav-link" routerLinkActive [routerLink]="['']">Usuarios</a>
         </li>
       </ul>
@@ -33,6 +33,7 @@
           class="btn btn-secondary"
           routerLink="addLab"
           routerLinkActive
+          *ngIf="currentUser.role === 'ADMIN'"
         >
           Agregar salon
         </button>

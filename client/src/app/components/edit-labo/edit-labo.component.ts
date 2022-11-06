@@ -25,7 +25,6 @@ export class EditLaboComponent implements OnInit {
     this.newLabForm.value.classes = [];
     if (this.newLabForm.value.status !== true)
       this.newLabForm.value.status = false;
-    console.log(this.newLabForm.value);
     this.labBack.createLab(this.newLabForm.value);
     this.labBack.fetchLabs();
     this.cancelCreate();

@@ -15,7 +15,6 @@ export class LaboratoriesService {
   }
 
   getLabsArray(): Laboratories[] {
-    console.log('GetLabs', this.LaboratoriesArray);
     return this.LaboratoriesArray.slice();
   }
 

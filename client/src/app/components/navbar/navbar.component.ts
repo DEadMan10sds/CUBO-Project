@@ -8,12 +8,14 @@ import { UserService } from 'src/app/services/user.service';
   styleUrls: ['./navbar.component.css'],
 })
 export class NavbarComponent implements OnInit {
-  @Input() UserData: User;
+  //@Input() UserData: User;
+
+  currentUser: User;
 
   constructor(private userService: UserService) {}
 
   ngOnInit(): void {
-    //console.log('Navbar: ', this.UserData);
+    this.currentUser = this.userService.getUserLogged();
   }
 
   logout() {

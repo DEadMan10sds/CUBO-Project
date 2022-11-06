@@ -1,7 +1,7 @@
 <div
   class="card mt-4 m-auto d-grid shadow-sm"
   style="width: 80%"
-  *ngIf="UserObservable | async as UserObservable; else loading"
+  *ngIf="UserData.name !== undefined; else loading"
 >
   <h1 class="card-header">Mi Perfil</h1>
   <form
@@ -21,7 +21,7 @@
             aria-label="Nombre"
             aria-describedby="basic-addon1"
             name="name"
-            [(ngModel)]="UserObservable.userResult.name"
+            [(ngModel)]="UserData.name"
             required
           />
         </div>
@@ -34,7 +34,7 @@
             aria-label="Apellido"
             aria-describedby="basic-addon1"
             name="surname"
-            [(ngModel)]="UserObservable.userResult.surname"
+            [(ngModel)]="UserData.surname"
           />
         </div>
       </div>
@@ -48,7 +48,7 @@
             aria-label="Correo"
             aria-describedby="basic-addon1"
             name="email"
-            [ngModel]="UserObservable.userResult.email"
+            [ngModel]="UserData.email"
           />
         </div>
         <div class="input-group mb-3 col">
@@ -61,7 +61,7 @@
             aria-label="uniKey"
             aria-describedby="basic-addon1"
             name="uniKey"
-            value="{{ UserObservable.userResult.uniKey }}"
+            value="{{ UserData.uniKey }}"
           />
         </div>
       </div>

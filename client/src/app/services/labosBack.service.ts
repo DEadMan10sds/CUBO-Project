@@ -15,7 +15,6 @@ export class BackLaboratories {
   ) {}
 
   fetchLabs() {
-    console.log('Fetching labs');
     return this.httpSolicitudes
       .get<Laboratories[]>(environment.backURL + '/labs/')
       .pipe(
@@ -35,7 +34,6 @@ export class BackLaboratories {
   }
 
   editLab(editedLab: Laboratories) {
-    console.log('Editing lab');
     this.httpSolicitudes
       .put<{ Message: string; existsLab?: Laboratories }>(
         environment.backURL + '/labs/' + editedLab.id,
@@ -45,7 +43,6 @@ export class BackLaboratories {
   }
 
   deleteLab(IDlabToDelete: string) {
-    console.log('Eliminando labo');
     this.httpSolicitudes
       .delete<{
         Message: string;

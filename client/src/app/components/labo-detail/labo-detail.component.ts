@@ -8,6 +8,7 @@ import { ClassesService } from 'src/app/services/classes.service';
 import { ClassesBackService } from 'src/app/services/classesBack.service';
 import { LaboratoriesService } from 'src/app/services/labos.service';
 import { BackLaboratories } from 'src/app/services/labosBack.service';
+import { UserService } from 'src/app/services/user.service';
 
 @Component({
   selector: 'app-labo-detail',
@@ -15,8 +16,7 @@ import { BackLaboratories } from 'src/app/services/labosBack.service';
   styleUrls: ['./labo-detail.component.css'],
 })
 export class LaboDetailComponent implements OnInit {
-  //userRole: string;
-  //currentLab: Laboratories;
+  userRole: string;
   currentLabID: string;
   selectedClass: string;
   classesOfLab: ClassInterface[];
@@ -35,8 +35,8 @@ export class LaboDetailComponent implements OnInit {
     private laboratoriesBack: BackLaboratories,
     private activeRoute: ActivatedRoute,
     private classesService: ClassesService,
-    private classesBack: ClassesBackService,
-    private router: Router
+    private router: Router,
+    private userService: UserService
   ) {}
 
   ngOnInit(): void {
@@ -45,10 +45,8 @@ export class LaboDetailComponent implements OnInit {
       localStorage.setItem('currentLab', this.currentLabID);
     });
     this.currentLab = this.labService.getSpecificLabo(this.currentLabID);
-    //console.log(this.currentLab);
 
     //OBTENER LAS CLASES DEL LABO
-    //this.classesBack.fetchClasses(this.currentLabID);
     this.classesSubscription = this.classesService.classArrayChanges.subscribe({
       next(value) {
         this.classesOfLab = value;
@@ -58,6 +56,7 @@ export class LaboDetailComponent implements OnInit {
       },
     });
     this.classesOfLab = this.classesService.getClassesArray();
+    this.userRole = this.userService.getUserLogged().role;
   }
 
   editMode() {
@@ -76,15 +75,12 @@ export class LaboDetailComponent implements OnInit {
   editLab() {
     this.editMode();
     this.laboForm.value.id = this.currentLabID;
-    console.log(this.laboForm.value);
     this.laboratoriesBack.editLab(this.laboForm.value);
   }
 
   deleteLab() {
-    //this.editMode();
     this.laboratoriesBack.deleteLab(this.currentLabID);
     this.router.navigate(['/labs']);
-    console.log(this.deleteForm.value);
   }
 
   selectClass(idOfClass: string) {
@@ -92,7 +88,6 @@ export class LaboDetailComponent implements OnInit {
   }
 
   ngOnDestroy() {
-    //localStorage.removeItem('currentLab');
     this.classesService.setEmptyClassesArray();
     this.classesSubscription.unsubscribe();
   }
