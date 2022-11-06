@@ -1,0 +1,91 @@
+<div
+  class="card mt-4 m-auto d-grid shadow-sm"
+  style="width: 80%"
+  *ngIf="UserObservable | async as UserObservable; else loading"
+>
+  <h1 class="card-header">Mi Perfil</h1>
+  <form
+    #FormData="ngForm"
+    (ngSubmit)="editProfile()"
+    ngNativeValidate
+    class="card-body"
+  >
+    <fieldset [disabled]="!disabledForm">
+      <div class="row container-fluid">
+        <div class="input-group mb-3 col">
+          <span class="input-group-text">Nombre(s)</span>
+          <input
+            type="text"
+            class="form-control"
+            placeholder="Nombre"
+            aria-label="Nombre"
+            aria-describedby="basic-addon1"
+            name="name"
+            [(ngModel)]="UserObservable.userResult.name"
+            required
+          />
+        </div>
+        <div class="input-group mb-3 col">
+          <span class="input-group-text">Apellido(s)</span>
+          <input
+            type="text"
+            class="form-control"
+            placeholder="Apellido"
+            aria-label="Apellido"
+            aria-describedby="basic-addon1"
+            name="surname"
+            [(ngModel)]="UserObservable.userResult.surname"
+          />
+        </div>
+      </div>
+      <div class="row container-fluid">
+        <div class="input-group mb-3 col">
+          <span class="input-group-text">Correo</span>
+          <input
+            type="email"
+            class="form-control"
+            placeholder="Correo"
+            aria-label="Correo"
+            aria-describedby="basic-addon1"
+            name="email"
+            [ngModel]="UserObservable.userResult.email"
+          />
+        </div>
+        <div class="input-group mb-3 col">
+          <span class="input-group-text">Clave unica</span>
+          <input
+            disabled
+            type="text"
+            class="form-control"
+            placeholder="uniKey"
+            aria-label="uniKey"
+            aria-describedby="basic-addon1"
+            name="uniKey"
+            value="{{ UserObservable.userResult.uniKey }}"
+          />
+        </div>
+      </div>
+    </fieldset>
+    <div class="d-grid gap-2 d-md-flex justify-content-md-end px-5">
+      <button
+        class="btn btn-success"
+        type="submit"
+        *ngIf="disabledForm"
+        [ngClass]="FormData.valid ? 'enabled' : 'disabled'"
+      >
+        Guardar
+      </button>
+      <button
+        class="btn btn-primary me-md-2"
+        [ngClass]="disabledForm ? 'btn-danger' : 'btn-primary'"
+        type="button"
+        (click)="editForm()"
+      >
+        {{ disabledForm ? "Cancelar" : "Editar" }}
+      </button>
+    </div>
+  </form>
+</div>
+<ng-template #loading>
+  <app-loading></app-loading>
+</ng-template>

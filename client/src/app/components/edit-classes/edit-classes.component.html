@@ -1,0 +1,147 @@
+<form
+  class="card mx-auto mt-4"
+  style="width: 80%"
+  #NewClassForm="ngForm"
+  (ngSubmit)="createClass()"
+  ngNativeValidate
+>
+  <div class="card-header">
+    <h1>Crear Clase</h1>
+  </div>
+  <div class="card-body">
+    <div class="row p-4 gap-2">
+      <div class="row">
+        <div class="col">
+          <input
+            type="text"
+            name="name"
+            placeholder="Nombre de la clase"
+            class="form-control"
+            ngModel
+            required
+          />
+        </div>
+        <div class="col">
+          <select
+            class="form-select"
+            aria-label="Default select example"
+            name="place"
+            ngModel
+            required
+          >
+            <option value="" disabled selected>Salón</option>
+            <option *ngFor="let lab of labsArray" [value]="[lab.id]">
+              {{ lab.name }}
+            </option>
+          </select>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col p-2 px-4">
+          <div class="form-check">
+            <input
+              class="form-check-input"
+              type="radio"
+              name="type"
+              value="CLASS"
+              checked
+              ngModel
+              required
+            />
+            <label class="form-check-label" for="type"> Clase </label>
+          </div>
+          <div class="form-check">
+            <input
+              class="form-check-input"
+              type="radio"
+              name="type"
+              value="EXAM"
+              ngModel
+              required
+            />
+            <label class="form-check-label" for="type"> Examen </label>
+          </div>
+        </div>
+        <div class="col">
+          <div class="form-check form-switch">
+            <input
+              class="form-check-input"
+              type="checkbox"
+              role="switch"
+              name="status"
+              ngModel
+            />
+            <label class="form-check-label" for="flexSwitchCheckDefault"
+              >Activar</label
+            >
+          </div>
+          <select
+            class="form-select"
+            aria-label="Default select example"
+            name="hour"
+            ngModel
+            required
+          >
+            <option value="" disabled selected>Hora</option>
+            <option *ngFor="let currentHour of availableHours">
+              {{ currentHour }}:00
+            </option>
+          </select>
+        </div>
+        <div class="col">
+          <label for="startDate">{{
+            NewClassForm.value.type === "CLASS" ? "Fecha de inicio " : "Fecha"
+          }}</label>
+          <input
+            id="startDate"
+            class="form-control"
+            type="date"
+            name="startDate"
+            ngModel
+            required
+          />
+        </div>
+        <div class="col" *ngIf="NewClassForm.value.type === 'CLASS'">
+          <label for="startDate">Fecha final</label>
+          <input
+            id="startDate"
+            class="form-control"
+            type="date"
+            name="endDate"
+            ngModel
+            required
+          />
+        </div>
+      </div>
+      <div class="row m-auto text-center">
+        <div class="form-check col" *ngFor="let newDay of days">
+          <label class="form-check-label" for="flexCheckDefault">
+            <input
+              class="form-check-input"
+              type="checkbox"
+              (click)="addDay(newDay)"
+              [checked]="selectedDays.includes(newDay)"
+            />
+            {{ newDay }}
+          </label>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="card-footer gap-2 d-flex flex-row-reverse">
+    <button type="button" class="btn btn-danger" (click)="cancelCreateClass()">
+      Cancelar
+    </button>
+    <button type="submit" class="btn btn-primary">
+      {{ currentClass !== undefined ? "Editar" : "Crear" }}
+    </button>
+    <button
+      type="button"
+      class="btn btn-warning"
+      *ngIf="currentClass !== undefined"
+      (click)="deleteClass()"
+    >
+      Eliminar
+    </button>
+  </div>
+</form>

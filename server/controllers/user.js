@@ -40,31 +40,29 @@ const createUser = async (req, res = response) => {
 const editUser = async (req, res = response) => {
   const { id } = req.params;
   //Elimina password y role para hacerlas variables independientes
-  const { name, surname, ...dataToUpdate } = req.body;
+  const dataToUpdate = req.body;
 
   const existsUser = await User.findById(id);
 
   if (!existsUser)
     return res.status(400).json({ Message: "No existe el usuario" });
 
-  /*if (dataToUpdate.uniKey || dataToUpdate.email) {
-    const duplicatedData = await User.find({
-      $or: [{ uniKey: dataToUpdate.uniKey }, { email: dataToUpdate.email }],
-    });
-    if (duplicatedData)
-      return res
-        .status(400)
-        .json({ Message: "Clave universitaria o correo ya registrados" });
-  }*/
+  const duplicatedEmali = await User.findOne({
+    email: dataToUpdate.email,
+    status: false,
+  });
+  if (duplicatedEmali)
+    return res
+      .status(400)
+      .json({ Message: "El correo ya está registrado con otro usuario" });
 
-  /*if (!bcrypt.compareSync(password, existsUser.password))
-    return res.status(400).json({ Message: "Contraseña incorrecta" });*/
-
-  const editedData = await User.findByIdAndUpdate(id, { name, surname });
+  const editedUser = await User.findByIdAndUpdate(id, dataToUpdate, {
+    new: true,
+  });
 
   //console.log(editedData);
 
-  return res.status(200).json({ Message: "Usuario editado", editedData });
+  return res.status(200).json({ Message: "Usuario editado", editedUser });
 };
 
 /**

@@ -99,7 +99,9 @@ const createClassByLab = async (req, res) => {
   //console.log(existsLab, newClass);
 
   //console.log({ existsLab, classAdded: req.body });
-  return res.status(200).json({ Message: "Classe encontrada", result });
+  return res
+    .status(200)
+    .json({ Message: "Classe creada y añadida al labo", newClass });
 };
 
 const editClass = async (req, res) => {

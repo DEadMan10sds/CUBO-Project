@@ -12,16 +12,17 @@ const validateJWT = async (req, res, next) => {
     if (!usuario)
       return res.status(401).json({ Message: "El usuario no existe" });
 
+    /*
     if (!usuario.status)
       return res
         .status(401)
         .json({ Message: "El usuario ha sido desactivado" });
+    */
 
     req.user = usuario;
 
     next();
   } catch (error) {
-    //console.log(error);
     return res
       .status(401)
       .json({ Message: "Token no válido", hasError: error });

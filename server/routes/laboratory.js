@@ -11,6 +11,8 @@ const {
   getAllActiveLabs,
   deleteClassFromLab,
   changeHourOfClass,
+  createAndAddClass,
+  deleteClassAndRemoveOfLab,
 } = require("../controllers/laboratory");
 const { fieldValidation } = require("../middlewares/fieldValidation");
 const { validateJWT } = require("../middlewares/validateJWT");
@@ -87,6 +89,8 @@ router.post(
   addClass
 );
 
+router.post("/addAndCreateClass/:id", createAndAddClass);
+
 router.post(
   "/changeHour/:id",
   [
@@ -96,7 +100,12 @@ router.post(
   changeHourOfClass
 );
 
-router.post(
+router.delete(
+  "/deleteClassAndRemove/:labID/:classID",
+  deleteClassAndRemoveOfLab
+);
+
+router.delete(
   "/deleteClassFromLab/:id",
   [
     check("id", "El id del laboratorio no es válido").isMongoId().notEmpty(),

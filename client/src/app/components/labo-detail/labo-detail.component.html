@@ -1,0 +1,194 @@
+<form
+  class="card shadow m-auto mt-4"
+  style="width: 80%"
+  #FormData="ngForm"
+  (ngSubmit)="editLab()"
+  *ngIf="!createClass; else CreateClassForm"
+>
+  <div class="card-header">
+    <div class="row">
+      <div class="col col-xl-7 px-4">
+        <h1 *ngIf="!canEdit; else editForm">
+          {{ currentLab.name }}
+        </h1>
+        <ng-template #editForm>
+          <input
+            type="text"
+            name="name"
+            [(ngModel)]="currentLab.name"
+            class="form-control card-header rounded"
+          />
+        </ng-template>
+      </div>
+      <div class="col col-xl-1 form-check form-switch m-auto">
+        <div *ngIf="canEdit">
+          <input
+            class="form-check-input"
+            type="checkbox"
+            role="switch"
+            name="status"
+            [(ngModel)]="currentLab.status"
+          />
+          <label class="form-check-label" for="flexSwitchCheckChecked"
+            >Activar</label
+          >
+        </div>
+      </div>
+      <div class="col col-xl-4 d-flex flex-row-reverse gap-1 p-2">
+        <button
+          type="button"
+          class="btn"
+          [ngClass]="canEdit ? 'btn-danger' : 'btn-primary'"
+          (click)="editMode()"
+        >
+          {{ canEdit ? "Cancelar" : "Editar" }}
+        </button>
+        <button type="submit" class="btn btn-success" *ngIf="canEdit">
+          Guardar
+        </button>
+        <button
+          type="button"
+          class="btn btn-warning"
+          *ngIf="canEdit"
+          data-bs-toggle="modal"
+          data-bs-target="#exampleModal"
+        >
+          Eliminar
+        </button>
+      </div>
+    </div>
+  </div>
+  <div class="card-body row container-fluid">
+    <div class="col-xl-5 m-2 p-2">
+      <h5 class="mx-3">Horas del salón</h5>
+      <ul class="list-group">
+        <li
+          *ngFor="let actualClass of classesOfLab"
+          class="list-group-item list-group-item-action"
+          [ngClass]="{ active: actualClass.id === selectedClass }"
+          (click)="selectClass(actualClass.id)"
+        >
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            width="25"
+            height="25"
+            fill="currentColor"
+            class="bi bi-pencil-square m-1"
+            viewBox="0 0 16 16"
+            (click)="createClassMode(actualClass.id)"
+          >
+            <path
+              d="M15.502 1.94a.5.5 0 0 1 0 .706L14.459 3.69l-2-2L13.502.646a.5.5 0 0 1 .707 0l1.293 1.293zm-1.75 2.456-2-2L4.939 9.21a.5.5 0 0 0-.121.196l-.805 2.414a.25.25 0 0 0 .316.316l2.414-.805a.5.5 0 0 0 .196-.12l6.813-6.814z"
+            />
+            <path
+              fill-rule="evenodd"
+              d="M1 13.5A1.5 1.5 0 0 0 2.5 15h11a1.5 1.5 0 0 0 1.5-1.5v-6a.5.5 0 0 0-1 0v6a.5.5 0 0 1-.5.5h-11a.5.5 0 0 1-.5-.5v-11a.5.5 0 0 1 .5-.5H9a.5.5 0 0 0 0-1H2.5A1.5 1.5 0 0 0 1 2.5v11z"
+            />
+          </svg>
+          {{ actualClass.hour }}:00 - {{ actualClass.hour + 1 }}:00 -
+          {{ actualClass.name }}
+        </li>
+      </ul>
+      <button
+        type="button"
+        class="btn btn-primary m-1"
+        *ngIf="classesOfLab.length < 14"
+        (click)="createClassMode(null)"
+      >
+        Crear Clase
+      </button>
+    </div>
+    <div class="col m-2 p-2">
+      <h5>Detalles de la clase</h5>
+      <app-class-details
+        [currentClassID]="selectedClass"
+        *ngIf="selectedClass"
+      ></app-class-details>
+    </div>
+  </div>
+</form>
+
+<!-- Modal -->
+<div
+  *ngIf="currentLab.hours.length <= 0; else cantDelete"
+  class="modal fade"
+  id="exampleModal"
+  tabindex="-1"
+  aria-labelledby="exampleModalLabel"
+  aria-hidden="true"
+>
+  <div class="modal-dialog">
+    <form class="modal-content" #DeleteForm="ngForm" (submit)="deleteLab()">
+      <div class="modal-header">
+        <h1 class="modal-title fs-5" id="exampleModalLabel">
+          Eliminar laboratorio
+        </h1>
+        <button
+          type="button"
+          class="btn-close"
+          data-bs-dismiss="modal"
+          aria-label="Close"
+        ></button>
+      </div>
+      <div class="modal-body">
+        Está seguro que desea eliminar el laboratiorio: {{ currentLab.name }}
+        <br />
+        Si es así, repita el nombre del laboratorio:
+        <input type="text" name="name" ngModel class="form-control" />
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-primary" data-bs-dismiss="modal">
+          Cancelar
+        </button>
+        <button
+          type="submit"
+          class="btn btn-danger"
+          [disabled]="DeleteForm.value.name !== currentLab.name"
+          data-bs-dismiss="modal"
+        >
+          Borrar laboratorio
+        </button>
+      </div>
+    </form>
+  </div>
+</div>
+
+<ng-template #cantDelete>
+  <div
+    class="modal fade"
+    id="exampleModal"
+    tabindex="-1"
+    aria-labelledby="exampleModalLabel"
+    aria-hidden="true"
+  >
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h1 class="modal-title fs-5 color-danger" id="exampleModalLabel">
+            Advertencia
+          </h1>
+          <button
+            type="button"
+            class="btn-close"
+            data-bs-dismiss="modal"
+            aria-label="Close"
+          ></button>
+        </div>
+        <div class="modal-body">
+          No se puede eliminar un salón que aún tenga clases
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-primary" data-bs-dismiss="modal">
+            Acecptar
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+</ng-template>
+
+<ng-template #CreateClassForm>
+  <app-edit-classes
+    (CreateClass)="setCreateClassMode($event)"
+  ></app-edit-classes>
+</ng-template>

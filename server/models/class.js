@@ -25,7 +25,7 @@ const classModel = new Schema(
     },
     teacher: {
       type: Schema.Types.ObjectId,
-      required: [true, "El profesor de la clase es obligatorio"],
+      //required: [true, "El profesor de la clase es obligatorio"],
       ref: "User",
     },
     type: {

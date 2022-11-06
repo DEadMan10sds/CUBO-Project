@@ -8,12 +8,16 @@ const login = async (req, res) => {
   try {
     const existsUser = await User.findOne({ email: email, status: true });
     if (!existsUser)
-      return res.status(400).json({ Message: "No existe el usuario" });
+      return res
+        .status(400)
+        .json({ Message: "No existe el usuario o ha sido desactivado" });
 
+    /*
     if (!existsUser)
       return res
         .status(400)
         .json({ Message: "El usuario ha sido desactivado" });
+    */
 
     const passwordVerification = bcrypt.compareSync(
       password,
@@ -32,6 +36,11 @@ const login = async (req, res) => {
   }
 };
 
+const validateLogin = async (req, res) => {
+  return res.status(200).json({ Validation: true });
+};
+
 module.exports = {
   login,
+  validateLogin,
 };
