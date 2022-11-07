@@ -1,8 +1,10 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { NgForm } from '@angular/forms';
+import { Router } from '@angular/router';
 import { Subscription, tap } from 'rxjs';
 import { User } from 'src/app/interfaces/user.interface';
 import { UserService } from 'src/app/services/user.service';
+import { authServiceConnection } from 'src/app/services/UserBack.service';
 
 @Component({
   selector: 'app-profile',
@@ -16,7 +18,11 @@ export class ProfileComponent implements OnInit {
   UserSubscription: Subscription;
   disabledForm: boolean = false;
 
-  constructor(private userService: UserService) {}
+  constructor(
+    private userService: UserService,
+    private userBack: authServiceConnection,
+    private router: Router
+  ) {}
 
   ngOnInit(): void {
     this.UserSubscription = this.userService.UserChanges.pipe(
@@ -32,7 +38,9 @@ export class ProfileComponent implements OnInit {
   }
 
   editProfile() {
-    console.log(this.profileForm.value);
+    this.profileForm.value.id = this.UserData.id;
+    this.userBack.editUser(this.profileForm.value);
+    this.router.navigate(['']);
   }
 
   ngOnDestroy() {

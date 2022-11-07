@@ -40,4 +40,13 @@ export class authServiceConnection {
       environment.backURL + '/users/' + userID
     );
   }
+
+  editUser(editedUser: User) {
+    this.httpSolicitudes
+      .put<{ Message: string; editedUser?: User }>(
+        environment.backURL + '/users/' + editedUser.id,
+        editedUser
+      )
+      .subscribe();
+  }
 }

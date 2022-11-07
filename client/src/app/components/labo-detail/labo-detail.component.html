@@ -102,11 +102,11 @@
         Crear Clase
       </button>
     </div>
-    <div class="col m-2 p-2">
-      <h5 class="mx-3">Detalles de la clase</h5>
+    <div class="col m-2 mx-3 p-2">
+      <h5 class="">Detalles de la clase</h5>
       <app-class-details
         [currentClassID]="selectedClass"
-        *ngIf="selectedClass"
+        *ngIf="selectedClass; else emptyClass"
       ></app-class-details>
     </div>
   </div>
@@ -195,4 +195,8 @@
   <app-edit-classes
     (CreateClass)="setCreateClassMode($event)"
   ></app-edit-classes>
+</ng-template>
+
+<ng-template class="col" #emptyClass>
+  <h6>Selecciona una clase por favor</h6>
 </ng-template>

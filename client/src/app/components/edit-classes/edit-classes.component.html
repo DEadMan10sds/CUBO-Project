@@ -12,6 +12,7 @@
     <div class="row p-4 gap-2">
       <div class="row">
         <div class="col">
+          <label for="name">Nombre</label>
           <input
             type="text"
             name="name"
@@ -35,9 +36,33 @@
             </option>
           </select>
         </div> -->
+        <div class="col">
+          <label for="startDate">{{
+            NewClassForm.value.type === "CLASS" ? "Fecha de inicio " : "Fecha"
+          }}</label>
+          <input
+            id="startDate"
+            class="form-control"
+            type="date"
+            name="startDate"
+            ngModel
+            required
+          />
+        </div>
+        <div class="col" *ngIf="NewClassForm.value.type === 'CLASS'">
+          <label for="startDate">Fecha final</label>
+          <input
+            id="startDate"
+            class="form-control"
+            type="date"
+            name="endDate"
+            ngModel
+            required
+          />
+        </div>
       </div>
       <div class="row">
-        <div class="col p-2 px-4">
+        <div class="col col-xl-2 p-2 px-4">
           <div class="form-check">
             <input
               class="form-check-input"
@@ -76,7 +101,7 @@
             >
           </div>
           <select
-            class="form-select"
+            class="form-select col-xl-3"
             aria-label="Default select example"
             name="hour"
             ngModel
@@ -88,34 +113,12 @@
             </option>
           </select>
         </div>
-        <div class="col">
-          <label for="startDate">{{
-            NewClassForm.value.type === "CLASS" ? "Fecha de inicio " : "Fecha"
-          }}</label>
-          <input
-            id="startDate"
-            class="form-control"
-            type="date"
-            name="startDate"
-            ngModel
-            required
-          />
-        </div>
-        <div class="col" *ngIf="NewClassForm.value.type === 'CLASS'">
-          <label for="startDate">Fecha final</label>
-          <input
-            id="startDate"
-            class="form-control"
-            type="date"
-            name="endDate"
-            ngModel
-            required
-          />
-        </div>
-      </div>
-      <div class="row m-auto text-center">
-        <div class="form-check col" *ngFor="let newDay of days">
-          <label class="form-check-label" for="flexCheckDefault">
+        <div class="form-check col col-xl-6">
+          <label
+            *ngFor="let newDay of days"
+            class="form-check-label m-3 gap-2"
+            for="flexCheckDefault"
+          >
             <input
               class="form-check-input"
               type="checkbox"
@@ -126,6 +129,7 @@
           </label>
         </div>
       </div>
+      <div class="row m-auto text-center"></div>
     </div>
   </div>
   <div class="card-footer gap-2 d-flex flex-row-reverse">

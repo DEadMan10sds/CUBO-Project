@@ -30,4 +30,8 @@ export class LaboratoriesService {
   getSpecificLaboName(labID: string) {
     return this.LaboratoriesArray.find((lab) => lab.id === labID).name;
   }
+
+  deleteAllLabs() {
+    this.LaboratoriesArray = [];
+  }
 }

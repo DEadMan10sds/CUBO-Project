@@ -15,13 +15,11 @@ export class UserService {
   constructor(private router: Router) {}
 
   setUserLogged(loggedUser: User) {
-    console.log('SetLoggedUser', loggedUser);
     this.UserLogged = loggedUser;
     this.UserChanges.next(this.UserLogged);
   }
 
   getUserLogged() {
-    console.log('GetUserLogged', this.UserLogged);
     return this.UserLogged;
   }
 

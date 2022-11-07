@@ -1,11 +1,7 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { NgForm } from '@angular/forms';
-import { ActivatedRoute, Params, Router } from '@angular/router';
-import { Subscription } from 'rxjs';
-import { ClassInterface } from 'src/app/interfaces/classes.interface';
-import { Laboratories } from 'src/app/interfaces/laboratories.interface';
-import { ClassesService } from 'src/app/services/classes.service';
-import { ClassesBackService } from 'src/app/services/classesBack.service';
+import { Router } from '@angular/router';
+import { catchError, of, pipe, tap } from 'rxjs';
 import { LaboratoriesService } from 'src/app/services/labos.service';
 import { BackLaboratories } from 'src/app/services/labosBack.service';
 
@@ -17,7 +13,11 @@ import { BackLaboratories } from 'src/app/services/labosBack.service';
 export class EditLaboComponent implements OnInit {
   @ViewChild('CreateLab') newLabForm: NgForm;
 
-  constructor(private router: Router, private labBack: BackLaboratories) {}
+  constructor(
+    private router: Router,
+    private labBack: BackLaboratories,
+    private labsService: LaboratoriesService
+  ) {}
 
   ngOnInit(): void {}
 
@@ -25,14 +25,28 @@ export class EditLaboComponent implements OnInit {
     this.newLabForm.value.classes = [];
     if (this.newLabForm.value.status !== true)
       this.newLabForm.value.status = false;
-    this.labBack.createLab(this.newLabForm.value);
-    this.labBack.fetchLabs();
-    this.cancelCreate();
+    this.labBack
+      .createLab(this.newLabForm.value)
+      .pipe(
+        tap((result) => this.cancelCreate()),
+        catchError((err) => this.handelError(err))
+      )
+      .subscribe();
+
+    this.labBack.fetchLabs().subscribe();
   }
 
   cancelCreate() {
-    this.router.navigate(['/labs']);
+    this.router.navigate(['']);
   }
 
-  ngOnDestroy() {}
+  handelError(err) {
+    console.log(err);
+    return of(err);
+  }
+
+  ngOnDestroy() {
+    this.labsService.deleteAllLabs();
+    this.labBack.fetchLabs().subscribe();
+  }
 }

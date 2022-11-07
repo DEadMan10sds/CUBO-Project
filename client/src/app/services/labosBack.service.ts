@@ -1,6 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { tap } from 'rxjs/operators';
+import { catchError, tap } from 'rxjs/operators';
 import { environment } from 'src/environments/environment';
 import { Laboratories } from '../interfaces/laboratories.interface';
 import { LaboratoriesService } from './labos.service';
@@ -25,12 +25,10 @@ export class BackLaboratories {
   }
 
   createLab(labData: Laboratories) {
-    this.httpSolicitudes
-      .post<{ Message: string; result?: Laboratories }>(
-        environment.backURL + '/labs/',
-        labData
-      )
-      .subscribe();
+    return this.httpSolicitudes.post<{
+      Message: string;
+      result?: Laboratories;
+    }>(environment.backURL + '/labs/', labData);
   }
 
   editLab(editedLab: Laboratories) {
@@ -40,6 +38,7 @@ export class BackLaboratories {
         editedLab
       )
       .subscribe();
+    this.fetchLabs().subscribe();
   }
 
   deleteLab(IDlabToDelete: string) {
@@ -49,6 +48,6 @@ export class BackLaboratories {
         edeletedLab?: Laboratories;
       }>(environment.backURL + '/labs/delete/' + IDlabToDelete)
       .subscribe();
-    this.fetchLabs();
+    this.fetchLabs().subscribe();
   }
 }

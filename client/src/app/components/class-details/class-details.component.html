@@ -1,2 +1,17 @@
 <h3>{{ currentClass.name }}</h3>
-<h6>Imparte: {{ teacher.name + " " + teacher.surname }}</h6>
+<div class="row">
+  <div class="col">
+    <h6>Imparte: {{ teacher.name + " " + teacher.surname }}</h6>
+  </div>
+  <div class="col">
+    Tipo: {{ currentClass.type === "CLASS" ? "Clase" : "Examen" }}
+  </div>
+</div>
+<div class="row">
+  <div class="col">Inicia: {{ startDate }}</div>
+  <div class="col">Termina: {{ startDate }}</div>
+  <div class="col gap-2 d-flex">
+    Dias:
+    <p *ngFor="let day of currentClass.repeats">{{ day }}</p>
+  </div>
+</div>

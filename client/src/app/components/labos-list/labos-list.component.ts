@@ -13,14 +13,16 @@ export class LabosListComponent implements OnInit {
   labos: Laboratories[];
   labosChangesSubscription: Subscription;
 
-  constructor(private labsService: LaboratoriesService) {}
+  constructor(
+    private labsService: LaboratoriesService,
+    private labBack: BackLaboratories
+  ) {}
 
   ngOnInit(): void {
+    this.labBack.fetchLabs().subscribe();
     this.labosChangesSubscription =
       this.labsService.laboratoriesChanges.subscribe({
-        next(value) {
-          this.labos = value;
-        },
+        next(value) {},
         error(err) {
           console.log(err);
         },

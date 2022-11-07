@@ -80,7 +80,7 @@ export class LaboDetailComponent implements OnInit {
 
   deleteLab() {
     this.laboratoriesBack.deleteLab(this.currentLabID);
-    this.router.navigate(['/labs']);
+    this.router.navigate(['']);
   }
 
   selectClass(idOfClass: string) {
