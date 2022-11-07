@@ -1,3 +1,12 @@
+<div
+  *ngIf="hadError"
+  class="alert alert-danger m-auto"
+  role="alert"
+  style="width: 80%"
+>
+  {{ error }}
+</div>
+
 <form
   #CreateLab="ngForm"
   class="card mx-auto mt-4"

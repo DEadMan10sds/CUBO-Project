@@ -36,30 +36,6 @@
             </option>
           </select>
         </div> -->
-        <div class="col">
-          <label for="startDate">{{
-            NewClassForm.value.type === "CLASS" ? "Fecha de inicio " : "Fecha"
-          }}</label>
-          <input
-            id="startDate"
-            class="form-control"
-            type="date"
-            name="startDate"
-            ngModel
-            required
-          />
-        </div>
-        <div class="col" *ngIf="NewClassForm.value.type === 'CLASS'">
-          <label for="startDate">Fecha final</label>
-          <input
-            id="startDate"
-            class="form-control"
-            type="date"
-            name="endDate"
-            ngModel
-            required
-          />
-        </div>
       </div>
       <div class="row">
         <div class="col col-xl-2 p-2 px-4">
@@ -113,10 +89,36 @@
             </option>
           </select>
         </div>
-        <div class="form-check col col-xl-6">
+        <div class="col">
+          <label for="startDate">{{
+            NewClassForm.value.type === "CLASS" ? "Fecha de inicio " : "Fecha"
+          }}</label>
+          <input
+            id="startDate"
+            class="form-control"
+            type="date"
+            name="startDate"
+            ngModel
+            required
+          />
+        </div>
+        <div class="col" *ngIf="NewClassForm.value.type === 'CLASS'">
+          <label for="startDate">Fecha final</label>
+          <input
+            id="startDate"
+            class="form-control"
+            type="date"
+            name="endDate"
+            ngModel
+            required
+          />
+        </div>
+      </div>
+      <div class="row m-auto text-center">
+        <div class="form-check row row-cols-auto">
           <label
             *ngFor="let newDay of days"
-            class="form-check-label m-3 gap-2"
+            class="form-check-label m-3 gap-2 col"
             for="flexCheckDefault"
           >
             <input
@@ -129,7 +131,6 @@
           </label>
         </div>
       </div>
-      <div class="row m-auto text-center"></div>
     </div>
   </div>
   <div class="card-footer gap-2 d-flex flex-row-reverse">

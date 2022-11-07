@@ -13,6 +13,9 @@ import { BackLaboratories } from 'src/app/services/labosBack.service';
 export class EditLaboComponent implements OnInit {
   @ViewChild('CreateLab') newLabForm: NgForm;
 
+  hadError: boolean = false;
+  error: string;
+
   constructor(
     private router: Router,
     private labBack: BackLaboratories,
@@ -42,6 +45,8 @@ export class EditLaboComponent implements OnInit {
 
   handelError(err) {
     console.log(err);
+    this.hadError = true;
+    this.error = err.error.Message;
     return of(err);
   }
 

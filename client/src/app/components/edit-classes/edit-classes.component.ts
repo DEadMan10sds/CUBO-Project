@@ -63,11 +63,9 @@ export class EditClassesComponent implements OnInit, AfterContentInit {
           this.formData.setValue({
             name: this.currentClass.name,
             hour: this.currentClass.hour,
-            place: this.labData.id,
             status: this.currentClass.status,
             type: this.currentClass.type,
             startDate: this.currentClass.startDate,
-            teacher: localStorage.getItem('userID'),
           });
         });
         this.days.map((day) => {

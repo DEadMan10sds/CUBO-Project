@@ -1,13 +1,5 @@
-import {
-  AfterContentChecked,
-  AfterContentInit,
-  Component,
-  OnInit,
-} from '@angular/core';
-import { ActivatedRoute, Router } from '@angular/router';
-import { Subscription } from 'rxjs';
-import { User } from 'src/app/interfaces/user.interface';
-import { UserService } from 'src/app/services/user.service';
+import { AfterContentChecked, Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-home',
@@ -16,6 +8,7 @@ import { UserService } from 'src/app/services/user.service';
 })
 export class HomeComponent implements OnInit, AfterContentChecked {
   route: string;
+
   constructor(private router: Router) {}
 
   ngOnInit(): void {}

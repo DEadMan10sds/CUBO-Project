@@ -20,6 +20,7 @@ export class UserService {
   }
 
   getUserLogged() {
+    console.log(this.UserLogged);
     return this.UserLogged;
   }
 

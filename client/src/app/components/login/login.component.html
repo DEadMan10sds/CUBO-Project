@@ -9,8 +9,8 @@
         <h1 class="row">
           {{ loginStatus ? "Iniciar sesión" : "Registrarse" }}
         </h1>
-        <div class="form-text text-danger" *ngIf="hasError">
-          Error: {{ errorOnAction }}
+        <div class="alert alert-danger" role="alert" *ngIf="hasError">
+          {{ this.errorBack }}
         </div>
         <form
           *ngIf="loginStatus"

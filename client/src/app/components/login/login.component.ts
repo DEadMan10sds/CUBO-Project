@@ -16,6 +16,7 @@ export class LoginComponent implements OnInit {
 
   loginStatus: boolean = true;
   hasError: boolean = null;
+  errorBack;
   userSubscription: Subscription;
   navigate: boolean = false;
 
@@ -40,7 +41,6 @@ export class LoginComponent implements OnInit {
       .pipe(
         tap((value) => {
           this.changeMode();
-          console.log(value);
         }),
         catchError((err) => this.handleError(err))
       )
@@ -63,7 +63,8 @@ export class LoginComponent implements OnInit {
   }
 
   handleError(error) {
-    console.log('ERROR', error);
+    this.hasError = true;
+    this.errorBack = error.error.Message;
     return of(error);
   }
 
